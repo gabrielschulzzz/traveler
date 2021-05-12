@@ -13,11 +13,13 @@ import { DashboardAddCity } from './pages/DashboardAddCity';
 import { DashboardEditCity } from './pages/DashboardEditCity';
 import { DashboardEditPlace } from './pages/DashboardEditPlace';
 import { DashBoardAddPlace } from './pages/DashboardAddPlace';
+import ScrollToTop from './components/ScrollToTop';
 
 function App() {
   return (
     <Router>
       <GlobalStyle />
+      <ScrollToTop />
       <Switch>
         <Route exact path='/' component={Home} />
         <Route exact path='/login' component={Login} />

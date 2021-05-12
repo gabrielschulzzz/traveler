@@ -33,6 +33,7 @@ export function PlacePage() {
 
     return (
         <>
+
             <LogoWhiteBg />
             <ReviewModal
                 isOpen={isReviewsModalOpen}
