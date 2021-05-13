@@ -9,7 +9,7 @@ class Place {
   @Column()
   name: string;
 
-  @ManyToOne((type) => City, (places) => Place)
+  @ManyToOne(() => City, (city) => city.places)
   city: City;
 
   @Column()

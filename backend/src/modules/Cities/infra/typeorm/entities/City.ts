@@ -15,7 +15,7 @@ class City {
   @Column()
   fact: string;
 
-  @OneToMany((type) => Place, (city) => City)
+  @OneToMany(() => Place, (place) => place.city)
   places: Place[];
 }
 
