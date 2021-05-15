@@ -1,18 +1,13 @@
 import { ICreatePlaceDTO } from "../dtos/ICreatePlaceDTO";
+import { IUpdatePlaceDTO } from "../dtos/IUpdatePlaceDTO";
 import { Place } from "../infra/typeorm/entities/Place";
 
 interface IPlacesRepository {
   findAll(): Promise<Place[]>;
-  create({
-    name,
-    bairro,
-    category,
-    cep,
-    city,
-    numero,
-    photo,
-    rua,
-  }: ICreatePlaceDTO): Promise<Place>;
+  findOne(id: string): Promise<Place>;
+  create(data: ICreatePlaceDTO): Promise<Place>;
+  update(data: IUpdatePlaceDTO): Promise<void>;
+  delete(id: string): Promise<void>;
 }
 
 export { IPlacesRepository };

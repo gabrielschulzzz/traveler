@@ -21,6 +21,7 @@ export const Container = styled.div`
             border-top-right-radius: .625rem;
             border-bottom-right-radius: .625rem;
             margin-right: 1.2rem;
+            cursor: pointer;
         }
 
         svg {

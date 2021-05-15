@@ -25,7 +25,7 @@ function App() {
         <Route exact path='/login' component={Login} />
         <Route exact path='/dashboard' component={DashboardCityList} />
         <Route exact path='/dashboard/add-city' component={DashboardAddCity} />
-        <Route exact path='/dashboard/add-place' component={DashBoardAddPlace} />
+        <Route exact path='/dashboard/city/:city/add-place' component={DashBoardAddPlace} />
         <Route exact path='/dashboard/city/:city' component={DashboardCity} />
         <Route exact path='/dashboard/city/:city/edit' component={DashboardEditCity} />
         <Route exact path='/dashboard/city/:city/place/:place/edit' component={DashboardEditPlace} />

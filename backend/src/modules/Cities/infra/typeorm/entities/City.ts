@@ -7,6 +7,9 @@ class City {
   id: string;
 
   @Column()
+  photo: string;
+
+  @Column()
   name: string;
 
   @Column()
@@ -15,7 +18,9 @@ class City {
   @Column()
   fact: string;
 
-  @OneToMany(() => Place, (place) => place.city)
+  @OneToMany(() => Place, (place) => place.city, {
+    cascade: true,
+  })
   places: Place[];
 }
 

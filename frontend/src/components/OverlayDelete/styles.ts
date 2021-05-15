@@ -40,9 +40,18 @@ export const Container = styled.div`
             margin-top: 2rem;
             
             button {
-                margin: .2rem;
+                border: 0;
+                padding: .8rem 1.5rem;
+                font-size: 1.2rem;
+                margin: .5rem;
                 background-color: var(--red);
                 color: var(--white);
+                border-radius: 0.625rem;
+                font-weight: bold;
+            }
+
+            .btn-remove {
+                background-color: var(--green);
             }
         }
 

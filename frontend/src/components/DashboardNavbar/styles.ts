@@ -12,6 +12,7 @@ export const Navbar = styled.div`
     height: 51.313rem;
     padding-bottom: 2rem;
     font-size: 1.2rem;
+    border-bottom-right-radius: 0.625rem;
 
     a {
         color: var(--white);

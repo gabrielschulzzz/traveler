@@ -31,7 +31,7 @@ export function Card({ image, places, title, rating, category, iconDelete, iconE
                     : ''
                 }
                 <h2>{title}</h2>
-                {places ? <p>{places} locais</p> : ''}
+                {places ? <p>{places} {places.length === 1 ? 'local' : 'locais'}</p> : ''}
                 {category
                     ?
                     <div className="card-bottom">

@@ -5,7 +5,7 @@ import { AddCityUseCase } from "./AddCityUseCase";
 
 class AddCityController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { description, fact, name } = request.body;
+    const { description, fact, name, photo } = request.body;
 
     const addCityUseCase = container.resolve(AddCityUseCase);
 
@@ -13,6 +13,7 @@ class AddCityController {
       description,
       fact,
       name,
+      photo,
     });
 
     return response.json(newCity);

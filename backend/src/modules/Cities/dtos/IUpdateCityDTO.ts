@@ -1,8 +1,9 @@
-interface ICreateCityDTO {
+interface IUpdateCityDTO {
+  id: string;
   name: string;
   description: string;
   fact: string;
   photo: string;
 }
 
-export { ICreateCityDTO };
+export { IUpdateCityDTO };

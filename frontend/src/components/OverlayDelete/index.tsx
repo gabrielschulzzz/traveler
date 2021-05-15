@@ -20,8 +20,8 @@ export function OverlayDelete({ title, text, setDeletTriggered, handleDelete }: 
             <p>{text}</p>
 
             <div className="buttons">
-                <Button onClick={() => setDeletTriggered(false)}>Nao</Button>
-                <Button onClick={handleDelete}>Sim</Button>
+                <button onClick={() => setDeletTriggered(false)}>Não</button>
+                <button className="btn-remove" onClick={handleDelete}>Sim</button>
             </div>
         </Container>
     )

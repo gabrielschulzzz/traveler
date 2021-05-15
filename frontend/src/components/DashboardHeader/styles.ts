@@ -16,6 +16,7 @@ export const Wrapper = styled.div`
     .step2 {
         cursor: pointer;
     }
+
 `
 
 export const WhiteBackground = styled.div`

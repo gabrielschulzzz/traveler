@@ -9,7 +9,7 @@ class Place {
   @Column()
   name: string;
 
-  @ManyToOne(() => City, (city) => city.places)
+  @ManyToOne(() => City, (city) => city.places, { onDelete: "CASCADE" })
   city: City;
 
   @Column()

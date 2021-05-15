@@ -61,6 +61,7 @@ export const FormBody = styled.div`
         }
 
         textarea {
+            margin-bottom: 1rem;
             font-family: 'Heebo', sans-serif;
             border: 1px solid var(--light-grey);
             border-radius: 0.625rem;

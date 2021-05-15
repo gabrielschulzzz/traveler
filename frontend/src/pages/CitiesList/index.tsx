@@ -1,13 +1,40 @@
+import { useEffect, useState } from 'react'
+import { ImCrying } from 'react-icons/im'
+import { RiArrowDownSLine } from 'react-icons/ri'
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+
+import { Container, HeaderContent, PageContainer, CardsContainer, NotFoundContainer } from "./styles";
+
 import { Button } from "../../components/Button";
 import { Input } from "../../components/Input";
 import { Logo } from "../../components/Logo";
-import { Container, HeaderContent, PageContainer, CardsContainer, NotFoundContainer } from "./styles";
-import { RiArrowDownSLine } from 'react-icons/ri'
 import { Card } from "../../components/Card";
-import { ImCrying } from 'react-icons/im'
-import { Link } from 'react-router-dom';
+
+interface CityAttributes {
+    id: string;
+    description: string;
+    photo: string;
+    name: string;
+    fact: string;
+    places: string[];
+}
 
 export function CitiesList() {
+    const [cities, setCities] = useState([])
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const result = await axios(
+                'http://localhost:3333/cities',
+            );
+
+            setCities(result.data);
+        };
+
+        fetchData();
+    }, []);
+
     return (
         <>
             <Container>
@@ -28,49 +55,28 @@ export function CitiesList() {
             </PageContainer>
 
             <CardsContainer>
-                <Link to="/cities/dallas">
-                    <Card
-                        image="https://images.unsplash.com/photo-1444723121867-7a241cacace9?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-                        places="24"
-                        title="Dallas"
-                    />
-                </Link>
-
-                <Link to="/cities/dallas">
-                    <Card
-                        image="https://images.unsplash.com/photo-1444084316824-dc26d6657664?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-                        places="16"
-                        title="Ohio"
-                    />
-                </Link>
-
-                <Link to="/cities/dallas">
-                    <Card
-                        image="https://images.unsplash.com/photo-1554058501-f6872d688003?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1349&q=80"
-                        places="37"
-                        title="Shibuya"
-                    />
-                </Link>
-
-                <Link to="/cities/dallas">
-                    <Card
-                        image="https://images.unsplash.com/photo-1620095200055-9d1c4f36ba43?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-                        places="25"
-                        title="Guadalajara"
-                    />
-                </Link>
-
-
-
+                {
+                    cities ? cities.map((city: CityAttributes) => (
+                        <Link to={{
+                            pathname: `/cities/${city.id}`
+                        }}>
+                            < Card
+                                image={city.photo}
+                                places={String(city.places.length)}
+                                title={city.name}
+                            />
+                        </Link>
+                    )) : <NotFoundContainer>
+                        <div>
+                            <ImCrying />
+                            <p>Sem resultados.</p>
+                            <p>Tente uma nova busca</p>
+                        </div>
+                    </NotFoundContainer>
+                }
             </CardsContainer>
 
-            {/* <NotFoundContainer>
-                <div>
-                    <ImCrying />
-                    <p>Sem resultados.</p>
-                    <p>Tente uma nova busca</p>
-                </div>
-            </NotFoundContainer> */}
+
         </>
     )
 }

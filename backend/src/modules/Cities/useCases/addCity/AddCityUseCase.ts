@@ -11,11 +11,12 @@ class AddCityUseCase {
     private citiesRepository: ICitiesRepository
   ) { }
 
-  async execute({ name, fact, description }: ICreateCityDTO): Promise<City> {
+  async execute({ name, fact, description, photo }: ICreateCityDTO): Promise<City> {
     const city = await this.citiesRepository.create({
       name,
       fact,
       description,
+      photo
     });
 
     return city;

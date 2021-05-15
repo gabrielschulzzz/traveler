@@ -47,17 +47,18 @@ export const RadioBox = styled.button`
 
 export const SuccessAdd = styled.div`
     display: flex;
-    width: 100vw;
-    height: 100vh;
     align-items: center;
     justify-content: center;
+    width: 100vw;
+    height: 100vh;
 
     .first {
+        flex: 1;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        margin-left: 15rem;
+        height: 100vh;
 
         svg {
             font-size: 3rem;
@@ -68,7 +69,7 @@ export const SuccessAdd = styled.div`
         h1 {
             color: var(--title);
             text-align: center;
-            font-size: 2.5rem;
+            font-size: 3.5rem;
             width: 30%;
         }
 
@@ -81,15 +82,23 @@ export const SuccessAdd = styled.div`
         }
 
         button {
+            font-size: 1rem;
+            margin-top: 1.8rem;
             color: var(--white);
             background-color: var(--orange);
+            padding: 1.2rem 2rem;
+            display: flex;
+            align-items: center;
         }
     }
 
     .second {
+        flex: 1;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        height: 100vh;
+
     }
 `

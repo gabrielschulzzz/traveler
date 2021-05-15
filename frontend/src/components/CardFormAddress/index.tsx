@@ -1,10 +1,18 @@
 import { Container } from './styles';
 
 interface CardFormAddressProps {
-    map?: boolean
+    map?: boolean,
+    cep?: string;
+    street?: string;
+    district?: string;
+    number?: string;
+    setCep: React.Dispatch<React.SetStateAction<string>>;
+    setStreet: React.Dispatch<React.SetStateAction<string>>;
+    setDistrict: React.Dispatch<React.SetStateAction<string>>;
+    setNumber: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export function CardFormAddress({ map }: CardFormAddressProps) {
+export function CardFormAddress({ map, cep, street, district, number, setCep, setStreet, setDistrict, setNumber }: CardFormAddressProps) {
     return (
         <Container>
             <h3 className="heading">Endereco</h3>
@@ -14,8 +22,8 @@ export function CardFormAddress({ map }: CardFormAddressProps) {
                 <label className="second-label">Rua</label>
             </div>
             <div className="split-30-70">
-                <input type="text" />
-                <input className="second-input" type="text" />
+                <input type="text" value={cep} onChange={(e) => setCep(e.target.value)} />
+                <input className="second-input" type="text" value={street} onChange={(e) => setStreet(e.target.value)} />
             </div>
 
             <div className="split-70-30">
@@ -24,8 +32,8 @@ export function CardFormAddress({ map }: CardFormAddressProps) {
             </div>
 
             <div className="split-70-30">
-                <input type="text" />
-                <input type="text" className="second-input" />
+                <input type="text" value={district} onChange={(e) => setDistrict(e.target.value)} />
+                <input type="text" className="second-input" value={number} onChange={(e) => setNumber(e.target.value)} />
             </div>
 
             {

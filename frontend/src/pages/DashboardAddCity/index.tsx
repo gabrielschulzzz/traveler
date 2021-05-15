@@ -1,30 +1,65 @@
-import { AiOutlineArrowLeft, AiOutlineCalendar, AiOutlineCamera, AiOutlineCheckCircle } from "react-icons/ai";
+import { useState } from 'react';
+import axios from 'axios';
+import { Link } from "react-router-dom";
 import { FiAlertCircle, FiCoffee } from "react-icons/fi";
 import { BsPlus } from 'react-icons/bs';
-
+import { AiOutlineArrowLeft, AiOutlineCalendar, AiOutlineCamera, AiOutlineCheckCircle } from "react-icons/ai";
 import { CategoryContainer, Container, RadioBox, SuccessAdd } from "./styles";
 
+import { CardsRow } from "../Home/styles";
 import { Button } from "../../components/Button";
 import { CardForm } from "../../components/CardForm";
-
 import { DashboardHeader } from "../../components/DashboardHeader";
 import { DashboardNavbar } from "../../components/DashboardNavbar";
 import { CardFormHeader } from "../../components/CardFormHeader";
 import { Card } from "../../components/Card";
-import { CardsRow } from "../Home/styles";
 import { CardFormBody } from "../../components/CardFormBody";
 import { CardFormFooter } from "../../components/CardFormFooter";
 import { CardFormAddress } from "../../components/CardFormAddress";
-
-import { useState } from 'react';
-import { Link } from "react-router-dom";
 import { CardFormDates } from "../../components/CardFormDates";
 import { NextEvent } from "../../components/NextEvent";
 
+
 export function DashboardAddCity() {
     const [step, setStep] = useState(1);
+    const [cityName, setCityName] = useState('');
+    const [cityPhoto, setCityPhoto] = useState('');
+    const [cityDescription, setCityDescription] = useState('');
+    const [cityFact, setCityFact] = useState('');
+    const [placeName, setPlaceName] = useState('');
+    const [placePhoto, setPlacePhoto] = useState('');
     const [type, setType] = useState('food');
+    const [cep, setCep] = useState('');
+    const [street, setStreet] = useState('');
+    const [district, setDistrict] = useState('');
+    const [number, setNumber] = useState('');
     const [successAdd, setSuccessAdd] = useState(false);
+
+    async function createNewCity() {
+        try {
+            const newCity = await axios.post('http://localhost:3333/cities', {
+                name: cityName,
+                description: cityDescription,
+                fact: cityFact,
+                photo: cityPhoto
+            })
+
+            await axios.post('http://localhost:3333/places', {
+                name: placeName,
+                city: newCity.data.id,
+                photo: placePhoto,
+                category: type,
+                cep,
+                rua: street,
+                bairro: district,
+                numero: number,
+            })
+        } catch (error) {
+            console.log(error)
+        } finally {
+            setSuccessAdd(true)
+        }
+    }
 
     return (
         <Container>
@@ -57,17 +92,24 @@ export function DashboardAddCity() {
 
                     <CardFormBody>
                         <label>Nome da cidade</label>
-                        <input type="text" />
+                        <input type="text" value={cityName} onChange={(e) => setCityName(e.target.value)} />
 
                         <label>Foto da cidade</label>
+                        <input type="text" value={cityPhoto} onChange={(e) => setCityPhoto(e.target.value)} />
 
-                        <div className="form-foto">
+                        {/* <div className="form-foto">
                             <BsPlus />
                             <p>Adicionar uma foto</p>
-                        </div>
+                        </div> */}
 
                         <label>Descricao da cidade</label>
-                        <textarea></textarea>
+                        <textarea
+                            value={cityDescription}
+                            onChange={(e) => setCityDescription(e.target.value)}>
+                        </textarea>
+
+                        <label>Curiosidade da cidade</label>
+                        <textarea value={cityFact} onChange={(e) => setCityFact(e.target.value)}></textarea>
                     </CardFormBody>
 
                     <CardFormFooter>
@@ -91,13 +133,14 @@ export function DashboardAddCity() {
 
                     <CardFormBody>
                         <label>Nome do local</label>
-                        <input type="text" />
+                        <input type="text" value={placeName} onChange={(e) => setPlaceName(e.target.value)} />
 
                         <label>Foto do local</label>
-                        <div className="form-foto">
+                        <input type="text" value={placePhoto} onChange={(e) => setPlacePhoto(e.target.value)} />
+                        {/* <div className="form-foto">
                             <BsPlus />
                             <p>Adicionar uma foto</p>
-                        </div>
+                        </div> */}
 
                         <label>Selecionar uma categoria</label>
                         <CategoryContainer>
@@ -128,14 +171,26 @@ export function DashboardAddCity() {
                         }
 
 
-                        <CardFormAddress map />
+                        <CardFormAddress
+                            cep={cep}
+                            setCep={setCep}
+                            street={street}
+                            setStreet={setStreet}
+                            district={district}
+                            setDistrict={setDistrict}
+                            number={number}
+                            setNumber={setNumber}
+                            map
+                        />
 
                         <CardFormFooter>
                             <div className="footer-left">
                                 <FiAlertCircle />
                                 <p>Preencha todos os dados com cuidado</p>
                             </div>
-                            <Button onClick={() => setSuccessAdd(true)}><p className="buttonFinish">Concluir cadastro</p></Button>
+                            <Button
+                                onClick={() => createNewCity()}>
+                                <p className="buttonFinish">Concluir cadastro</p></Button>
                         </CardFormFooter>
                     </CardFormBody>
                 </CardForm>
@@ -147,27 +202,26 @@ export function DashboardAddCity() {
                     <div className="first">
                         <AiOutlineCheckCircle />
                         <h1>Cidade Cadastrada!</h1>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia magni pariatur assumenda eligendi perspiciatis similique. Excepturi nesciunt inventore, adipisci porro fugiat qui fuga reiciendis ex earum iure in asperiores neque!</p>
-                        <Link to="/dashboard"><Button>Okay</Button></Link>
+                        <Link to="/dashboard">
+                            <Button>
+                                Voltar a dashboard
+                            </Button>
+                        </Link>
                     </div>
 
                     <div className="second">
                         <CardsRow>
                             <Card
-                                image="https://images.unsplash.com/photo-1620095200055-9d1c4f36ba43?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                                title={cityName}
+                                image={cityPhoto}
                                 places="1"
-                                title="Guadalajara"
-                                iconDelete
-                                iconEdit
                             />
 
                             <Card
-                                image="https://images.unsplash.com/photo-1517433670267-08bbd4be890f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=972&q=80"
-                                title="Dolce & Company"
+                                title={placeName}
+                                image={placePhoto}
                                 rating="-"
-                                category="food"
-                                iconDelete
-                                iconEdit
+                                category={type}
                             />
                         </CardsRow>
                     </div>
