@@ -81,6 +81,7 @@ class PlacesRepository implements IPlacesRepository {
     numero,
     photo,
     rua,
+    description,
   }: ICreatePlaceDTO): Promise<Place> {
     const newPlace = await this.repository.create({
       name,
@@ -91,6 +92,7 @@ class PlacesRepository implements IPlacesRepository {
       numero,
       photo,
       rua,
+      description,
     });
 
     await this.repository.save(newPlace);

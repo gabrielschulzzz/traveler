@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaWhatsapp } from 'react-icons/fa'
 
 import { Atendimento } from "../../components/Atendimento";
@@ -10,10 +10,58 @@ import { Endereco } from "../../components/Endereco";
 import { Avaliacoes } from "../../components/Avaliacoes";
 import { ReviewModal } from '../../components/ReviewModal';
 import { AddReviewModal } from '../../components/AddReviewModal';
+import { useParams } from 'react-router';
+import axios from 'axios';
+
+interface RouteParams {
+    city: string;
+    place: string;
+}
 
 export function PlacePage() {
+    const [name, setName] = useState('')
+    const [bairro, setBairro] = useState('')
+    const [category, setCategory] = useState('')
+    const [photo, setPhoto] = useState('')
+    const [cep, setCep] = useState('')
+    const [numero, setNumero] = useState('')
+    const [rua, setRua] = useState('')
+    const [segunda, setSegunda] = useState('')
+    const [terca, setTerca] = useState('')
+    const [quarta, setQuarta] = useState('')
+    const [quinta, setQuinta] = useState('')
+    const [sexta, setSexta] = useState('')
+    const [sabado, setSabado] = useState('')
+    const [domingo, setDomingo] = useState('')
+
     const [isReviewsModalOpen, setReviewsModalIsOpen] = useState(false);
     const [isAddReviewModalOpen, setIsAddReviewModalOpen] = useState(false);
+
+    const { city, place } = useParams<RouteParams>();
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const { data } = await axios(`http://localhost:3333/places/${place}`)
+
+            setName(data.name)
+            setBairro(data.bairro)
+            setCategory(data.category)
+            setPhoto(data.photo)
+            setCep(data.cep)
+            setNumero(data.numero)
+            setRua(data.rua)
+            setSegunda(data.segunda)
+            setTerca(data.terca)
+            setQuarta(data.quarta)
+            setQuinta(data.quinta)
+            setSexta(data.sexta)
+            setSabado(data.sabado)
+            setDomingo(data.domingo)
+            console.log(data)
+        }
+
+        fetchData()
+    })
 
     function handleReviewsModalClose() {
         setReviewsModalIsOpen(false)
@@ -33,7 +81,6 @@ export function PlacePage() {
 
     return (
         <>
-
             <LogoWhiteBg />
             <ReviewModal
                 isOpen={isReviewsModalOpen}
@@ -46,18 +93,18 @@ export function PlacePage() {
             />
             <Container>
                 <PlaceDescription
-                    title="Doce & Compania"
+                    title={name}
                     description="O melhor lugar da cidade para voce tomar um bom cafe. Fatias de tortas artesanais, bolos, lanches e biscoitos caseiros."
                 />
 
                 <Atendimento
-                    segunda="Fechado"
-                    terca="08h - 17h"
-                    quarta="08h - 17h"
-                    quinta="08h - 17h"
-                    sexta="08h - 17h"
-                    sabado="08h - 17h"
-                    domingo="08h - 17h"
+                    segunda={segunda}
+                    terca={terca}
+                    quarta={quarta}
+                    quinta={quinta}
+                    sexta={sexta}
+                    sabado={sabado}
+                    domingo={domingo}
                 />
 
                 <ContactInfo>
@@ -70,8 +117,8 @@ export function PlacePage() {
 
 
                 <Endereco
-                    cep="86547-321"
-                    rua="7 de setembro, 319 - Jardim America"
+                    cep={cep}
+                    rua={rua}
                 />
 
                 <Avaliacoes
@@ -80,7 +127,7 @@ export function PlacePage() {
                 />
 
                 <Image>
-                    <img src="https://images.unsplash.com/photo-1536782896453-61d09f3aaf3e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="" />
+                    <img src={photo} alt="" />
                 </Image>
             </Container>
         </>

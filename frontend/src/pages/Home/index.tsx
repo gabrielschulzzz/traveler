@@ -12,7 +12,7 @@ export function Home() {
                 <Hero>
                     <h1>Viva uma grande aventura</h1>
                     <p>Descubra locais incriveis para visitar cidades maravilhosas ao redor do mundo.</p>
-                    <Button><Link to="/cities">Descobrir todos os lugares</Link></Button>
+                    <Link to="/cities"><Button>Descobrir todos os lugares</Button></Link>
                 </Hero>
 
                 <CardsRow>

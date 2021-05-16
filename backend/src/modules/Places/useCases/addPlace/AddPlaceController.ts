@@ -5,8 +5,17 @@ import { AddPlaceUseCase } from "./AddPlaceUseCase";
 
 class AddPlaceController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { name, city, photo, category, cep, rua, bairro, numero } =
-      request.body;
+    const {
+      name,
+      city,
+      photo,
+      category,
+      cep,
+      rua,
+      bairro,
+      numero,
+      description,
+    } = request.body;
 
     const addPlaceUseCase = container.resolve(AddPlaceUseCase);
 
@@ -19,6 +28,7 @@ class AddPlaceController {
       rua,
       bairro,
       numero,
+      description,
     });
 
     return response.json(newPlace);

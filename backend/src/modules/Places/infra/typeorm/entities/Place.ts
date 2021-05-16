@@ -13,6 +13,9 @@ class Place {
   city: City;
 
   @Column()
+  description: string;
+
+  @Column()
   photo: string;
 
   @Column()

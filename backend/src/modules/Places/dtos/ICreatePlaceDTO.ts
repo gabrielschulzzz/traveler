@@ -9,6 +9,7 @@ interface ICreatePlaceDTO {
   rua: string;
   bairro: string;
   numero: string;
+  description: string;
 }
 
 export { ICreatePlaceDTO };

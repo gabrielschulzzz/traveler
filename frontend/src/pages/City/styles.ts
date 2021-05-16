@@ -33,38 +33,42 @@ export const HeroDescription = styled.div`
         h1 {
             color: var(--title);
             margin-bottom: 2rem;
-            font-size: 3rem;
+            font-size: 4rem;
         }
 
         p.subtitle {
-            line-height: 1.8rem;
+            line-height: 2rem;
             width: 70%;
             color: var(--title);
+            font-size: 1.3rem;
         }
 
         p.complement {
             margin-top: 1.5rem;
             color: var(--text);
             width: 70%;
+            line-height: 1.8rem;
+            font-size: 0.9rem;
         }
    }
 
     .right {
         flex: 1;
         display: flex;
+        justify-content: space-around;
 
         > div {
             display: flex;
             flex-direction: column;
             align-items: left;
-            justify-content: space-around;
+            justify-content: space-between;
             padding: 1rem;
             height: 11.75rem;
-            width: 10rem;
+            width: 9rem;
             background-color: var(--white);
             border-radius: 0.625rem;
             border: 1px solid var(--light-grey);
-            margin: 1rem;
+            margin: 0 1rem;
 
             svg {
                 font-size: 2rem;

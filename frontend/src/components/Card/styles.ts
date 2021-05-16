@@ -10,6 +10,7 @@ export const CardElement = styled.div`
     transition: box-shadow .2s;
     border: 1px solid var(--light-grey);
     position: relative;
+    height: 23rem;
 
     .iconEdit {
         position: absolute;
@@ -30,7 +31,7 @@ export const CardElement = styled.div`
     }
 
     :hover {
-        box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+        box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.12);
     }
 
     img {
@@ -50,6 +51,7 @@ export const CardElement = styled.div`
         h2 {
             color: var(--blue);
             margin-bottom: 1rem;
+            text-transform: capitalize;
         }
 
         p {
@@ -85,10 +87,13 @@ export const CardElement = styled.div`
         width: 100%;
         display: grid;
         grid-template-columns: 11fr 1fr;
+        position: relative;
 
         svg {
             color: var(--orange);
-            font-size: 1.2rem;
+            font-size: 2rem;
+            position: absolute;
+            right: -1.075rem;   
         }
     }
 `

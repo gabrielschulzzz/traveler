@@ -116,11 +116,11 @@ export function DashboardEditPlace() {
                     <label>Descricao do local</label>
                     <textarea value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
 
-                    <CardCategoryPicker setType={setType} />
+                    <CardCategoryPicker type={type} setType={setType} />
 
-                    {
+                    {/* {
                         type === 'food' && <CardFormDates />
-                    }
+                    } */}
 
                     {
                         type === 'event' && <NextEvent />

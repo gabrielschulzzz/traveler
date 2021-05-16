@@ -65,6 +65,7 @@ export function DashBoardAddPlace() {
                 rua: street,
                 bairro: district,
                 numero: number,
+                description: placeDescription
             })
             history.push(`/dashboard/city/${city}`)
         } catch (error) {
@@ -103,11 +104,11 @@ export function DashBoardAddPlace() {
                     <label>Descricao do local</label>
                     <textarea value={placeDescription} onChange={(e) => setPlaceDescription(e.target.value)}></textarea>
 
-                    <CardCategoryPicker setType={setType} />
+                    <CardCategoryPicker type={type} setType={setType} />
 
-                    {
+                    {/* {
                         type === 'food' && <CardFormDates />
-                    }
+                    } */}
 
                     {
                         type === 'event' && <NextEvent />

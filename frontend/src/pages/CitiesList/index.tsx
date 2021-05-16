@@ -41,7 +41,7 @@ export function CitiesList() {
                 <HeaderContent>
                     <Logo />
                     <Input placeholder="Qual cidade voce procura?" />
-                    <Button>Acesso restrito</Button>
+                    <Link to="/login"><Button>Acesso restrito</Button></Link>
                 </HeaderContent>
             </Container>
 

@@ -16,8 +16,14 @@ import { CityDescriptionAndStats } from '../../components/CityDescriptionAndStat
 import { SectionText } from '../../components/SectionText';
 
 interface RouteParams {
-    slug: string;
     city: string;
+}
+
+interface currentCityPlacesType {
+    id: string;
+    name: string;
+    category: string;
+    photo: string;
 }
 
 interface currentCityType {
@@ -26,10 +32,15 @@ interface currentCityType {
     name: string;
     fact: string;
     description: string;
+    places: currentCityPlacesType[];
 }
 
 export function City() {
     const [currentCity, setCurrentCity] = useState({} as currentCityType)
+    const [food, setFood] = useState(0);
+    const [turistic, setTuristic] = useState(0);
+    const [events, setEvents] = useState(0);
+
     const { city } = useParams<RouteParams>();
 
     useEffect(() => {
@@ -39,9 +50,42 @@ export function City() {
             );
 
             setCurrentCity(result.data);
+
+            interface accAttr {
+                food: number;
+                turistic: number;
+                events: number;
+            }
+
+            interface placeAttr {
+                category: string;
+            }
+
+
+            const places = result.data.places.reduce((acc: accAttr, place: placeAttr) => {
+                if (place.category === 'food') {
+                    acc.food++
+                } else if (place.category === 'turistic') {
+                    acc.turistic++
+                } else {
+                    acc.events++
+                }
+
+                return acc;
+            }, {
+                food: 0,
+                turistic: 0,
+                events: 0
+            })
+
+            setFood(Number(places.food))
+            setTuristic(Number(places.turistic));
+            setEvents(Number(places.events))
         };
 
         fetchData();
+
+
     }, [city]);
 
     return (
@@ -50,7 +94,7 @@ export function City() {
                 <HeaderContent>
                     <Logo />
                     <p>{currentCity && currentCity.name}</p>
-                    <Button>Acesso restrito</Button>
+                    <Link to="/login"><Button>Acesso restrito</Button></Link>
                 </HeaderContent>
             </Container>
 
@@ -63,53 +107,31 @@ export function City() {
                 cityName={currentCity.name}
                 cityDescription={currentCity.description}
                 cityFact={currentCity.fact}
-                cityEventsNumber={67}
-                cityFoodNumber={21}
-                cityTuristicNumber={15}
+                cityEventsNumber={events}
+                cityFoodNumber={food}
+                cityTuristicNumber={turistic}
             />
 
-            <SectionText text="Top Avaliados" />
+            {/* <SectionText text="Top Avaliados" />
 
             <CardsContainer>
-                <Link to="/cities/dallas/food/dolce">
-                    <Card
-                        image="https://images.unsplash.com/photo-1517433670267-08bbd4be890f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=972&q=80"
-                        title="Dolce & Company"
-                        rating="4.7"
-                        category="food"
-                    />
-                </Link>
+                {
+                    currentCity.places && currentCity.places.map((place) => (
+                        <Card
+                            image={place.photo}
+                            title={place.name}
+                            category={place.category}
+                            iconEditLink={`/dashboard/city/${city}/place/${place.id}/edit`}
+                        />
+                    ))
+                }
+            </CardsContainer> */}
 
-                <Link to="/cities/dallas/turistic/dolce">
-                    <Card
-                        image="https://images.unsplash.com/photo-1516132006923-6cf348e5dee2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=968&q=80"
-                        title="Lagoa Conceicao"
-                        rating="5.0"
-                        category="turistic"
-                    />
-                </Link>
-
-                <Card
-                    image="https://images.unsplash.com/photo-1519046904884-53103b34b206?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-                    title="Praia do Campeche"
-                    rating="4.9"
-                    category="turistic"
-                />
-
-                <Card
-                    image="https://images.unsplash.com/photo-1565058379802-bbe93b2f703a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80"
-                    title="Expo Tattoo Floripa"
-                    rating="5.0"
-                    category="events"
-                />
-
-            </CardsContainer>
-
-            <CardHorizontal
+            {/* <CardHorizontal
                 description="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aspernatur eaque cumque maxime assumenda in architecto."
                 img="https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80"
                 nome="Praia dos Ingleses"
-            />
+            /> */}
 
             <AllHeader>
                 <div>
@@ -127,64 +149,17 @@ export function City() {
             </AllHeader>
 
             <CardsContainer>
-                <Card
-                    image="https://images.unsplash.com/photo-1517433670267-08bbd4be890f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=972&q=80"
-                    title="Dolce & Company"
-                    rating="4.7"
-                    category="food"
-                />
-
-                <Card
-                    image="https://images.unsplash.com/photo-1516132006923-6cf348e5dee2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=968&q=80"
-                    title="Lagoa Conceicao"
-                    rating="5.0"
-                    category="turistic"
-                />
-
-                <Card
-                    image="https://images.unsplash.com/photo-1519046904884-53103b34b206?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-                    title="Praia do Campeche"
-                    rating="4.9"
-                    category="turistic"
-                />
-
-                <Card
-                    image="https://images.unsplash.com/photo-1565058379802-bbe93b2f703a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80"
-                    title="Expo Tattoo Floripa"
-                    rating="5.0"
-                    category="events"
-                />
-
-
-                <Card
-                    image="https://images.unsplash.com/photo-1517433670267-08bbd4be890f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=972&q=80"
-                    title="Dolce & Company"
-                    rating="4.7"
-                    category="food"
-                />
-
-                <Card
-                    image="https://images.unsplash.com/photo-1516132006923-6cf348e5dee2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=968&q=80"
-                    title="Lagoa Conceicao"
-                    rating="5.0"
-                    category="turistic"
-                />
-
-                <Card
-                    image="https://images.unsplash.com/photo-1519046904884-53103b34b206?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-                    title="Praia do Campeche"
-                    rating="4.9"
-                    category="turistic"
-                />
-
-                <Card
-                    image="https://images.unsplash.com/photo-1565058379802-bbe93b2f703a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80"
-                    title="Expo Tattoo Floripa"
-                    rating="5.0"
-                    category="events"
-                />
-
-
+                {
+                    currentCity.places && currentCity.places.map((place) => (
+                        <Link to={`/cities/${city}/${place.id}`}>
+                            <Card
+                                image={place.photo}
+                                title={place.name}
+                                category={place.category}
+                            />
+                        </Link>
+                    ))
+                }
             </CardsContainer>
         </>
     )

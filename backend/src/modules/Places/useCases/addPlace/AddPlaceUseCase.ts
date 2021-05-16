@@ -13,6 +13,7 @@ interface IRequest {
   rua: string;
   bairro: string;
   numero: string;
+  description: string;
 }
 
 @injectable()
@@ -22,8 +23,8 @@ class AddPlaceUseCase {
     private placesRepository: IPlacesRepository
   ) { }
 
-  public async execute({ bairro, rua, photo, numero, cep, category, name, city }: IRequest): Promise<Place> {
-    const place = await this.placesRepository.create({ bairro, rua, photo, numero, cep, category, name, city })
+  public async execute({ bairro, rua, photo, numero, cep, category, name, city, description }: IRequest): Promise<Place> {
+    const place = await this.placesRepository.create({ bairro, rua, photo, numero, cep, category, name, city, description })
 
     return place;
   }

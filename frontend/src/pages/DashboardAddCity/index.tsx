@@ -18,6 +18,7 @@ import { CardFormFooter } from "../../components/CardFormFooter";
 import { CardFormAddress } from "../../components/CardFormAddress";
 import { CardFormDates } from "../../components/CardFormDates";
 import { NextEvent } from "../../components/NextEvent";
+import { CardCategoryPicker } from '../../components/CardCategoryPicker';
 
 
 export function DashboardAddCity() {
@@ -28,12 +29,20 @@ export function DashboardAddCity() {
     const [cityFact, setCityFact] = useState('');
     const [placeName, setPlaceName] = useState('');
     const [placePhoto, setPlacePhoto] = useState('');
+    const [placeDescription, setPlaceDescription] = useState('');
     const [type, setType] = useState('food');
     const [cep, setCep] = useState('');
     const [street, setStreet] = useState('');
     const [district, setDistrict] = useState('');
     const [number, setNumber] = useState('');
     const [successAdd, setSuccessAdd] = useState(false);
+    const [domingoOpen, setDomingoOpen] = useState(true);
+    const [segundaOpen, setSegundaOpen] = useState(true);
+    const [tercaOpen, setTercaOpen] = useState(true);
+    const [quartaOpen, setQuartaOpen] = useState(true);
+    const [quintaOpen, setQuintaOpen] = useState(true);
+    const [sextaOpen, setSextaOpen] = useState(true);
+    const [sabadoOpen, setSabadoOpen] = useState(true);
 
     async function createNewCity() {
         try {
@@ -47,6 +56,7 @@ export function DashboardAddCity() {
             await axios.post('http://localhost:3333/places', {
                 name: placeName,
                 city: newCity.data.id,
+                description: placeDescription,
                 photo: placePhoto,
                 category: type,
                 cep,
@@ -142,27 +152,32 @@ export function DashboardAddCity() {
                             <p>Adicionar uma foto</p>
                         </div> */}
 
-                        <label>Selecionar uma categoria</label>
-                        <CategoryContainer>
-                            <RadioBox onClick={() => setType('food')}>
-                                <p><FiCoffee /></p>
-                                <h3>Comida e bebida</h3>
-                            </RadioBox>
+                        <label>Descricao do local</label>
+                        <textarea value={placeDescription} onChange={(e) => setPlaceDescription(e.target.value)}></textarea>
 
-                            <RadioBox onClick={() => setType('turistic')}>
-                                <p><AiOutlineCamera /></p>
-                                <h3>Pontos Turisticos</h3>
-                            </RadioBox>
-
-                            <RadioBox onClick={() => setType('event')}>
-                                <p><AiOutlineCalendar /></p>
-                                <h3>Eventos Organizados</h3>
-                            </RadioBox>
-                        </CategoryContainer>
+                        <CardCategoryPicker
+                            type={type}
+                            setType={setType}
+                        />
 
                         {
                             type === 'food' &&
-                            <CardFormDates />
+                            <CardFormDates
+                                setDomingoOpen={setDomingoOpen}
+                                domingoOpen={domingoOpen}
+                                segundaOpen={segundaOpen}
+                                setSegundaOpen={setSegundaOpen}
+                                tercaOpen={tercaOpen}
+                                setTercaOpen={setTercaOpen}
+                                quartaOpen={quartaOpen}
+                                setQuartaOpen={setQuartaOpen}
+                                quintaOpen={quintaOpen}
+                                setQuintaOpen={setQuintaOpen}
+                                sextaOpen={sextaOpen}
+                                setSextaOpen={setSextaOpen}
+                                sabadoOpen={sabadoOpen}
+                                setSabadoOpen={setSabadoOpen}
+                            />
                         }
 
                         {

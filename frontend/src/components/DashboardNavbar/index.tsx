@@ -15,7 +15,9 @@ export function DashboardNavbar() {
                 </Link>
             </div>
             <div>
-                <BiMap />
+                <Link to="/dashboard">
+                    <BiMap />
+                </Link>
                 <FiGrid />
                 <MdChatBubbleOutline />
             </div>

@@ -53,4 +53,11 @@ export const Image = styled.div`
     top: 0;
     right: 0;
     position: fixed;
+    width: 40vw;
+    
+    img {
+        width: 100%;
+        object-fit: contain;
+        border-bottom-left-radius: 0.625rem;
+    }
 `

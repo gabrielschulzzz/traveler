@@ -31,7 +31,7 @@ function App() {
         <Route exact path='/dashboard/city/:city/place/:place/edit' component={DashboardEditPlace} />
         <Route exact path='/cities/' component={CitiesList} />
         <Route exact path='/cities/:city' component={City} />
-        <Route path='/cities/:city/:type/:place' component={PlacePage} />
+        <Route path='/cities/:city/:place' component={PlacePage} />
       </Switch>
     </Router>
   );

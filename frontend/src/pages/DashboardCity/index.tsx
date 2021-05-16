@@ -166,7 +166,7 @@ export function DashboardCity() {
 
             <AllHeader>
                 <div>
-                    <h4>Conheca todos</h4>
+                    <h4>Locais cadastrados</h4>
                 </div>
 
                 <div>
