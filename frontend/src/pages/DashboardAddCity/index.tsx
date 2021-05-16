@@ -23,10 +23,15 @@ import { CardCategoryPicker } from '../../components/CardCategoryPicker';
 
 export function DashboardAddCity() {
     const [step, setStep] = useState(1);
+    const [successAdd, setSuccessAdd] = useState(false);
+
+    // city state
     const [cityName, setCityName] = useState('');
     const [cityPhoto, setCityPhoto] = useState('');
     const [cityDescription, setCityDescription] = useState('');
     const [cityFact, setCityFact] = useState('');
+
+    // place state
     const [placeName, setPlaceName] = useState('');
     const [placePhoto, setPlacePhoto] = useState('');
     const [placeDescription, setPlaceDescription] = useState('');
@@ -35,14 +40,34 @@ export function DashboardAddCity() {
     const [street, setStreet] = useState('');
     const [district, setDistrict] = useState('');
     const [number, setNumber] = useState('');
-    const [successAdd, setSuccessAdd] = useState(false);
+
     const [domingoOpen, setDomingoOpen] = useState(true);
+    const [domingoFrom, setDomingoFrom] = useState('');
+    const [domingoUntil, setDomingoUntil] = useState('');
+
     const [segundaOpen, setSegundaOpen] = useState(true);
+    const [segundaFrom, setSegundaFrom] = useState('');
+    const [segundaUntil, setSegundaUntil] = useState('');
+
     const [tercaOpen, setTercaOpen] = useState(true);
+    const [tercaFrom, setTercaFrom] = useState('');
+    const [tercaUntil, setTercaUntil] = useState('');
+
     const [quartaOpen, setQuartaOpen] = useState(true);
+    const [quartaFrom, setQuartaFrom] = useState('');
+    const [quartaUntil, setQuartaUntil] = useState('');
+
     const [quintaOpen, setQuintaOpen] = useState(true);
+    const [quintaFrom, setQuintaFrom] = useState('');
+    const [quintaUntil, setQuintaUntil] = useState('');
+
     const [sextaOpen, setSextaOpen] = useState(true);
+    const [sextaFrom, setSextaFrom] = useState('');
+    const [sextaUntil, setSextaUntil] = useState('');
+
     const [sabadoOpen, setSabadoOpen] = useState(true);
+    const [sabadoFrom, setSabadoFrom] = useState('');
+    const [sabadoUntil, setSabadoUntil] = useState('');
 
     async function createNewCity() {
         try {
@@ -53,17 +78,63 @@ export function DashboardAddCity() {
                 photo: cityPhoto
             })
 
-            await axios.post('http://localhost:3333/places', {
-                name: placeName,
-                city: newCity.data.id,
-                description: placeDescription,
-                photo: placePhoto,
-                category: type,
-                cep,
-                rua: street,
-                bairro: district,
-                numero: number,
-            })
+            type === "food"
+                ? await axios.post('http://localhost:3333/places', {
+                    name: placeName,
+                    city: newCity.data.id,
+                    description: placeDescription,
+                    photo: placePhoto,
+                    category: type,
+                    cep,
+                    rua: street,
+                    bairro: district,
+                    numero: number,
+                    domingoOpen,
+                    domingoFrom,
+                    domingoUntil,
+                    segundaOpen,
+                    segundaFrom,
+                    segundaUntil,
+                    tercaOpen,
+                    tercaFrom,
+                    tercaUntil,
+                    quartaOpen,
+                    quartaFrom,
+                    quartaUntil,
+                    quintaOpen,
+                    quintaFrom,
+                    quintaUntil,
+                    sextaOpen,
+                    sextaFrom,
+                    sextaUntil,
+                    sabadoOpen,
+                    sabadoFrom,
+                    sabadoUntil,
+                })
+                : type === 'event'
+                    ? await axios.post('http://localhost:3333/places', {
+                        name: placeName,
+                        city: newCity.data.id,
+                        description: placeDescription,
+                        photo: placePhoto,
+                        category: type,
+                        cep,
+                        rua: street,
+                        bairro: district,
+                        numero: number,
+                    })
+
+                    : await axios.post('http://localhost:3333/places', {
+                        name: placeName,
+                        city: newCity.data.id,
+                        description: placeDescription,
+                        photo: placePhoto,
+                        category: type,
+                        cep,
+                        rua: street,
+                        bairro: district,
+                        numero: number,
+                    })
         } catch (error) {
             console.log(error)
         } finally {
@@ -165,18 +236,52 @@ export function DashboardAddCity() {
                             <CardFormDates
                                 setDomingoOpen={setDomingoOpen}
                                 domingoOpen={domingoOpen}
+                                setDomingoFrom={setDomingoFrom}
+                                domingoFrom={domingoFrom}
+                                setDomingoUntil={setDomingoUntil}
+                                domingoUntil={domingoUntil}
+
                                 segundaOpen={segundaOpen}
                                 setSegundaOpen={setSegundaOpen}
+                                setSegundaFrom={setSegundaFrom}
+                                segundaFrom={segundaFrom}
+                                setSegundaUntil={setSegundaUntil}
+                                segundaUntil={segundaUntil}
+
                                 tercaOpen={tercaOpen}
                                 setTercaOpen={setTercaOpen}
+                                setTercaFrom={setTercaFrom}
+                                tercaFrom={tercaFrom}
+                                setTercaUntil={setTercaUntil}
+                                tercaUntil={tercaUntil}
+
                                 quartaOpen={quartaOpen}
                                 setQuartaOpen={setQuartaOpen}
+                                setQuartaFrom={setQuartaFrom}
+                                quartaFrom={quartaFrom}
+                                setQuartaUntil={setQuartaUntil}
+                                quartaUntil={quartaUntil}
+
                                 quintaOpen={quintaOpen}
                                 setQuintaOpen={setQuintaOpen}
+                                setQuintaFrom={setQuintaFrom}
+                                quintaFrom={quintaFrom}
+                                setQuintaUntil={setQuintaUntil}
+                                quintaUntil={quintaUntil}
+
                                 sextaOpen={sextaOpen}
                                 setSextaOpen={setSextaOpen}
+                                setSextaFrom={setSextaFrom}
+                                sextaFrom={sextaFrom}
+                                setSextaUntil={setSextaUntil}
+                                sextaUntil={sextaUntil}
+
                                 sabadoOpen={sabadoOpen}
                                 setSabadoOpen={setSabadoOpen}
+                                setSabadoFrom={setSabadoFrom}
+                                sabadoFrom={sabadoFrom}
+                                setSabadoUntil={setSabadoUntil}
+                                sabadoUntil={sabadoUntil}
                             />
                         }
 

@@ -10,13 +10,12 @@ export const CardElement = styled.div`
     transition: box-shadow .2s;
     border: 1px solid var(--light-grey);
     position: relative;
-    height: 23rem;
+    height: 22rem;
 
     .iconEdit {
         position: absolute;
         top: .8rem;
         right: 0rem;
-        color: var(--white);
         padding: 0;
         padding: .5rem;
         background: var(--light-grey);
@@ -26,7 +25,7 @@ export const CardElement = styled.div`
         
         svg {
             color: var(--blue);
-            font-size: 1rem;
+            font-size: 1.2rem;
         }
     }
 
@@ -46,16 +45,19 @@ export const CardElement = styled.div`
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        padding: 2rem;
+        padding: 1.8rem;
+        
 
         h2 {
             color: var(--blue);
             margin-bottom: 1rem;
             text-transform: capitalize;
+            font-size: 1.3rem;
         }
 
         p {
             color: var(--text);
+            font-size: .9rem;
         }
     }
 
@@ -93,7 +95,8 @@ export const CardElement = styled.div`
             color: var(--orange);
             font-size: 2rem;
             position: absolute;
-            right: -1.075rem;   
+            right: -1.075rem;
+            bottom: -1rem;  
         }
     }
 `

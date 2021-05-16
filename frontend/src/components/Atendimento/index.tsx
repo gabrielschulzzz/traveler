@@ -2,16 +2,36 @@ import { MiniCard } from '../MiniCard';
 import { Container, CardList } from './styles';
 
 interface AtendimentoProps {
-    segunda: string;
-    terca: string;
-    quarta: string;
-    quinta: string;
-    sexta: string;
-    sabado: string;
-    domingo: string;
+    segundaOpen: boolean;
+    segundaOpenFrom: string;
+    segundaOpenUntil: string;
+
+    tercaOpen: boolean;
+    tercaOpenFrom: string;
+    tercaOpenUntil: string;
+
+    quartaOpen: boolean;
+    quartaOpenFrom: string;
+    quartaOpenUntil: string;
+
+    quintaOpen: boolean;
+    quintaOpenFrom: string;
+    quintaOpenUntil: string;
+
+    sextaOpen: boolean;
+    sextaOpenFrom: string;
+    sextaOpenUntil: string;
+
+    sabadoOpen: boolean;
+    sabadoOpenFrom: string;
+    sabadoOpenUntil: string;
+
+    domingoOpen: boolean;
+    domingoOpenFrom: string;
+    domingoOpenUntil: string;
 }
 
-export function Atendimento({ domingo, quarta, quinta, sabado, segunda, sexta, terca }: AtendimentoProps) {
+export function Atendimento({ domingoOpen, quartaOpen, quintaOpen, sabadoOpen, segundaOpen, sextaOpen, tercaOpen, domingoOpenFrom, domingoOpenUntil, quartaOpenFrom, quartaOpenUntil, quintaOpenFrom, quintaOpenUntil, sabadoOpenFrom, sabadoOpenUntil, segundaOpenFrom, segundaOpenUntil, sextaOpenFrom, sextaOpenUntil, tercaOpenFrom, tercaOpenUntil }: AtendimentoProps) {
     return (
         <Container>
             <h2>Atendimento</h2>
@@ -19,37 +39,65 @@ export function Atendimento({ domingo, quarta, quinta, sabado, segunda, sexta, t
             <CardList>
                 <MiniCard>
                     <p className="light">Domingo</p>
-                    <p className="strong">{domingo}</p>
+                    {
+                        domingoOpen
+                            ? <p className="strong">{domingoOpenFrom} - {domingoOpenUntil}</p>
+                            : <p className="strong">Fechado</p>
+                    }
                 </MiniCard>
 
                 <MiniCard>
                     <p className="light">Segunda</p>
-                    <p className="strong">{segunda}</p>
+                    {
+                        segundaOpen
+                            ? <p className="strong">{segundaOpenFrom} - {segundaOpenUntil}</p>
+                            : <p className="strong">Fechado</p>
+                    }
                 </MiniCard>
 
                 <MiniCard>
                     <p className="light">Terca</p>
-                    <p className="strong">{terca}</p>
+                    {
+                        tercaOpen
+                            ? <p className="strong">{tercaOpenFrom} - {tercaOpenUntil}</p>
+                            : <p className="strong">Fechado</p>
+                    }
                 </MiniCard>
 
                 <MiniCard>
                     <p className="light">Quarta</p>
-                    <p className="strong">{quarta}</p>
+                    {
+                        quartaOpen
+                            ? <p className="strong">{quartaOpenFrom} - {quartaOpenUntil}</p>
+                            : <p className="strong">Fechado</p>
+                    }
                 </MiniCard>
 
                 <MiniCard>
                     <p className="light">Quinta</p>
-                    <p className="strong">{quinta}</p>
+                    {
+                        quintaOpen
+                            ? <p className="strong">{quintaOpenFrom} - {quintaOpenUntil}</p>
+                            : <p className="strong">Fechado</p>
+                    }
                 </MiniCard>
 
                 <MiniCard>
                     <p className="light">Sexta</p>
-                    <p className="strong">{sexta}</p>
+                    {
+                        sextaOpen
+                            ? <p className="strong">{sextaOpenFrom} - {sextaOpenUntil}</p>
+                            : <p className="strong">Fechado</p>
+                    }
                 </MiniCard>
 
                 <MiniCard>
                     <p className="light">Sabado</p>
-                    <p className="strong">{sabado}</p>
+                    {
+                        sabadoOpen
+                            ? <p className="strong">{sabadoOpenFrom} - {sabadoOpenUntil}</p>
+                            : <p className="strong">Fechado</p>
+                    }
                 </MiniCard>
             </CardList>
         </Container>

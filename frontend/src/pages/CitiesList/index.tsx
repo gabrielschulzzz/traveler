@@ -60,7 +60,8 @@ export function CitiesList() {
                         <Link to={{
                             pathname: `/cities/${city.id}`
                         }}>
-                            < Card
+                            <Card
+                                key={city.id}
                                 image={city.photo}
                                 places={String(city.places.length)}
                                 title={city.name}
@@ -70,13 +71,10 @@ export function CitiesList() {
                         <div>
                             <ImCrying />
                             <p>Sem resultados.</p>
-                            <p>Tente uma nova busca</p>
                         </div>
                     </NotFoundContainer>
                 }
             </CardsContainer>
-
-
         </>
     )
 }

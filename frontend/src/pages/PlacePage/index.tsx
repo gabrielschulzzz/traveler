@@ -23,16 +23,38 @@ export function PlacePage() {
     const [bairro, setBairro] = useState('')
     const [category, setCategory] = useState('')
     const [photo, setPhoto] = useState('')
+    const [description, setDescription] = useState('');
     const [cep, setCep] = useState('')
     const [numero, setNumero] = useState('')
     const [rua, setRua] = useState('')
-    const [segunda, setSegunda] = useState('')
-    const [terca, setTerca] = useState('')
-    const [quarta, setQuarta] = useState('')
-    const [quinta, setQuinta] = useState('')
-    const [sexta, setSexta] = useState('')
-    const [sabado, setSabado] = useState('')
-    const [domingo, setDomingo] = useState('')
+
+    const [segundaOpen, setSegundaOpen] = useState(false)
+    const [segundaOpenFrom, setSegundaOpenFrom] = useState('')
+    const [segundaOpenUntil, setSegundaOpenUntil] = useState('')
+
+    const [tercaOpen, setTercaOpen] = useState(false)
+    const [tercaOpenFrom, setTercaOpenFrom] = useState('')
+    const [tercaOpenUntil, setTercaOpenUntil] = useState('')
+
+    const [quartaOpen, setQuartaOpen] = useState(false)
+    const [quartaOpenFrom, setQuartaOpenFrom] = useState('')
+    const [quartaOpenUntil, setQuartaOpenUntil] = useState('')
+
+    const [quintaOpen, setQuintaOpen] = useState(false)
+    const [quintaOpenFrom, setQuintaOpenFrom] = useState('')
+    const [quintaOpenUntil, setQuintaOpenUntil] = useState('')
+
+    const [sextaOpen, setSextaOpen] = useState(false)
+    const [sextaOpenFrom, setSextaOpenFrom] = useState('')
+    const [sextaOpenUntil, setSextaOpenUntil] = useState('')
+
+    const [sabadoOpen, setSabadoOpen] = useState(false)
+    const [sabadoOpenFrom, setSabadoOpenFrom] = useState('')
+    const [sabadoOpenUntil, setSabadoOpenUntil] = useState('')
+
+    const [domingoOpen, setDomingoOpen] = useState(false)
+    const [domingoOpenFrom, setDomingoOpenFrom] = useState('')
+    const [domingoOpenUntil, setDomingoOpenUntil] = useState('')
 
     const [isReviewsModalOpen, setReviewsModalIsOpen] = useState(false);
     const [isAddReviewModalOpen, setIsAddReviewModalOpen] = useState(false);
@@ -50,14 +72,36 @@ export function PlacePage() {
             setCep(data.cep)
             setNumero(data.numero)
             setRua(data.rua)
-            setSegunda(data.segunda)
-            setTerca(data.terca)
-            setQuarta(data.quarta)
-            setQuinta(data.quinta)
-            setSexta(data.sexta)
-            setSabado(data.sabado)
-            setDomingo(data.domingo)
-            console.log(data)
+
+            setSegundaOpen(data.segundaOpen)
+            setSegundaOpenFrom(data.segundaFrom)
+            setSegundaOpenUntil(data.segundaUntil)
+
+            setTercaOpen(data.tercaOpen)
+            setTercaOpenFrom(data.tercaFrom)
+            setTercaOpenUntil(data.tercaUntil)
+
+            setQuartaOpen(data.quartaOpen)
+            setQuartaOpenFrom(data.quartaFrom)
+            setQuartaOpenUntil(data.quartaUntil)
+
+            setQuintaOpen(data.quintaOpen)
+            setQuintaOpenFrom(data.quintaFrom)
+            setQuintaOpenUntil(data.quintaUntil)
+
+            setSextaOpen(data.sextaOpen)
+            setSextaOpenFrom(data.sextaFrom)
+            setSextaOpenUntil(data.sextaUntil)
+
+            setSabadoOpen(data.sabadoOpen)
+            setSabadoOpenFrom(data.sabadoFrom)
+            setSabadoOpenUntil(data.sabadoUntil)
+
+            setDomingoOpen(data.domingoOpen)
+            setDomingoOpenFrom(data.domingoFrom)
+            setDomingoOpenUntil(data.domingoUntil)
+
+            setDescription(data.description);
         }
 
         fetchData()
@@ -94,27 +138,51 @@ export function PlacePage() {
             <Container>
                 <PlaceDescription
                     title={name}
-                    description="O melhor lugar da cidade para voce tomar um bom cafe. Fatias de tortas artesanais, bolos, lanches e biscoitos caseiros."
+                    description={description}
                 />
 
-                <Atendimento
-                    segunda={segunda}
-                    terca={terca}
-                    quarta={quarta}
-                    quinta={quinta}
-                    sexta={sexta}
-                    sabado={sabado}
-                    domingo={domingo}
-                />
+                {
+                    category === 'food' &&
+                    <>
+                        <Atendimento
+                            segundaOpen={segundaOpen}
+                            segundaOpenFrom={segundaOpenFrom}
+                            segundaOpenUntil={segundaOpenUntil}
 
-                <ContactInfo>
-                    <button><FaWhatsapp />Entrar em contato</button>
-                    <div className="contact-phone">
-                        <p className="title">Telefone</p>
-                        <p className="phone">(47) 3598-7815</p>
-                    </div>
-                </ContactInfo>
+                            tercaOpen={tercaOpen}
+                            tercaOpenFrom={tercaOpenFrom}
+                            tercaOpenUntil={tercaOpenUntil}
 
+                            quartaOpen={quartaOpen}
+                            quartaOpenFrom={quartaOpenFrom}
+                            quartaOpenUntil={quartaOpenUntil}
+
+                            quintaOpen={quintaOpen}
+                            quintaOpenFrom={quintaOpenFrom}
+                            quintaOpenUntil={quintaOpenUntil}
+
+                            sextaOpen={sextaOpen}
+                            sextaOpenFrom={sextaOpenFrom}
+                            sextaOpenUntil={sextaOpenUntil}
+
+                            sabadoOpen={sabadoOpen}
+                            sabadoOpenFrom={sabadoOpenFrom}
+                            sabadoOpenUntil={sabadoOpenUntil}
+
+                            domingoOpen={domingoOpen}
+                            domingoOpenFrom={domingoOpenFrom}
+                            domingoOpenUntil={domingoOpenUntil}
+                        />
+
+                        <ContactInfo>
+                            <button><FaWhatsapp />Entrar em contato</button>
+                            <div className="contact-phone">
+                                <p className="title">Telefone</p>
+                                <p className="phone">(47) 3598-7815</p>
+                            </div>
+                        </ContactInfo>
+                    </>
+                }
 
                 <Endereco
                     cep={cep}

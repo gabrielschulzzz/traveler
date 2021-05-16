@@ -48,6 +48,7 @@ export function DashboardCity() {
     const [deleteTriggered, setDeletTriggered] = useState(false);
 
     const { city } = useParams<RouteParams>();
+
     let history = useHistory();
 
     useEffect(() => {

@@ -9,9 +9,6 @@ class Place {
   @Column()
   name: string;
 
-  @ManyToOne(() => City, (city) => city.places, { onDelete: "CASCADE" })
-  city: City;
-
   @Column()
   description: string;
 
@@ -20,41 +17,6 @@ class Place {
 
   @Column()
   category: string;
-
-  @Column({
-    nullable: true,
-  })
-  domingo: boolean;
-
-  @Column({
-    nullable: true,
-  })
-  segunda: boolean;
-
-  @Column({
-    nullable: true,
-  })
-  terca: boolean;
-
-  @Column({
-    nullable: true,
-  })
-  quarta: boolean;
-
-  @Column({
-    nullable: true,
-  })
-  quinta: boolean;
-
-  @Column({
-    nullable: true,
-  })
-  sexta: boolean;
-
-  @Column({
-    nullable: true,
-  })
-  sabado: boolean;
 
   @Column()
   cep: string;
@@ -67,6 +29,72 @@ class Place {
 
   @Column()
   numero: string;
+
+  @ManyToOne(() => City, (city) => city.places, { onDelete: "CASCADE" })
+  city: City;
+
+  @Column({ nullable: true })
+  domingoOpen: boolean;
+
+  @Column({ nullable: true })
+  domingoFrom: string;
+
+  @Column({ nullable: true })
+  domingoUntil: string;
+
+  @Column({ nullable: true })
+  segundaOpen: boolean;
+
+  @Column({ nullable: true })
+  segundaFrom: string;
+
+  @Column({ nullable: true })
+  segundaUntil: string;
+
+  @Column({ nullable: true })
+  tercaOpen: boolean;
+
+  @Column({ nullable: true })
+  tercaFrom: string;
+
+  @Column({ nullable: true })
+  tercaUntil: string;
+
+  @Column({ nullable: true })
+  quartaOpen: boolean;
+
+  @Column({ nullable: true })
+  quartaFrom: string;
+
+  @Column({ nullable: true })
+  quartaUntil: string;
+
+  @Column({ nullable: true })
+  quintaOpen: boolean;
+
+  @Column({ nullable: true })
+  quintaFrom: string;
+
+  @Column({ nullable: true })
+  quintaUntil: string;
+
+  @Column({ nullable: true })
+  sextaOpen: boolean;
+
+  @Column({ nullable: true })
+  sextaFrom: string;
+
+  @Column({ nullable: true })
+  sextaUntil: string;
+
+  @Column({ nullable: true })
+  sabadoOpen: boolean;
+
+  @Column({ nullable: true })
+  sabadoFrom: string;
+
+  @Column({ nullable: true })
+  sabadoUntil: string;
 }
 
 export { Place };

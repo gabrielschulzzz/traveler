@@ -73,13 +73,8 @@ export const CardsContainer = styled.div`
 `
 
 export const NotFoundContainer = styled.div`
-    margin: 0 auto;
-    max-width: 1400px;
-    height: 800px;
+    width: 75vw;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
 
     div {
         display: flex;

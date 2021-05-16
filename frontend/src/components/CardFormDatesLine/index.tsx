@@ -4,9 +4,13 @@ interface CardFormDatesLineProps {
     day: string;
     isOpen?: boolean;
     handleOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    das?: string;
+    ate?: string;
+    setDas: React.Dispatch<React.SetStateAction<string>>;
+    setAte: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export function CardFormDatesLine({ day, isOpen, handleOpen }: CardFormDatesLineProps) {
+export function CardFormDatesLine({ day, isOpen, handleOpen, das, ate, setDas, setAte }: CardFormDatesLineProps) {
     return (
         <Container isOpen={isOpen}>
             <div className="first">
@@ -21,9 +25,9 @@ export function CardFormDatesLine({ day, isOpen, handleOpen }: CardFormDatesLine
                 isOpen ?
                     <div className="second">
                         <p>Das</p>
-                        <input type="text" />
+                        <input type="text" value={das} onChange={(e) => setDas(e.target.value)} />
                         <p className="second-time">Ate</p>
-                        <input type="text" />
+                        <input type="text" value={ate} onChange={(e) => setAte(e.target.value)} />
                     </div>
                     : ''
             }

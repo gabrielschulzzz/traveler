@@ -10,4 +10,8 @@ export const Container = styled.div`
         background-color: var(--background);
         padding: 1rem;
     }
+
+    div {
+        margin-top: 2rem;
+    }
 `

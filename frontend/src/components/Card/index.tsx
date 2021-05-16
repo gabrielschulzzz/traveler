@@ -18,6 +18,7 @@ interface CardProps {
 }
 
 export function Card({ image, places, title, rating, category, iconDelete, iconEdit, iconDeleteLink, iconEditLink }: CardProps) {
+    console.log(category);
     return (
         <CardElement>
             <img src={image} alt={title} />
@@ -31,17 +32,19 @@ export function Card({ image, places, title, rating, category, iconDelete, iconE
                     : ''
                 }
                 <h2>{title}</h2>
+
                 {places ? <p>{places} {places.length === 1 ? 'local' : 'locais'}</p> : ''}
+
                 {category
                     ?
                     <div className="card-bottom">
-                        <p>{category === 'food' ? 'Comidas e bebidas' : ''}
+                        <p> {category === 'food' ? 'Comidas e bebidas' : ''}
                             {category === 'turistic' ? 'Pontos Turisticos' : ''}
-                            {category === 'events' ? 'Eventos Organizados' : ''}
+                            {category === 'event' ? 'Eventos Organizados' : ''}
                         </p>
                         {category === 'food' ? <FiCoffee /> : ''}
                         {category === 'turistic' ? <AiOutlineCamera /> : ''}
-                        {category === 'events' ? <AiOutlineCalendar /> : ''}
+                        {category === 'event' ? <AiOutlineCalendar /> : ''}
 
                     </div>
                     : ''
@@ -50,9 +53,12 @@ export function Card({ image, places, title, rating, category, iconDelete, iconE
 
                 {
                     iconEdit
-                        ? <div className="iconEdit">
-                            <Link to={`${iconEditLink}`}><AiOutlineEdit /></Link>
-                        </div>
+                        ?
+                        <Link to={`${iconEditLink}`}>
+                            <div className="iconEdit">
+                                <AiOutlineEdit />
+                            </div>
+                        </Link>
                         : null
                 }
             </div>

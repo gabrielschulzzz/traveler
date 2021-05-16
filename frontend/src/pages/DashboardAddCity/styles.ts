@@ -53,7 +53,7 @@ export const SuccessAdd = styled.div`
     height: 100vh;
 
     .first {
-        flex: 1;
+        width: 50%;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -93,12 +93,11 @@ export const SuccessAdd = styled.div`
     }
 
     .second {
-        flex: 1;
+        width: 50%;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         height: 100vh;
-
     }
 `
