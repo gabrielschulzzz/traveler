@@ -19,6 +19,7 @@ import { CardFormAddress } from "../../components/CardFormAddress";
 import { CardFormDates } from "../../components/CardFormDates";
 import { NextEvent } from "../../components/NextEvent";
 import { CardCategoryPicker } from '../../components/CardCategoryPicker';
+import { Step1, Step2 } from '../../components/DashboardHeader/styles';
 
 
 export function DashboardAddCity() {
@@ -156,8 +157,8 @@ export function DashboardAddCity() {
                         </Link>
                         <h2 className="title">Adicionar uma cidade</h2>
                         <div className="right">
-                            <p className="step1" onClick={() => setStep(1)}>01</p>
-                            <p className="step2" onClick={() => setStep(2)}>02</p>
+                            <Step1 active={step} className="step1" onClick={() => setStep(1)}>01</Step1>
+                            <Step2 active={step} className="step2" onClick={() => setStep(2)}>02</Step2>
                         </div>
                     </DashboardHeader>
                 </>
