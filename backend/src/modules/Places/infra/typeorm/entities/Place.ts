@@ -1,5 +1,12 @@
 import { City } from "@modules/Cities/infra/typeorm/entities/City";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Review } from "@modules/Reviews/infra/typeorm/entities/Review";
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 
 @Entity("places")
 class Place {
@@ -14,6 +21,9 @@ class Place {
 
   @Column()
   photo: string;
+
+  @OneToMany(() => Review, (review) => review.place)
+  reviews: Review[];
 
   @Column({ nullable: true })
   telefone: string;

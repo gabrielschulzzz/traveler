@@ -14,6 +14,7 @@ import { DashboardEditCity } from './pages/DashboardEditCity';
 import { DashboardEditPlace } from './pages/DashboardEditPlace';
 import { DashBoardAddPlace } from './pages/DashboardAddPlace';
 import ScrollToTop from './components/ScrollToTop';
+import { CreateAccount } from './pages/CreateAccount';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
       <Switch>
         <Route exact path='/' component={Home} />
         <Route exact path='/login' component={Login} />
+        <Route exact path='/register' component={CreateAccount} />
         <Route exact path='/dashboard' component={DashboardCityList} />
         <Route exact path='/dashboard/add-city' component={DashboardAddCity} />
         <Route exact path='/dashboard/city/:city/add-place' component={DashBoardAddPlace} />

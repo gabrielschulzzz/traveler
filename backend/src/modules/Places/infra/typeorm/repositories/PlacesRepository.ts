@@ -17,7 +17,7 @@ class PlacesRepository implements IPlacesRepository {
   }
 
   async findOne(id: string): Promise<Place> {
-    const place = await this.repository.findOne(id);
+    const place = await this.repository.findOne(id, { relations: ["reviews"] });
 
     if (!place) {
       throw new Error("Place not found");
