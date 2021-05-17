@@ -7,6 +7,7 @@ interface ICreatePlaceDTO {
   category: string;
   cep: string;
   rua: string;
+  telefone: string;
   bairro: string;
   numero: string;
   description: string;

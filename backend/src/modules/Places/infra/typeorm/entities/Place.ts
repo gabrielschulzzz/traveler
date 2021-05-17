@@ -15,6 +15,9 @@ class Place {
   @Column()
   photo: string;
 
+  @Column({ nullable: true })
+  telefone: string;
+
   @Column()
   category: string;
 

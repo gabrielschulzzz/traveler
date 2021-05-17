@@ -12,6 +12,7 @@ interface IRequest {
   cep: string;
   rua: string;
   bairro: string;
+  telefone: string,
   numero: string;
   description: string;
   domingoOpen: boolean,
@@ -44,10 +45,10 @@ class AddPlaceUseCase {
     private placesRepository: IPlacesRepository
   ) { }
 
-  public async execute({ bairro, rua, photo, numero, cep, category, name, city, description, domingoOpen,
+  public async execute({ bairro, rua, photo, numero, telefone, cep, category, name, city, description, domingoOpen,
     domingoFrom, domingoUntil, segundaOpen, segundaFrom, segundaUntil, tercaOpen, tercaFrom, tercaUntil, quartaOpen, quartaFrom, quartaUntil, quintaOpen, quintaFrom, quintaUntil, sextaOpen, sextaFrom, sextaUntil, sabadoOpen, sabadoFrom, sabadoUntil }: IRequest): Promise<Place> {
     const place = await this.placesRepository.create({
-      bairro, rua, photo, numero, cep, category, name, city, description, domingoOpen,
+      bairro, rua, photo, numero, cep, category, telefone, name, city, description, domingoOpen,
       domingoFrom, domingoUntil, segundaOpen, segundaFrom, segundaUntil, tercaOpen, tercaFrom, tercaUntil, quartaOpen, quartaFrom, quartaUntil, quintaOpen, quintaFrom, quintaUntil, sextaOpen, sextaFrom, sextaUntil, sabadoOpen, sabadoFrom, sabadoUntil
     })
 

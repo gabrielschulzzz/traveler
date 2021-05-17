@@ -31,11 +31,39 @@ export function DashboardEditPlace() {
     const [bairro, setBairro] = useState('');
     const [cep, setCep] = useState('');
     const [name, setName] = useState('');
+    const [telefone, setTelefone] = useState('');
     const [numero, setNumero] = useState('');
     const [photo, setPhoto] = useState('');
     const [rua, setRua] = useState('');
     const [description, setDescription] = useState('');
     const [deleteTriggered, setDeleteTriggered] = useState(false);
+    const [domingoOpen, setDomingoOpen] = useState(true);
+    const [domingoFrom, setDomingoFrom] = useState('');
+    const [domingoUntil, setDomingoUntil] = useState('');
+
+    const [segundaOpen, setSegundaOpen] = useState(true);
+    const [segundaFrom, setSegundaFrom] = useState('');
+    const [segundaUntil, setSegundaUntil] = useState('');
+
+    const [tercaOpen, setTercaOpen] = useState(true);
+    const [tercaFrom, setTercaFrom] = useState('');
+    const [tercaUntil, setTercaUntil] = useState('');
+
+    const [quartaOpen, setQuartaOpen] = useState(true);
+    const [quartaFrom, setQuartaFrom] = useState('');
+    const [quartaUntil, setQuartaUntil] = useState('');
+
+    const [quintaOpen, setQuintaOpen] = useState(true);
+    const [quintaFrom, setQuintaFrom] = useState('');
+    const [quintaUntil, setQuintaUntil] = useState('');
+
+    const [sextaOpen, setSextaOpen] = useState(true);
+    const [sextaFrom, setSextaFrom] = useState('');
+    const [sextaUntil, setSextaUntil] = useState('');
+
+    const [sabadoOpen, setSabadoOpen] = useState(true);
+    const [sabadoFrom, setSabadoFrom] = useState('');
+    const [sabadoUntil, setSabadoUntil] = useState('');
 
     let history = useHistory();
 
@@ -50,25 +78,114 @@ export function DashboardEditPlace() {
             setCep(data.cep);
             setName(data.name);
             setNumero(data.numero);
+            setTelefone(data.telefone);
             setPhoto(data.photo);
             setRua(data.rua);
             setDescription(data.description);
+
+            setSegundaOpen(data.segundaOpen);
+            setSegundaFrom(data.segundaFrom);
+            setSegundaUntil(data.segundaUntil);
+
+            setTercaOpen(data.tercaOpen);
+            setTercaFrom(data.tercaFrom);
+            setTercaUntil(data.tercaUntil);
+
+            setQuartaOpen(data.quartaOpen);
+            setQuartaFrom(data.quartaFrom);
+            setQuartaUntil(data.quartaUntil);
+
+            setQuintaOpen(data.quintaOpen);
+            setQuintaFrom(data.quintaFrom);
+            setQuintaUntil(data.quintaUntil);
+
+            setSextaOpen(data.sextaOpen);
+            setSextaFrom(data.sextaFrom);
+            setSextaUntil(data.sextaUntil);
+
+            setSabadoOpen(data.sabadoOpen);
+            setSabadoFrom(data.sabadoFrom);
+            setSabadoUntil(data.sabadoUntil);
+
+            setDomingoOpen(data.domingoOpen);
+            setDomingoFrom(data.domingoFrom);
+            setDomingoUntil(data.domingoUntil);
         }
 
         fetchData()
     }, [place])
 
     function handleEditSuccess() {
-        axios.patch(`http://localhost:3333/places/${place}`, {
-            name,
-            city,
-            photo,
-            category: type,
-            cep,
-            rua,
-            bairro,
-            numero
-        })
+        if (type === "food") {
+            axios.patch(`http://localhost:3333/places/${place}`, {
+                name,
+                city,
+                photo,
+                category: type,
+                cep,
+                rua,
+                telefone,
+                bairro,
+                numero,
+                description,
+                domingoOpen,
+                domingoFrom,
+                domingoUntil,
+                segundaOpen,
+                segundaFrom,
+                segundaUntil,
+                tercaOpen,
+                tercaFrom,
+                tercaUntil,
+                quartaOpen,
+                quartaFrom,
+                quartaUntil,
+                quintaOpen,
+                quintaFrom,
+                quintaUntil,
+                sextaOpen,
+                sextaFrom,
+                sextaUntil,
+                sabadoOpen,
+                sabadoFrom,
+                sabadoUntil,
+            })
+        }
+
+        if (type === "turistic" || type === "event") {
+            axios.patch(`http://localhost:3333/places/${place}`, {
+                name,
+                city,
+                photo,
+                category: type,
+                cep,
+                rua,
+                bairro,
+                numero,
+                description,
+                domingoOpen: null,
+                domingoFrom: null,
+                domingoUntil: null,
+                segundaOpen: null,
+                segundaFrom: null,
+                segundaUntil: null,
+                tercaOpen: null,
+                tercaFrom: null,
+                tercaUntil: null,
+                quartaOpen: null,
+                quartaFrom: null,
+                quartaUntil: null,
+                quintaOpen: null,
+                quintaFrom: null,
+                quintaUntil: null,
+                sextaOpen: null,
+                sextaFrom: null,
+                sextaUntil: null,
+                sabadoOpen: null,
+                sabadoFrom: null,
+                sabadoUntil: null,
+            })
+        }
 
         setEditSuccess(true);
         setTimeout(() => {
@@ -118,9 +235,59 @@ export function DashboardEditPlace() {
 
                     <CardCategoryPicker type={type} setType={setType} />
 
-                    {/* {
-                        type === 'food' && <CardFormDates />
-                    } */}
+                    {
+                        type === 'food' &&
+                        <CardFormDates
+                            setDomingoOpen={setDomingoOpen}
+                            domingoOpen={domingoOpen}
+                            setDomingoFrom={setDomingoFrom}
+                            domingoFrom={domingoFrom}
+                            setDomingoUntil={setDomingoUntil}
+                            domingoUntil={domingoUntil}
+
+                            segundaOpen={segundaOpen}
+                            setSegundaOpen={setSegundaOpen}
+                            setSegundaFrom={setSegundaFrom}
+                            segundaFrom={segundaFrom}
+                            setSegundaUntil={setSegundaUntil}
+                            segundaUntil={segundaUntil}
+
+                            tercaOpen={tercaOpen}
+                            setTercaOpen={setTercaOpen}
+                            setTercaFrom={setTercaFrom}
+                            tercaFrom={tercaFrom}
+                            setTercaUntil={setTercaUntil}
+                            tercaUntil={tercaUntil}
+
+                            quartaOpen={quartaOpen}
+                            setQuartaOpen={setQuartaOpen}
+                            setQuartaFrom={setQuartaFrom}
+                            quartaFrom={quartaFrom}
+                            setQuartaUntil={setQuartaUntil}
+                            quartaUntil={quartaUntil}
+
+                            quintaOpen={quintaOpen}
+                            setQuintaOpen={setQuintaOpen}
+                            setQuintaFrom={setQuintaFrom}
+                            quintaFrom={quintaFrom}
+                            setQuintaUntil={setQuintaUntil}
+                            quintaUntil={quintaUntil}
+
+                            sextaOpen={sextaOpen}
+                            setSextaOpen={setSextaOpen}
+                            setSextaFrom={setSextaFrom}
+                            sextaFrom={sextaFrom}
+                            setSextaUntil={setSextaUntil}
+                            sextaUntil={sextaUntil}
+
+                            sabadoOpen={sabadoOpen}
+                            setSabadoOpen={setSabadoOpen}
+                            setSabadoFrom={setSabadoFrom}
+                            sabadoFrom={sabadoFrom}
+                            setSabadoUntil={setSabadoUntil}
+                            sabadoUntil={sabadoUntil}
+                        />
+                    }
 
                     {
                         type === 'event' && <NextEvent />
@@ -138,6 +305,14 @@ export function DashboardEditPlace() {
                         setNumber={setNumero}
                         setStreet={setRua}
                     />
+
+                    {
+                        type === 'food' &&
+                        <>
+                            <label>Telefone</label>
+                            <input type="text" value={telefone} onChange={(e) => setTelefone(e.target.value)} />
+                        </>
+                    }
 
                     <CardFormFooter>
                         <div className="footer-left">

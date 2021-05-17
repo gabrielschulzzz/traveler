@@ -6,6 +6,7 @@ import { UpdateCityUseCase } from "./UpdateCityUseCase";
 class UpdateCityController {
   async handle(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
+
     const { name, fact, description, photo } = request.body;
 
     const updateCityUseCase = container.resolve(UpdateCityUseCase);

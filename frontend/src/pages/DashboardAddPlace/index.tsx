@@ -34,10 +34,38 @@ export function DashBoardAddPlace() {
     const [placePhoto, setPlacePhoto] = useState('');
     const [placeDescription, setPlaceDescription] = useState('')
     const [cep, setCep] = useState('');
+    const [telefone, setTelefone] = useState('');
     const [street, setStreet] = useState('');
     const [district, setDistrict] = useState('');
     const [number, setNumber] = useState('');;
     const [type, setType] = useState('food');
+    const [domingoOpen, setDomingoOpen] = useState(true);
+    const [domingoFrom, setDomingoFrom] = useState('');
+    const [domingoUntil, setDomingoUntil] = useState('');
+
+    const [segundaOpen, setSegundaOpen] = useState(true);
+    const [segundaFrom, setSegundaFrom] = useState('');
+    const [segundaUntil, setSegundaUntil] = useState('');
+
+    const [tercaOpen, setTercaOpen] = useState(true);
+    const [tercaFrom, setTercaFrom] = useState('');
+    const [tercaUntil, setTercaUntil] = useState('');
+
+    const [quartaOpen, setQuartaOpen] = useState(true);
+    const [quartaFrom, setQuartaFrom] = useState('');
+    const [quartaUntil, setQuartaUntil] = useState('');
+
+    const [quintaOpen, setQuintaOpen] = useState(true);
+    const [quintaFrom, setQuintaFrom] = useState('');
+    const [quintaUntil, setQuintaUntil] = useState('');
+
+    const [sextaOpen, setSextaOpen] = useState(true);
+    const [sextaFrom, setSextaFrom] = useState('');
+    const [sextaUntil, setSextaUntil] = useState('');
+
+    const [sabadoOpen, setSabadoOpen] = useState(true);
+    const [sabadoFrom, setSabadoFrom] = useState('');
+    const [sabadoUntil, setSabadoUntil] = useState('');
     const [currentCity, setCurrentCity] = useState({} as currentCityType)
     const { city } = useParams<RouteParams>();
     let history = useHistory();
@@ -56,18 +84,56 @@ export function DashBoardAddPlace() {
 
     async function createNewPlace() {
         try {
-            await axios.post('http://localhost:3333/places', {
-                name: placeName,
-                city: city,
-                photo: placePhoto,
-                category: type,
-                cep,
-                rua: street,
-                bairro: district,
-                numero: number,
-                description: placeDescription
-            })
-            history.push(`/dashboard/city/${city}`)
+            if (type === "food") {
+                await axios.post('http://localhost:3333/places', {
+                    name: placeName,
+                    city: city,
+                    photo: placePhoto,
+                    category: type,
+                    cep,
+                    telefone,
+                    rua: street,
+                    bairro: district,
+                    numero: number,
+                    description: placeDescription,
+                    domingoOpen,
+                    domingoFrom,
+                    domingoUntil,
+                    segundaOpen,
+                    segundaFrom,
+                    segundaUntil,
+                    tercaOpen,
+                    tercaFrom,
+                    tercaUntil,
+                    quartaOpen,
+                    quartaFrom,
+                    quartaUntil,
+                    quintaOpen,
+                    quintaFrom,
+                    quintaUntil,
+                    sextaOpen,
+                    sextaFrom,
+                    sextaUntil,
+                    sabadoOpen,
+                    sabadoFrom,
+                    sabadoUntil,
+                })
+                history.push(`/dashboard/city/${city}`)
+            } else {
+                await axios.post('http://localhost:3333/places', {
+                    name: placeName,
+                    city: city,
+                    photo: placePhoto,
+                    category: type,
+                    cep,
+                    rua: street,
+                    bairro: district,
+                    numero: number,
+                    description: placeDescription,
+                })
+                history.push(`/dashboard/city/${city}`)
+            }
+
         } catch (error) {
             console.log(error);
         }
@@ -106,9 +172,59 @@ export function DashBoardAddPlace() {
 
                     <CardCategoryPicker type={type} setType={setType} />
 
-                    {/* {
-                        type === 'food' && <CardFormDates />
-                    } */}
+                    {
+                        type === 'food' &&
+                        <CardFormDates
+                            setDomingoOpen={setDomingoOpen}
+                            domingoOpen={domingoOpen}
+                            setDomingoFrom={setDomingoFrom}
+                            domingoFrom={domingoFrom}
+                            setDomingoUntil={setDomingoUntil}
+                            domingoUntil={domingoUntil}
+
+                            segundaOpen={segundaOpen}
+                            setSegundaOpen={setSegundaOpen}
+                            setSegundaFrom={setSegundaFrom}
+                            segundaFrom={segundaFrom}
+                            setSegundaUntil={setSegundaUntil}
+                            segundaUntil={segundaUntil}
+
+                            tercaOpen={tercaOpen}
+                            setTercaOpen={setTercaOpen}
+                            setTercaFrom={setTercaFrom}
+                            tercaFrom={tercaFrom}
+                            setTercaUntil={setTercaUntil}
+                            tercaUntil={tercaUntil}
+
+                            quartaOpen={quartaOpen}
+                            setQuartaOpen={setQuartaOpen}
+                            setQuartaFrom={setQuartaFrom}
+                            quartaFrom={quartaFrom}
+                            setQuartaUntil={setQuartaUntil}
+                            quartaUntil={quartaUntil}
+
+                            quintaOpen={quintaOpen}
+                            setQuintaOpen={setQuintaOpen}
+                            setQuintaFrom={setQuintaFrom}
+                            quintaFrom={quintaFrom}
+                            setQuintaUntil={setQuintaUntil}
+                            quintaUntil={quintaUntil}
+
+                            sextaOpen={sextaOpen}
+                            setSextaOpen={setSextaOpen}
+                            setSextaFrom={setSextaFrom}
+                            sextaFrom={sextaFrom}
+                            setSextaUntil={setSextaUntil}
+                            sextaUntil={sextaUntil}
+
+                            sabadoOpen={sabadoOpen}
+                            setSabadoOpen={setSabadoOpen}
+                            setSabadoFrom={setSabadoFrom}
+                            sabadoFrom={sabadoFrom}
+                            setSabadoUntil={setSabadoUntil}
+                            sabadoUntil={sabadoUntil}
+                        />
+                    }
 
                     {
                         type === 'event' && <NextEvent />
@@ -126,6 +242,14 @@ export function DashBoardAddPlace() {
                         setNumber={setNumber}
                         map
                     />
+
+                    {
+                        type === 'food' &&
+                        <>
+                            <label>Telefone</label>
+                            <input type="text" value={telefone} onChange={(e) => setTelefone(e.target.value)} />
+                        </>
+                    }
 
                     <CardFormFooter>
                         <div className="footer-left">

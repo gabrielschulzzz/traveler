@@ -34,6 +34,7 @@ export function DashboardAddCity() {
     // place state
     const [placeName, setPlaceName] = useState('');
     const [placePhoto, setPlacePhoto] = useState('');
+    const [placeTelefone, setPlaceTelefone] = useState('');
     const [placeDescription, setPlaceDescription] = useState('');
     const [type, setType] = useState('food');
     const [cep, setCep] = useState('');
@@ -83,6 +84,7 @@ export function DashboardAddCity() {
                     name: placeName,
                     city: newCity.data.id,
                     description: placeDescription,
+                    telefone: placeTelefone,
                     photo: placePhoto,
                     category: type,
                     cep,
@@ -302,6 +304,14 @@ export function DashboardAddCity() {
                             setNumber={setNumber}
                             map
                         />
+
+                        {
+                            type === 'food' &&
+                            <>
+                                <label>Telefone</label>
+                                <input type="text" value={placeTelefone} onChange={(e) => setPlaceTelefone(e.target.value)} />
+                            </>
+                        }
 
                         <CardFormFooter>
                             <div className="footer-left">

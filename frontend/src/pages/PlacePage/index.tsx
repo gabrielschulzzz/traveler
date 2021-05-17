@@ -12,6 +12,7 @@ import { ReviewModal } from '../../components/ReviewModal';
 import { AddReviewModal } from '../../components/AddReviewModal';
 import { useParams } from 'react-router';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 interface RouteParams {
     city: string;
@@ -27,6 +28,7 @@ export function PlacePage() {
     const [cep, setCep] = useState('')
     const [numero, setNumero] = useState('')
     const [rua, setRua] = useState('')
+    const [telefone, setTelefone] = useState('');
 
     const [segundaOpen, setSegundaOpen] = useState(false)
     const [segundaOpenFrom, setSegundaOpenFrom] = useState('')
@@ -72,6 +74,7 @@ export function PlacePage() {
             setCep(data.cep)
             setNumero(data.numero)
             setRua(data.rua)
+            setTelefone(data.telefone)
 
             setSegundaOpen(data.segundaOpen)
             setSegundaOpenFrom(data.segundaFrom)
@@ -102,6 +105,8 @@ export function PlacePage() {
             setDomingoOpenUntil(data.domingoUntil)
 
             setDescription(data.description);
+
+            console.log(data)
         }
 
         fetchData()
@@ -175,10 +180,14 @@ export function PlacePage() {
                         />
 
                         <ContactInfo>
-                            <button><FaWhatsapp />Entrar em contato</button>
+                            <a
+                                href={`http://api.whatsapp.com/send?phone=${telefone.trim()}&text=bom%20dia`}
+                                rel="noreferrer"
+                                target="_blank"
+                            ><button><FaWhatsapp />Entrar em contato</button></a>
                             <div className="contact-phone">
                                 <p className="title">Telefone</p>
-                                <p className="phone">(47) 3598-7815</p>
+                                <p className="phone">{telefone}</p>
                             </div>
                         </ContactInfo>
                     </>
@@ -189,10 +198,10 @@ export function PlacePage() {
                     rua={rua}
                 />
 
-                <Avaliacoes
+                {/* <Avaliacoes
                     handleReviewsModalOpen={handleReviewsModalOpen}
                     handleAddReviewsModalOpen={handleAddReviewsModalOpen}
-                />
+                /> */}
 
                 <Image>
                     <img src={photo} alt="" />
