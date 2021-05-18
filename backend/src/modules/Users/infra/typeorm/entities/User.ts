@@ -14,13 +14,14 @@ class User {
   @Column()
   email: string;
 
-  @Column()
+  @Column({ select: false })
   password: string;
 
   @Column({ nullable: true })
   avatar: string;
 
   @Column({
+    select: false,
     type: "enum",
     enum: ["admin", "user"],
     default: "user",

@@ -1,9 +1,15 @@
 /* eslint-disable prettier/prettier */
-import { ICreateUserDTO } from "@modules/Users/dtos/ICreateUserDTO";
 import { User } from "@modules/Users/infra/typeorm/entities/User";
 import { IUsersRepository } from "@modules/Users/repositories/IUsersRepository";
 import { hash } from 'bcryptjs';
 import { inject, injectable } from "tsyringe";
+
+interface IRequest {
+  name: string;
+  avatar: string;
+  email: string;
+  password: string;
+}
 
 @injectable()
 class CreateUserUseCase {
@@ -17,7 +23,7 @@ class CreateUserUseCase {
     avatar,
     email,
     password
-  }: ICreateUserDTO): Promise<User> {
+  }: IRequest): Promise<User> {
     const userAlreadyCreated = await this.usersRepository.findByEmail(email)
 
     if (userAlreadyCreated) {

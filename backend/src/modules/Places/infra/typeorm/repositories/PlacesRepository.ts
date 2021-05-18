@@ -1,7 +1,7 @@
 import { ICreatePlaceDTO } from "@modules/Places/dtos/ICreatePlaceDTO";
 import { IUpdatePlaceDTO } from "@modules/Places/dtos/IUpdatePlaceDTO";
 import { IPlacesRepository } from "@modules/Places/repositories/IPlacesRepository";
-import { getRepository, Repository } from "typeorm";
+import { createQueryBuilder, getRepository, Repository } from "typeorm";
 
 import { Place } from "../entities/Place";
 
@@ -16,8 +16,17 @@ class PlacesRepository implements IPlacesRepository {
     await this.repository.delete(id);
   }
 
-  async findOne(id: string): Promise<Place> {
-    const place = await this.repository.findOne(id, { relations: ["reviews"] });
+  async findOne(id: string): Promise<any> {
+    // const place = await this.repository.findOne(id, {
+    //   relations: ["reviews"],
+    // });
+
+    const place = await this.repository
+      .createQueryBuilder("place")
+      .leftJoinAndSelect("place.reviews", "review")
+      .leftJoinAndSelect("review.user", "user")
+      .where("place.id = :id", { id })
+      .getOne();
 
     if (!place) {
       throw new Error("Place not found");

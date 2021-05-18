@@ -37,10 +37,17 @@ class UsersRepository implements IUsersRepository {
   }
 
   async findOne(id: string): Promise<User> {
-    const user = await this.repository.findOne(
-      { id },
-      { relations: ["reviews"] }
-    );
+    // const user = await this.repository.findOne(
+    //   { id },
+    //   { relations: ["reviews"] }
+    // );
+
+    const user = await this.repository
+      .createQueryBuilder("user")
+      .leftJoinAndSelect("user.reviews", "review")
+      .leftJoinAndSelect("review.place", "place")
+      .select(["user", "user.role", "review", "place.name", "place.photo"])
+      .getOne();
 
     if (!user) {
       throw new Error("User not found");

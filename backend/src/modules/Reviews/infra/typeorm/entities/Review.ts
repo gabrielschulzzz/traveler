@@ -7,11 +7,19 @@ class Review {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @ManyToOne(() => Place, (place) => place.reviews)
+  @ManyToOne(() => Place, (place) => place.reviews, {
+    onDelete: "CASCADE",
+    eager: true,
+  })
   place: Place;
 
-  @ManyToOne(() => User, (user) => user.reviews, { onDelete: "CASCADE" })
+  @ManyToOne(() => User, (user) => user.reviews, {
+    onDelete: "CASCADE",
+  })
   user: User;
+
+  @Column()
+  review: string;
 
   @Column()
   score: string;
