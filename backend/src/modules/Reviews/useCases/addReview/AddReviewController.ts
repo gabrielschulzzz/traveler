@@ -5,14 +5,15 @@ import { AddReviewUseCase } from "./AddReviewUseCase";
 
 class AddReviewController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { score, place, user, review } = request.body;
+    const { score, place, review } = request.body;
+    const { id } = request.user;
 
     const addReviewUseCase = container.resolve(AddReviewUseCase);
 
     await addReviewUseCase.execute({
       score,
       place,
-      user,
+      user: id,
       review,
     });
 

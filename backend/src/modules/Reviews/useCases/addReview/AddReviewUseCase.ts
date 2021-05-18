@@ -1,12 +1,11 @@
 /* eslint-disable prettier/prettier */
 import { Place } from "@modules/Places/infra/typeorm/entities/Place";
 import { IReviewsRepository } from "@modules/Reviews/repositories/IReviewsRepository";
-import { User } from "@modules/Users/infra/typeorm/entities/User";
 import { inject, injectable } from "tsyringe";
 
 interface IRequest {
   score: string;
-  user: User;
+  user: string;
   place: Place;
   review: string;
 }

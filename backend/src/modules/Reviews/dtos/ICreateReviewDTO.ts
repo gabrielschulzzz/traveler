@@ -3,7 +3,7 @@ import { User } from "@modules/Users/infra/typeorm/entities/User";
 
 interface ICreateReviewDTO {
   score: string;
-  user: User;
+  user: string;
   place: Place;
   review: string;
 }

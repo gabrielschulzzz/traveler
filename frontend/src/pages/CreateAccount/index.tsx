@@ -1,17 +1,43 @@
+import axios from 'axios'
+import { useState } from 'react'
 import { Button } from '../../components/Button'
 import { Input } from '../../components/Input'
 import { Container } from './styles'
 
 export function CreateAccount() {
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [password2, setPassword2] = useState('')
+
+    const handleRegister = async () => {
+        try {
+            if (password === password2) {
+                const user = await axios.post("http://localhost:3333/users", {
+                    name, email, password
+                })
+
+                console.log(user)
+            } else {
+                console.log("Passwords dont match")
+            }
+
+        } catch (error) {
+            console.log(error)
+        }
+
+
+    }
+
     return (
         <Container>
             <div className="form">
                 <h1>Criar conta</h1>
-                <input type="text" placeholder="Name" />
-                <input type="text" placeholder="Email" />
-                <input type="text" placeholder="Senha" />
-                <input type="text" placeholder="Confirmar senha" />
-                <Button>Cadastrar</Button>
+                <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
+                <input type="text" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                <input type="text" placeholder="Senha" value={password} onChange={(e) => setPassword(e.target.value)} />
+                <input type="text" placeholder="Confirmar senha" value={password2} onChange={(e) => setPassword2(e.target.value)} />
+                <Button onClick={handleRegister}>Cadastrar</Button>
             </div>
 
             <div className="image">
