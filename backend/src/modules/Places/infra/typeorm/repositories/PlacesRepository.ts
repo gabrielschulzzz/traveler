@@ -3,6 +3,8 @@ import { IUpdatePlaceDTO } from "@modules/Places/dtos/IUpdatePlaceDTO";
 import { IPlacesRepository } from "@modules/Places/repositories/IPlacesRepository";
 import { createQueryBuilder, getRepository, Repository } from "typeorm";
 
+import { AppError } from "@shared/errors/AppError";
+
 import { Place } from "../entities/Place";
 
 class PlacesRepository implements IPlacesRepository {
@@ -29,7 +31,7 @@ class PlacesRepository implements IPlacesRepository {
       .getOne();
 
     if (!place) {
-      throw new Error("Place not found");
+      throw new AppError("Place not found");
     }
 
     return place;

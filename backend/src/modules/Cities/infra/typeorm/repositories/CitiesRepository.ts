@@ -3,6 +3,8 @@ import { IUpdateCityDTO } from "@modules/Cities/dtos/IUpdateCityDTO";
 import { ICitiesRepository } from "@modules/Cities/repositories/ICitiesRepository";
 import { getRepository, Repository } from "typeorm";
 
+import { AppError } from "@shared/errors/AppError";
+
 import { City } from "../entities/City";
 
 class CitiesRepository implements ICitiesRepository {
@@ -19,7 +21,7 @@ class CitiesRepository implements ICitiesRepository {
     );
 
     if (!city) {
-      throw new Error("City not found");
+      throw new AppError("City not found");
     }
 
     return city;

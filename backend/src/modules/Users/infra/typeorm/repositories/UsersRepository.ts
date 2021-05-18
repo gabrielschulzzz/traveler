@@ -3,6 +3,8 @@ import { IUpdateUserDTO } from "@modules/Users/dtos/IUpdateUserDTO";
 import { IUsersRepository } from "@modules/Users/repositories/IUsersRepository";
 import { getRepository, Repository } from "typeorm";
 
+import { AppError } from "@shared/errors/AppError";
+
 import { User } from "../entities/User";
 
 class UsersRepository implements IUsersRepository {
@@ -45,19 +47,25 @@ class UsersRepository implements IUsersRepository {
     const user = await this.repository
       .createQueryBuilder("user")
       .leftJoinAndSelect("user.reviews", "review")
+      .where("user.id = :id", { id })
       .leftJoinAndSelect("review.place", "place")
       .select(["user", "user.role", "review", "place.name", "place.photo"])
       .getOne();
 
     if (!user) {
-      throw new Error("User not found");
+      throw new AppError("User not found");
     }
 
     return user;
   }
 
   async findByEmail(email: string): Promise<User | undefined> {
-    const user = await this.repository.findOne({ email });
+    // const user = await this.repository.findOne({ email });
+    const user = await this.repository
+      .createQueryBuilder("user")
+      .where("user.email = :email", { email })
+      .select(["user.email", "user.password", "user.id", "user.name"])
+      .getOne();
 
     return user;
   }
