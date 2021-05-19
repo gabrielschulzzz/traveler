@@ -179,17 +179,21 @@ export function PlacePage() {
                             domingoOpenUntil={domingoOpenUntil}
                         />
 
-                        <ContactInfo>
-                            <a
-                                href={`http://api.whatsapp.com/send?phone=${telefone.trim()}&text=bom%20dia`}
-                                rel="noreferrer"
-                                target="_blank"
-                            ><button><FaWhatsapp />Entrar em contato</button></a>
-                            <div className="contact-phone">
-                                <p className="title">Telefone</p>
-                                <p className="phone">{telefone}</p>
-                            </div>
-                        </ContactInfo>
+
+                        {
+                            telefone && <ContactInfo>
+                                <a
+                                    href={`http://api.whatsapp.com/send?phone=${telefone.trim()}&text=bom%20dia`}
+                                    rel="noreferrer"
+                                    target="_blank"
+                                ><button><FaWhatsapp />Entrar em contato</button></a>
+                                <div className="contact-phone">
+                                    <p className="title">Telefone</p>
+                                    <p className="phone">{telefone}</p>
+                                </div>
+                            </ContactInfo>
+                        }
+
                     </>
                 }
 
