@@ -5,6 +5,8 @@ import { ListSingleUserController } from "@modules/Users/useCases/listSingleUser
 import { UpdateUserController } from "@modules/Users/useCases/updateUser/UpdateUserController";
 import { Router } from "express";
 
+import { ensureAuthenticated } from "../middlewares/ensureAuthenticated";
+
 const createUserController = new CreateUserController();
 const deleteUserController = new DeleteUserController();
 const listAllUsersController = new ListAllUsersController();
@@ -16,7 +18,7 @@ const usersRoutes = Router();
 usersRoutes.post("/", createUserController.handle);
 usersRoutes.delete("/:id", deleteUserController.handle);
 usersRoutes.get("/", listAllUsersController.handle);
-usersRoutes.get("/:id", listSingleUserController.handle);
+usersRoutes.get("/me", ensureAuthenticated, listSingleUserController.handle);
 usersRoutes.patch("/:id", updateUserController.handle);
 
 export { usersRoutes };

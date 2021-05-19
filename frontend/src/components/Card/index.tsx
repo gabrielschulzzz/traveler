@@ -18,7 +18,6 @@ interface CardProps {
 }
 
 export function Card({ image, places, title, rating, category, iconDelete, iconEdit, iconDeleteLink, iconEditLink }: CardProps) {
-    console.log(category);
     return (
         <CardElement>
             <img src={image} alt={title} />

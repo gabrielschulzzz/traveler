@@ -15,14 +15,16 @@ import { DashboardEditPlace } from './pages/DashboardEditPlace';
 import { DashBoardAddPlace } from './pages/DashboardAddPlace';
 import ScrollToTop from './components/ScrollToTop';
 import { CreateAccount } from './pages/CreateAccount';
+import { UserDashboard } from './pages/UserDashboard';
 
 function App() {
   return (
-    <Router>
+    <>
       <GlobalStyle />
       <ScrollToTop />
       <Switch>
         <Route exact path='/' component={Home} />
+        <Route exact path='/user/dashboard' component={UserDashboard} />
         <Route exact path='/login' component={Login} />
         <Route exact path='/register' component={CreateAccount} />
         <Route exact path='/dashboard' component={DashboardCityList} />
@@ -35,7 +37,7 @@ function App() {
         <Route exact path='/cities/:city' component={City} />
         <Route path='/cities/:city/:place' component={PlacePage} />
       </Switch>
-    </Router>
+    </>
   );
 }
 

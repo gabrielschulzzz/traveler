@@ -29,6 +29,7 @@ export function PlacePage() {
     const [numero, setNumero] = useState('')
     const [rua, setRua] = useState('')
     const [telefone, setTelefone] = useState('');
+    const [reviews, setReviews] = useState([]);
 
     const [segundaOpen, setSegundaOpen] = useState(false)
     const [segundaOpenFrom, setSegundaOpenFrom] = useState('')
@@ -105,12 +106,13 @@ export function PlacePage() {
             setDomingoOpenUntil(data.domingoUntil)
 
             setDescription(data.description);
+            setReviews(data.reviews);
 
-            console.log(data)
         }
 
         fetchData()
-    })
+    }, [place])
+
 
     function handleReviewsModalClose() {
         setReviewsModalIsOpen(false)
@@ -132,13 +134,16 @@ export function PlacePage() {
         <>
             <LogoWhiteBg />
             <ReviewModal
+                reviews={reviews}
                 isOpen={isReviewsModalOpen}
                 onRequestClose={handleReviewsModalClose}
+                handleAddReviewsModalOpen={handleAddReviewsModalOpen}
             />
 
             <AddReviewModal
                 isOpen={isAddReviewModalOpen}
                 onRequestClose={handleAddReviewModalClose}
+                place={place}
             />
             <Container>
                 <PlaceDescription
@@ -202,10 +207,13 @@ export function PlacePage() {
                     rua={rua}
                 />
 
-                {/* <Avaliacoes
-                    handleReviewsModalOpen={handleReviewsModalOpen}
-                    handleAddReviewsModalOpen={handleAddReviewsModalOpen}
-                /> */}
+                {
+                    reviews && <Avaliacoes
+                        reviews={reviews}
+                        handleReviewsModalOpen={handleReviewsModalOpen}
+                        handleAddReviewsModalOpen={handleAddReviewsModalOpen}
+                    />
+                }
 
                 <Image>
                     <img src={photo} alt="" />

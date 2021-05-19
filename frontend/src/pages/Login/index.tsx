@@ -32,13 +32,13 @@ export function Login() {
                     <h1>Fazer login</h1>
                     <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
                     <div className="secondInput">
-                        <input type="text" placeholder="Senha" value={password} onChange={(e) => setPassword(e.target.value)} />
+                        <input type="password" placeholder="Senha" value={password} onChange={(e) => setPassword(e.target.value)} />
                         <AiOutlineEye />
                     </div>
                     <Button>Acessar plataforma</Button>
                     <div className="alert">
                         <FiAlertCircle />
-                        <p>Acesso restrito a socios e moderadores.</p>
+                        <p>Nao possui conta? <Link to="/register">Cadastre-se agora gratuitamente.</Link></p>
                     </div>
                 </form>
             </div>

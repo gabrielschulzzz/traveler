@@ -72,10 +72,17 @@ export const CardBottom = styled.div`
         .star {
             border-left: 1px solid var(--light-grey);
             padding: .5rem 2.5rem;
+            cursor: pointer;
         }
 
-        svg {
+        .star-normal {
             color: var(--text);
+            font-size: 1.5rem;
+        }
+        
+
+        .star-color {
+            color: var(--orange);
             font-size: 1.5rem;
         }
     }

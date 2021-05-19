@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const CardTop = styled.div`
+export const ModalTop = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -33,6 +33,7 @@ export const CardTop = styled.div`
             font-family: 'Heebo', sans-serif;
             font-size: 0.875rem;
             font-weight: 500;
+            cursor: pointer;
         }
 
 

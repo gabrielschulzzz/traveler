@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { ImCrying } from 'react-icons/im'
 import { RiArrowDownSLine } from 'react-icons/ri'
 import { Link } from 'react-router-dom';
@@ -10,6 +10,7 @@ import { Button } from "../../components/Button";
 import { Input } from "../../components/Input";
 import { Logo } from "../../components/Logo";
 import { Card } from "../../components/Card";
+import { AuthContext } from '../../context/AuthContext';
 
 interface CityAttributes {
     id: string;
@@ -21,6 +22,7 @@ interface CityAttributes {
 }
 
 export function CitiesList() {
+    const { user } = useContext(AuthContext)
     const [cities, setCities] = useState([])
 
     useEffect(() => {
@@ -41,7 +43,10 @@ export function CitiesList() {
                 <HeaderContent>
                     <Logo />
                     <Input placeholder="Qual cidade voce procura?" />
-                    <Link to="/login"><Button>Acesso restrito</Button></Link>
+                    {
+                        user ? user.name : <Link to="/login"><Button>Acesso restrito</Button></Link>
+                    }
+
                 </HeaderContent>
             </Container>
 

@@ -12,7 +12,9 @@ export function PersonRating({ avatar, name, rating, avaliacao }: PersonRatingPr
     return (
         <Container>
             <div className="userRatings">
-                <img src={avatar} alt="" />
+                {
+                    avatar ? <img src={avatar} alt="" /> : <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png" alt="" />
+                }
 
                 <div className="userProfile">
                     <div>

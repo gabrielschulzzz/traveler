@@ -16,6 +16,7 @@ export const Container = styled.div`
             object-fit: cover;
         }
     }
+    
     .form {
         h1 {
             margin-bottom: 1rem;

@@ -5,7 +5,7 @@ import { ListSingleUserUseCase } from "./ListSingleUserUseCase";
 
 class ListSingleUserController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { id } = request.params;
+    const { id } = request.user;
 
     const listSingleUserUseCase = container.resolve(ListSingleUserUseCase);
 
