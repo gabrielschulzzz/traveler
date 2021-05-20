@@ -16,12 +16,10 @@ interface AddReviewModalProps {
     place: string;
 }
 
-
 export function AddReviewModal({ isOpen, onRequestClose, place }: AddReviewModalProps) {
     const [review, setReview] = useState('')
     const [score, setScore] = useState(0)
     const [successAddReview, setSuccessAddReview] = useState(false);
-    const [error, setError] = useState('');
     const { user } = useContext(AuthContext)
 
 
@@ -40,7 +38,6 @@ export function AddReviewModal({ isOpen, onRequestClose, place }: AddReviewModal
                 onRequestClose()
             }
         } catch (error) {
-            setError(error.message)
         }
 
     }

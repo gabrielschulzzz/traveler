@@ -18,6 +18,7 @@ export function Login() {
 
     async function handleSubmit(event: FormEvent) {
         event.preventDefault()
+
         const data = {
             email, password
         }
@@ -26,9 +27,7 @@ export function Login() {
             notify()
         }
 
-
         await signIn(data)
-
     }
 
 

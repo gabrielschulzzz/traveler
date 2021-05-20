@@ -27,6 +27,10 @@ class AuthenticateUserUseCase {
   ) { }
 
   async execute({ email, password }: IRequest): Promise<IResponse> {
+    if (!email || !password) {
+      throw new AppError("Insert an email or password")
+    }
+
     const user = await this.usersRepository.findByEmail(email)
 
     if (!user) {

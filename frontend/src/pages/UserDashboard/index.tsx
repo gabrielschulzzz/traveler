@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai'
 import { Button } from '../../components/Button'
 import { Card } from '../../components/Card'

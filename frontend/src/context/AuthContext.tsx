@@ -32,6 +32,7 @@ type SignInCredentials = {
 type AuthContextData = {
     signIn(credentials: SignInCredentials): Promise<void>;
     signOut(): void;
+    getUser(): void;
     user: User | undefined | null;
     isAuthenticated: boolean;
 }
@@ -48,25 +49,25 @@ export function AuthProvider({ children }: AuthProviderProps) {
     let history = useHistory();
     const notify = () => toast.error("Usuario ou senha incorretos!");
 
-    useEffect(() => {
-        async function getUser() {
-            const jwt = localStorage.getItem("traveler");
+    async function getUser() {
+        const jwt = localStorage.getItem("traveler");
 
-            if (jwt) {
-                const user = await api.get('/users/me', { headers: { "Authorization": `Bearer ${jwt}` } })
-                api.defaults.headers.authorization = `Bearer ${jwt}`;
+        if (jwt) {
+            const user = await api.get('/users/me', { headers: { "Authorization": `Bearer ${jwt}` } })
+            api.defaults.headers.authorization = `Bearer ${jwt}`;
 
-                setUser({
-                    id: user.data.id,
-                    name: user.data.name,
-                    email: user.data.email,
-                    avatar: user.data.avatar,
-                    role: user.data.role,
-                    reviews: user.data.reviews
-                });
-            }
-
+            setUser({
+                id: user.data.id,
+                name: user.data.name,
+                email: user.data.email,
+                avatar: user.data.avatar,
+                role: user.data.role,
+                reviews: user.data.reviews
+            });
         }
+    }
+
+    useEffect(() => {
         getUser()
     }, [])
 
@@ -80,17 +81,17 @@ export function AuthProvider({ children }: AuthProviderProps) {
         history.push('/')
     }
 
-
     async function signIn({ email, password }: SignInCredentials) {
         try {
             const response = await api.post('/sessions', {
                 email, password
             })
 
-
-            const user: UserResponse = await api.get('/users/me', { headers: { "Authorization": `Bearer ${response.data.token}` } })
-
             localStorage.setItem("traveler", response.data.token);
+            api.defaults.headers.authorization = `Bearer ${response.data.token}`;
+
+            const user: UserResponse = await api.get('/users/me')
+
 
             setUser({
                 id: user.data.id,
@@ -117,7 +118,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, signIn, user, signOut }}>
+        <AuthContext.Provider value={{ isAuthenticated, signIn, user, signOut, getUser }}>
             {children}
         </AuthContext.Provider>
     )
