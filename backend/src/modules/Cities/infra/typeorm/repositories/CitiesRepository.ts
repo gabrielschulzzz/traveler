@@ -39,11 +39,12 @@ class CitiesRepository implements ICitiesRepository {
     name,
     description,
     photo,
+    highlight,
   }: IUpdateCityDTO): Promise<void> {
     await this.repository
       .createQueryBuilder()
       .update(City)
-      .set({ name, description, fact, photo })
+      .set({ name, description, fact, photo, highlight })
       .where("id = :id", { id })
       .execute();
   }

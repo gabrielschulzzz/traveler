@@ -7,7 +7,6 @@ import { FormEvent, useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { border } from "polished";
 
 export function Login() {
     const [email, setEmail] = useState("")

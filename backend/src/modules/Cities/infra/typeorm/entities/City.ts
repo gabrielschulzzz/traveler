@@ -1,5 +1,12 @@
 import { Place } from "@modules/Places/infra/typeorm/entities/Place";
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 
 @Entity("cities")
 class City {
@@ -14,6 +21,10 @@ class City {
 
   @Column()
   description: string;
+
+  @OneToOne(() => Place, { eager: true })
+  @JoinColumn()
+  highlight: Place;
 
   @Column()
   fact: string;

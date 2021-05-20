@@ -1,5 +1,4 @@
 import { AiOutlineArrowLeft, AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai'
-
 import { Container, AllHeader } from './styles';
 
 import { Button } from '../../components/Button';

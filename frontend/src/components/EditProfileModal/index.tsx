@@ -4,8 +4,8 @@ import { IoCloseSharp } from "react-icons/io5";
 import Modal from "react-modal";
 import { AuthContext } from "../../context/AuthContext";
 import { api } from "../../services/api";
-import { Button } from "../Button";
-import { CardTop, CardBody } from './styles'
+import { CardTop, CardBody } from './styles';
+import { ToastContainer, toast } from 'react-toastify';
 
 interface EditProfileModalProps {
     isOpen: boolean;
@@ -17,8 +17,10 @@ export function EditProfileModal({ isOpen, onRequestClose }: EditProfileModalPro
     const [email, setEmail] = useState('');
     const [avatar, setAvatar] = useState('');
     const [password, setPassword] = useState('');
+    const notify = () => toast.error("Preencha todos os campos!");
 
-    const { user } = useContext(AuthContext)
+
+    const { user, setUser } = useContext(AuthContext)
 
     useEffect(() => {
         function fillData() {
@@ -33,12 +35,27 @@ export function EditProfileModal({ isOpen, onRequestClose }: EditProfileModalPro
 
     async function handleUpdateProfile(e: FormEvent) {
         e.preventDefault()
+
+        if (!nome || !email || !password) {
+            notify()
+            return;
+        }
+
         try {
             await api.patch("/users", {
                 name: nome,
                 avatar,
                 email,
                 password
+            })
+
+            user && setUser({
+                id: user?.id,
+                name: nome,
+                avatar,
+                email,
+                role: user.role,
+                reviews: user.reviews,
             })
 
             onRequestClose()
@@ -55,6 +72,17 @@ export function EditProfileModal({ isOpen, onRequestClose }: EditProfileModalPro
             overlayClassName="react-modal-overlay"
             className="react-modal-content"
         >
+            <ToastContainer
+                position="top-right"
+                autoClose={2000}
+                hideProgressBar
+                newestOnTop={false}
+                closeOnClick={false}
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
             <CardTop>
                 <div className="first">
                     <h3>Editar perfil</h3>
@@ -92,7 +120,6 @@ export function EditProfileModal({ isOpen, onRequestClose }: EditProfileModalPro
 
 
                 <button onClick={handleUpdateProfile}>Alterar perfil</button>
-
             </CardBody>
         </Modal>
     )

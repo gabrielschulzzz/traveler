@@ -7,11 +7,18 @@ class UpdateCityController {
   async handle(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
 
-    const { name, fact, description, photo } = request.body;
+    const { name, fact, description, photo, highlight } = request.body;
 
     const updateCityUseCase = container.resolve(UpdateCityUseCase);
 
-    await updateCityUseCase.execute({ id, name, fact, description, photo });
+    await updateCityUseCase.execute({
+      id,
+      name,
+      fact,
+      description,
+      photo,
+      highlight,
+    });
 
     return response.json();
   }

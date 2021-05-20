@@ -35,6 +35,7 @@ type AuthContextData = {
     getUser(): void;
     user: User | undefined | null;
     isAuthenticated: boolean;
+    setUser: React.Dispatch<React.SetStateAction<User | null | undefined>>
 }
 
 type AuthProviderProps = {
@@ -88,10 +89,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
             })
 
             localStorage.setItem("traveler", response.data.token);
+
             api.defaults.headers.authorization = `Bearer ${response.data.token}`;
 
             const user: UserResponse = await api.get('/users/me')
-
 
             setUser({
                 id: user.data.id,
@@ -118,7 +119,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, signIn, user, signOut, getUser }}>
+        <AuthContext.Provider value={{ isAuthenticated, signIn, user, signOut, getUser, setUser }}>
             {children}
         </AuthContext.Provider>
     )

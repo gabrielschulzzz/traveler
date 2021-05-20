@@ -7,9 +7,16 @@ import { Logo } from '../../components/Logo'
 import { AuthContext } from '../../context/AuthContext'
 import { HeaderContent } from '../City/styles'
 import { Container, DashboardBody, ReviewCard, Profile, ReviewCardGrid } from './styles'
+import { OverlayDelete } from '../../components/OverlayDelete';
+import { api } from '../../services/api'
+import { useHistory } from 'react-router'
 
 export function UserDashboard() {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+    const [deletTriggered, setDeletTriggered] = useState(false);
+    const { user, signOut } = useContext(AuthContext);
+
+    let history = useHistory();
 
     function handleEditModalOpen() {
         setIsEditModalOpen(true)
@@ -19,14 +26,27 @@ export function UserDashboard() {
         setIsEditModalOpen(false)
     }
 
-    const { user, signOut } = useContext(AuthContext);
+    function handleDeleteUser() {
+        setDeletTriggered(true)
+    }
+
+    async function deleteCity() {
+        await api.delete(`/users`)
+
+        setDeletTriggered(false)
+        signOut()
+    }
+
 
     return (
         <>
             <Container>
                 <HeaderContent>
                     <Logo />
-                    <Button onClick={signOut}>Logout</Button>
+                    <div className="buttons">
+                        <button className="delete-btn" onClick={handleDeleteUser}>Deletar perfil</button>
+                        <Button onClick={signOut}>Logout</Button>
+                    </div>
                 </HeaderContent>
             </Container>
 
@@ -86,7 +106,15 @@ export function UserDashboard() {
             </DashboardBody >
 
 
-
+            {
+                deletTriggered && user &&
+                <OverlayDelete
+                    title="Excluir perfil"
+                    text={`Tem certeza que quer excluir o seu perfil e seus ${user.reviews.length} reviews?`}
+                    setDeletTriggered={setDeletTriggered}
+                    handleDelete={deleteCity}
+                />
+            }
 
         </>
     )

@@ -43,7 +43,7 @@ export const CardBody = styled.form`
 
     .avatar {
         position: relative;
-        width: 162px;
+        width: 152px;
         height: 162px;
         margin-bottom: 1.5rem;
 
@@ -77,5 +77,11 @@ export const CardBody = styled.form`
         margin-top: 1rem;
         background-color: var(--green);
         color: var(--white);
+        border: 0;
+        padding: 1rem;
+        font-size: 1rem;
+        border-radius: 0.625rem;
+        width: 30%;
+        align-self: flex-end;
     }
 `
