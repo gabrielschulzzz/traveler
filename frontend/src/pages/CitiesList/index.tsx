@@ -44,7 +44,7 @@ export function CitiesList() {
                     <Logo />
                     <Input placeholder="Qual cidade voce procura?" />
                     {
-                        user ? user.name : <Link to="/login"><Button>Acesso restrito</Button></Link>
+                        user ? <Link to="/user/dashboard"><Button>Dashboard</Button></Link> : <Link to="/login"><Button>Acesso restrito</Button></Link>
                     }
 
                 </HeaderContent>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
 import { AiOutlineCamera, AiOutlineCalendar } from 'react-icons/ai'
@@ -14,6 +14,7 @@ import { CardHorizontal } from '../../components/CardHorizontal';
 import { CityHeroImage } from '../../components/CityHeroImage';
 import { CityDescriptionAndStats } from '../../components/CityDescriptionAndStats';
 import { SectionText } from '../../components/SectionText';
+import { AuthContext } from '../../context/AuthContext';
 
 interface RouteParams {
     city: string;
@@ -36,6 +37,8 @@ interface currentCityType {
 }
 
 export function City() {
+    const { user } = useContext(AuthContext)
+
     const [currentCity, setCurrentCity] = useState({} as currentCityType)
     const [food, setFood] = useState(0);
     const [turistic, setTuristic] = useState(0);
@@ -94,7 +97,10 @@ export function City() {
                 <HeaderContent>
                     <Logo />
                     <p>{currentCity && currentCity.name}</p>
-                    <Link to="/login"><Button>Acesso restrito</Button></Link>
+                    {
+                        user ? <Link to="/user/dashboard"><Button>Dashboard</Button></Link>
+                            : <Link to="/login"><Button>Acesso restrito</Button></Link>
+                    }
                 </HeaderContent>
             </Container>
 

@@ -30,7 +30,8 @@ type SignInCredentials = {
 
 type AuthContextData = {
     signIn(credentials: SignInCredentials): Promise<void>;
-    user: User | undefined;
+    signOut(): void;
+    user: User | undefined | null;
     isAuthenticated: boolean;
 }
 
@@ -41,7 +42,7 @@ type AuthProviderProps = {
 export const AuthContext = createContext({} as AuthContextData);
 
 export function AuthProvider({ children }: AuthProviderProps) {
-    const [user, setUser] = useState<User>();
+    const [user, setUser] = useState<User | null>();
     const isAuthenticated = !!user;
     let history = useHistory();
 
@@ -67,6 +68,16 @@ export function AuthProvider({ children }: AuthProviderProps) {
         getUser()
     }, [])
 
+    type UserResponse = {
+        data: User
+    }
+
+    function signOut() {
+        setUser(null)
+        localStorage.removeItem("traveler");
+        history.push('/')
+    }
+
 
     async function signIn({ email, password }: SignInCredentials) {
         try {
@@ -74,10 +85,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
                 email, password
             })
 
-            const user = await api.get('/users/me', { headers: { "Authorization": `Bearer ${response.data.token}` } })
+            const user: UserResponse = await api.get('/users/me', { headers: { "Authorization": `Bearer ${response.data.token}` } })
 
             localStorage.setItem("traveler", response.data.token);
-
 
             setUser({
                 id: user.data.id,
@@ -88,16 +98,21 @@ export function AuthProvider({ children }: AuthProviderProps) {
                 reviews: user.data.reviews
             });
 
+            if (user.data.role === "user") {
+                history.push('/user/dashboard')
+            }
 
+            if (user.data.role === "admin") {
+                history.push('/dashboard')
+            }
 
-            history.push('/cities')
         } catch (error) {
             console.log(error.message)
         }
     }
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, signIn, user }}>
+        <AuthContext.Provider value={{ isAuthenticated, signIn, user, signOut }}>
             {children}
         </AuthContext.Provider>
     )

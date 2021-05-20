@@ -94,8 +94,7 @@ export const GlobalStyle = createGlobalStyle`
         outline: none;
         height: 41.25rem;
         overflow-y: scroll;
-        border-top-left-radius: 1.25rem;
-        border-bottom-left-radius: 1.25rem;
+        border-radius: 1.25rem;
 
         /* width */
         ::-webkit-scrollbar {

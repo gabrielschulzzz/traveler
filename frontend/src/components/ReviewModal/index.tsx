@@ -10,6 +10,7 @@ interface ReviewModalProps {
     reviews: ReviewAttr[];
     handleAddReviewsModalOpen: () => void;
 }
+
 interface UserAttr {
     id: string;
     name: string;
@@ -26,7 +27,6 @@ interface ReviewAttr {
 }
 
 export function ReviewModal({ isOpen, onRequestClose, reviews, handleAddReviewsModalOpen }: ReviewModalProps) {
-
     function handleAddNewReview() {
         onRequestClose()
         handleAddReviewsModalOpen()

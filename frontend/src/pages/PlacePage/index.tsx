@@ -132,7 +132,7 @@ export function PlacePage() {
 
     return (
         <>
-            <LogoWhiteBg />
+            <LogoWhiteBg city={city} />
             <ReviewModal
                 reviews={reviews}
                 isOpen={isReviewsModalOpen}
