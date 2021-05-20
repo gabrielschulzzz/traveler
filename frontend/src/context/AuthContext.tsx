@@ -1,6 +1,7 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
 import { api } from "../services/api";
 import { useHistory } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 
 type Place = {
     name: string;
@@ -45,6 +46,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     const [user, setUser] = useState<User | null>();
     const isAuthenticated = !!user;
     let history = useHistory();
+    const notify = () => toast.error("Usuario ou senha incorretos!");
 
     useEffect(() => {
         async function getUser() {
@@ -85,6 +87,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
                 email, password
             })
 
+
             const user: UserResponse = await api.get('/users/me', { headers: { "Authorization": `Bearer ${response.data.token}` } })
 
             localStorage.setItem("traveler", response.data.token);
@@ -107,7 +110,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
             }
 
         } catch (error) {
-            console.log(error.message)
+            if (error.response.data.message === "User or password incorrect") {
+                notify()
+            }
         }
     }
 

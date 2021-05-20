@@ -1,9 +1,11 @@
 import axios from 'axios'
-import { useState } from 'react'
+import { FormEvent, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Button } from '../../components/Button'
 import { Input } from '../../components/Input'
 import { Container } from './styles'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export function CreateAccount() {
     const [name, setName] = useState('')
@@ -11,10 +13,23 @@ export function CreateAccount() {
     const [password, setPassword] = useState('')
     const [password2, setPassword2] = useState('')
     const [accountCreationSuccess, setAccountCreationSuccess] = useState(false);
+    const notify = () => toast.error("Preencha todos os campos!");
+    const notifypassword = () => toast.error("Senhas nao coincidem!");
+    const notifyUserAlready = () => toast.error("Usuario com este e-mail ja cadastrado!")
 
-    const handleRegister = async () => {
+    async function handleRegister(e: FormEvent) {
+        e.preventDefault()
         try {
+            if (password !== password2) {
+                notifypassword()
+            }
+
             if (password === password2) {
+                if (!name || !password || !password2 || !email) {
+                    notify()
+                    return;
+                }
+
                 const user = await axios.post("http://localhost:3333/users", {
                     name, email, password
                 })
@@ -27,7 +42,9 @@ export function CreateAccount() {
             }
 
         } catch (error) {
-            console.log(error.message)
+            if (error.response.data.message === "User already exists") {
+                notifyUserAlready()
+            }
         }
 
 
@@ -35,6 +52,17 @@ export function CreateAccount() {
 
     return (
         <Container>
+            <ToastContainer
+                position="top-left"
+                autoClose={2000}
+                hideProgressBar
+                newestOnTop={false}
+                closeOnClick={false}
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
             {
                 accountCreationSuccess
                     ?
@@ -45,14 +73,14 @@ export function CreateAccount() {
                         </div>
                     </>
                     :
-                    <div className="form">
+                    <form onSubmit={handleRegister} className="form">
                         <h1>Criar conta</h1>
                         <input type="text" placeholder="Nome" value={name} onChange={(e) => setName(e.target.value)} />
                         <input type="text" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
                         <input type="password" placeholder="Senha" value={password} onChange={(e) => setPassword(e.target.value)} />
                         <input type="password" placeholder="Confirmar senha" value={password2} onChange={(e) => setPassword2(e.target.value)} />
-                        <Button onClick={handleRegister}>Cadastrar</Button>
-                    </div>
+                        <Button>Cadastrar</Button>
+                    </form>
             }
 
             <div className="image">
