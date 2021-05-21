@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AiFillStar, AiOutlineCheckCircle, AiOutlineStar } from 'react-icons/ai';
 import { FiAlertCircle } from 'react-icons/fi';
@@ -8,7 +8,7 @@ import { api } from '../../services/api';
 import { AuthContext } from '../../context/AuthContext';
 import { CardTop, CardBottom, SuccessReview } from './styles';
 import { Button } from '../Button';
-import { BiHappyBeaming } from 'react-icons/bi';
+import { ToastContainer, toast } from 'react-toastify';
 
 interface userAttr {
     avatar: string | null;
@@ -17,11 +17,17 @@ interface userAttr {
     name: string;
 }
 
+type Place = {
+    name: string;
+    photo: string;
+}
+
 interface reviewsAttr {
     id: string;
     review: string;
     score: string;
     user: userAttr;
+    place: Place;
 }
 
 interface AddReviewModalProps {
@@ -31,16 +37,29 @@ interface AddReviewModalProps {
     setReviews: React.Dispatch<React.SetStateAction<reviewsAttr[]>>
     reviews: reviewsAttr[];
     city: string;
+    photo: string;
+    name: string;
 }
 
-export function AddReviewModal({ isOpen, onRequestClose, place, setReviews, reviews, city }: AddReviewModalProps) {
+export function AddReviewModal({ isOpen, onRequestClose, place, setReviews, reviews, city, name, photo }: AddReviewModalProps) {
     const [review, setReview] = useState('')
     const [score, setScore] = useState(0)
-    const [successAddReview, setSuccessAddReview] = useState(false);
-    const { user } = useContext(AuthContext)
+    const [successAddReview, setSuccessAddReview] = useState(false)
+    const notify = () => toast.error("Preencha todos os campos!");
+
+    const { user, setUser } = useContext(AuthContext)
+
+    useEffect(() => {
+        console.log(user)
+    }, [])
 
 
     async function handleAddReview() {
+        if (!review || !score) {
+            notify()
+            return;
+        }
+
         try {
             const response = await api.post("/reviews", {
                 review,
@@ -50,7 +69,11 @@ export function AddReviewModal({ isOpen, onRequestClose, place, setReviews, revi
 
             user &&
                 setReviews([...reviews, {
-                    id: '1231',
+                    id: response.data.id,
+                    place: {
+                        name,
+                        photo
+                    },
                     review,
                     score: String(score),
                     user: {
@@ -60,6 +83,24 @@ export function AddReviewModal({ isOpen, onRequestClose, place, setReviews, revi
                         name: user.name
                     }
                 }])
+
+            user &&
+                setUser({
+                    id: user.id,
+                    name: user.name,
+                    email: user.email,
+                    avatar: user.avatar,
+                    role: user.role,
+                    reviews: [...user.reviews, {
+                        id: response.data.id,
+                        place: {
+                            name,
+                            photo
+                        },
+                        review,
+                        score: String(score),
+                    }]
+                })
 
 
             if (response.status === 200) {
@@ -79,6 +120,17 @@ export function AddReviewModal({ isOpen, onRequestClose, place, setReviews, revi
             overlayClassName="react-modal-overlay"
             className="react-modal-content-small"
         >
+            <ToastContainer
+                position="top-right"
+                autoClose={2000}
+                hideProgressBar
+                newestOnTop={false}
+                closeOnClick={false}
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
 
             <CardTop>
                 <div className="first">

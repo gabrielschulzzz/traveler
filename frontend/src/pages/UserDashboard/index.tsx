@@ -3,6 +3,7 @@ import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai'
 import { Button } from '../../components/Button'
 import { Card } from '../../components/Card'
 import { EditProfileModal } from '../../components/EditProfileModal'
+import { ConfirmLogoutModal } from '../../components/ConfirmLogoutModal'
 import { Logo } from '../../components/Logo'
 import { AuthContext } from '../../context/AuthContext'
 import { HeaderContent } from '../City/styles'
@@ -13,8 +14,11 @@ import { useHistory } from 'react-router'
 
 export function UserDashboard() {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+    const [isConfirmLogoutModalOpen, setIsConfirmLogoutModalOpen] = useState(false);
+
     const [deletTriggered, setDeletTriggered] = useState(false);
-    const { user, signOut } = useContext(AuthContext);
+
+    const { user, signOut, setUser } = useContext(AuthContext);
 
     let history = useHistory();
 
@@ -24,6 +28,14 @@ export function UserDashboard() {
 
     function handleEditModalClose() {
         setIsEditModalOpen(false)
+    }
+
+    function handleConfirmLogoutModalOpen() {
+        setIsConfirmLogoutModalOpen(true)
+    }
+
+    function handleConfirmLogoutModalClose() {
+        setIsConfirmLogoutModalOpen(false)
     }
 
     function handleDeleteUser() {
@@ -37,6 +49,21 @@ export function UserDashboard() {
         signOut()
     }
 
+    async function handleDeleteReview(id: string) {
+        await api.delete('/reviews', {
+            data: { id }
+        })
+
+        user && setUser({
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            avatar: user.avatar,
+            role: user.role,
+            reviews: user.reviews.filter(review => !(review.id === id))
+        })
+    }
+
     return (
         <>
             <Container>
@@ -44,7 +71,7 @@ export function UserDashboard() {
                     <Logo />
                     <div className="buttons">
                         <button className="delete-btn" onClick={handleDeleteUser}>Deletar perfil</button>
-                        <Button onClick={signOut}>Logout</Button>
+                        <Button onClick={handleConfirmLogoutModalOpen}>Logout</Button>
                     </div>
                 </HeaderContent>
             </Container>
@@ -54,9 +81,14 @@ export function UserDashboard() {
                 onRequestClose={handleEditModalClose}
             />
 
+            <ConfirmLogoutModal
+                isOpen={isConfirmLogoutModalOpen}
+                onRequestClose={handleConfirmLogoutModalClose}
+                signOut={signOut}
+            />
+
             <DashboardBody>
                 <h1>Bem vindo, {user && user.name}!</h1>
-
                 <div>
                     {
                         user &&
@@ -82,7 +114,7 @@ export function UserDashboard() {
                                         <p><strong>Review</strong>: {review.review}</p>
                                         <p><strong>Nota</strong>: {review.score}</p>
                                         <p><strong>Local</strong>: {review.place.name}</p>
-                                        <AiOutlineDelete />
+                                        <AiOutlineDelete onClick={() => handleDeleteReview(review.id)} />
                                     </div>
                                 </ReviewCard>
                             ))
@@ -117,7 +149,6 @@ export function UserDashboard() {
                     handleDelete={deleteUser}
                 />
             }
-
         </>
     )
 }

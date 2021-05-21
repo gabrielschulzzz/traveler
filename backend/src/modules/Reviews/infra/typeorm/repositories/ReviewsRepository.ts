@@ -15,15 +15,17 @@ class ReviewsRepository implements IReviewsRepository {
     user,
     place,
     review,
-  }: ICreateReviewDTO): Promise<void> {
+  }: ICreateReviewDTO): Promise<Review> {
     const newReview = await this.repository.create({
-      score,
       user,
+      score,
       place,
       review,
     });
 
     await this.repository.save(newReview);
+
+    return newReview;
   }
 
   async delete(id: string): Promise<void> {

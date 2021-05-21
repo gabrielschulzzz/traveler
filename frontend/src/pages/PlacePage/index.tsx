@@ -19,6 +19,11 @@ interface RouteParams {
     place: string;
 }
 
+type Place = {
+    name: string;
+    photo: string;
+}
+
 interface userAttr {
     avatar: string | null;
     email: string;
@@ -31,6 +36,7 @@ interface reviewsAttr {
     review: string;
     score: string;
     user: userAttr;
+    place: Place;
 }
 
 export function PlacePage() {
@@ -122,7 +128,6 @@ export function PlacePage() {
             setDescription(data.description);
             setReviews(data.reviews);
 
-            console.log(data.reviews)
 
         }
 
@@ -164,6 +169,8 @@ export function PlacePage() {
                 setReviews={setReviews}
                 reviews={reviews}
                 city={city}
+                name={name}
+                photo={photo}
             />
 
             <Container>

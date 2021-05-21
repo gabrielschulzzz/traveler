@@ -87,6 +87,15 @@ export const GlobalStyle = createGlobalStyle`
         border-radius: 1.25rem;
     }
 
+    .react-modal-logout {
+        width: 100%;
+        max-width: 29rem;
+        background: var(--background);
+        outline: none;
+        height: 25rem;
+        border-radius: 1.25rem;
+    }
+
     .react-modal-content {
         width: 100%;
         max-width: 46rem;

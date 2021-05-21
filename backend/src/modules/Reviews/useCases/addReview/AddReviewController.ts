@@ -10,14 +10,14 @@ class AddReviewController {
 
     const addReviewUseCase = container.resolve(AddReviewUseCase);
 
-    await addReviewUseCase.execute({
+    const newReview = await addReviewUseCase.execute({
       score,
       place,
       user: id,
       review,
     });
 
-    return response.json();
+    return response.json(newReview);
   }
 }
 

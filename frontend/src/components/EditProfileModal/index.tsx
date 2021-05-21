@@ -111,7 +111,7 @@ export function EditProfileModal({ isOpen, onRequestClose }: EditProfileModalPro
                         <input type="text" value={nome} onChange={(e) => setNome(e.target.value)} />
                         <label>Email</label>
                         <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
-                        <label>Nova senha</label>
+                        <label>Senha Atual</label>
                         <input type="text" value={password} onChange={(e) => setPassword(e.target.value)} />
                     </>
                 }
