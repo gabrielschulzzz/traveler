@@ -5,22 +5,21 @@ import { PersonRating } from '../PersonRating';
 interface AvaliacoesProps {
     handleReviewsModalOpen: () => void;
     handleAddReviewsModalOpen: () => void;
-    reviews: ReviewAttr[];
+    reviews: reviewsAttr[];
 }
 
-interface UserAttr {
+interface userAttr {
+    avatar: string | null;
+    email: string;
     id: string;
     name: string;
-    review: string;
-    email: string;
-    avatar: string;
 }
 
-interface ReviewAttr {
+interface reviewsAttr {
     id: string;
     review: string;
     score: string;
-    user: UserAttr;
+    user: userAttr;
 }
 
 export function Avaliacoes({ handleReviewsModalOpen, handleAddReviewsModalOpen, reviews }: AvaliacoesProps) {

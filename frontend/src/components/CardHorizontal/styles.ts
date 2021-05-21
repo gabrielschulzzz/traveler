@@ -10,6 +10,11 @@ export const Container = styled.div`
     border-radius: 1rem;
     border: 1px solid var(--light-grey);
     position: relative;
+    transition: box-shadow .2s;
+
+    :hover {
+        box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.12);
+    }
 
 
     div { 

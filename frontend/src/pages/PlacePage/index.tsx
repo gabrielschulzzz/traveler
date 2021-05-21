@@ -19,6 +19,20 @@ interface RouteParams {
     place: string;
 }
 
+interface userAttr {
+    avatar: string | null;
+    email: string;
+    id: string;
+    name: string;
+}
+
+interface reviewsAttr {
+    id: string;
+    review: string;
+    score: string;
+    user: userAttr;
+}
+
 export function PlacePage() {
     const [name, setName] = useState('')
     const [bairro, setBairro] = useState('')
@@ -29,7 +43,7 @@ export function PlacePage() {
     const [numero, setNumero] = useState('')
     const [rua, setRua] = useState('')
     const [telefone, setTelefone] = useState('');
-    const [reviews, setReviews] = useState([]);
+    const [reviews, setReviews] = useState<reviewsAttr[]>([]);
 
     const [segundaOpen, setSegundaOpen] = useState(false)
     const [segundaOpenFrom, setSegundaOpenFrom] = useState('')
@@ -108,6 +122,8 @@ export function PlacePage() {
             setDescription(data.description);
             setReviews(data.reviews);
 
+            console.log(data.reviews)
+
         }
 
         fetchData()
@@ -133,6 +149,7 @@ export function PlacePage() {
     return (
         <>
             <LogoWhiteBg city={city} />
+
             <ReviewModal
                 reviews={reviews}
                 isOpen={isReviewsModalOpen}
@@ -144,7 +161,11 @@ export function PlacePage() {
                 isOpen={isAddReviewModalOpen}
                 onRequestClose={handleAddReviewModalClose}
                 place={place}
+                setReviews={setReviews}
+                reviews={reviews}
+                city={city}
             />
+
             <Container>
                 <PlaceDescription
                     title={name}
@@ -208,7 +229,8 @@ export function PlacePage() {
                 />
 
                 {
-                    reviews && <Avaliacoes
+                    reviews &&
+                    <Avaliacoes
                         reviews={reviews}
                         handleReviewsModalOpen={handleReviewsModalOpen}
                         handleAddReviewsModalOpen={handleAddReviewsModalOpen}

@@ -27,6 +27,13 @@ interface currentCityPlacesType {
     photo: string;
 }
 
+interface highlightType {
+    id: string;
+    photo: string;
+    name: string;
+    description: string;
+}
+
 interface currentCityType {
     id: string;
     photo: string;
@@ -34,6 +41,7 @@ interface currentCityType {
     fact: string;
     description: string;
     places: currentCityPlacesType[];
+    highlight: highlightType | null;
 }
 
 export function City() {
@@ -133,11 +141,19 @@ export function City() {
                 }
             </CardsContainer> */}
 
-            {/* <CardHorizontal
-                description="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aspernatur eaque cumque maxime assumenda in architecto."
-                img="https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80"
-                nome="Praia dos Ingleses"
-            /> */}
+            {
+                currentCity.highlight
+                    ?
+                    <Link to={`/cities/${city}/${currentCity.highlight.id}`}>
+                        <CardHorizontal
+                            description={currentCity.highlight.description}
+                            img={currentCity.highlight.photo}
+                            nome={currentCity.highlight.name}
+                        />
+                    </Link>
+                    : <CardHorizontal
+                    />
+            }
 
             <AllHeader>
                 <div>

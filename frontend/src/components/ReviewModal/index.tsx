@@ -4,27 +4,27 @@ import { IoCloseSharp } from 'react-icons/io5';
 import { BsChat } from 'react-icons/bs'
 import { ReviewModalCard } from "../ReviewModalCard";
 
-interface ReviewModalProps {
-    isOpen: boolean;
-    onRequestClose: () => void;
-    reviews: ReviewAttr[];
-    handleAddReviewsModalOpen: () => void;
-}
-
-interface UserAttr {
+interface userAttr {
+    avatar: string | null;
+    email: string;
     id: string;
     name: string;
-    review: string;
-    email: string;
-    avatar: string;
 }
 
-interface ReviewAttr {
+interface reviewsAttr {
     id: string;
     review: string;
     score: string;
-    user: UserAttr;
+    user: userAttr;
 }
+
+interface ReviewModalProps {
+    isOpen: boolean;
+    onRequestClose: () => void;
+    reviews: reviewsAttr[];
+    handleAddReviewsModalOpen: () => void;
+}
+
 
 export function ReviewModal({ isOpen, onRequestClose, reviews, handleAddReviewsModalOpen }: ReviewModalProps) {
     function handleAddNewReview() {

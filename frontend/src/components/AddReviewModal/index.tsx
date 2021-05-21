@@ -1,22 +1,39 @@
-import { IoCloseSharp } from 'react-icons/io5';
-import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
-import { FiAlertCircle } from 'react-icons/fi';
-import Modal from 'react-modal';
-
-import { CardTop, CardBottom } from './styles';
-import { Button } from '../Button';
 import { useContext, useState } from 'react';
-import { AuthContext } from '../../context/AuthContext';
-import { api } from '../../services/api';
 import { Link } from 'react-router-dom';
+import { AiFillStar, AiOutlineCheckCircle, AiOutlineStar } from 'react-icons/ai';
+import { FiAlertCircle } from 'react-icons/fi';
+import { IoCloseSharp } from 'react-icons/io5';
+import Modal from 'react-modal';
+import { api } from '../../services/api';
+import { AuthContext } from '../../context/AuthContext';
+import { CardTop, CardBottom, SuccessReview } from './styles';
+import { Button } from '../Button';
+import { BiHappyBeaming } from 'react-icons/bi';
+
+interface userAttr {
+    avatar: string | null;
+    email: string;
+    id: string;
+    name: string;
+}
+
+interface reviewsAttr {
+    id: string;
+    review: string;
+    score: string;
+    user: userAttr;
+}
 
 interface AddReviewModalProps {
     isOpen: boolean;
     onRequestClose: () => void;
     place: string;
+    setReviews: React.Dispatch<React.SetStateAction<reviewsAttr[]>>
+    reviews: reviewsAttr[];
+    city: string;
 }
 
-export function AddReviewModal({ isOpen, onRequestClose, place }: AddReviewModalProps) {
+export function AddReviewModal({ isOpen, onRequestClose, place, setReviews, reviews, city }: AddReviewModalProps) {
     const [review, setReview] = useState('')
     const [score, setScore] = useState(0)
     const [successAddReview, setSuccessAddReview] = useState(false);
@@ -31,11 +48,24 @@ export function AddReviewModal({ isOpen, onRequestClose, place }: AddReviewModal
                 place
             })
 
+            user &&
+                setReviews([...reviews, {
+                    id: '1231',
+                    review,
+                    score: String(score),
+                    user: {
+                        avatar: user?.avatar,
+                        email: user?.email,
+                        id: user?.id,
+                        name: user.name
+                    }
+                }])
+
+
             if (response.status === 200) {
                 setSuccessAddReview(true)
                 setReview('')
                 setScore(0)
-                onRequestClose()
             }
         } catch (error) {
         }
@@ -62,7 +92,17 @@ export function AddReviewModal({ isOpen, onRequestClose, place }: AddReviewModal
 
             {
                 user ? successAddReview ?
-                    <div>Review Adicionada!</div>
+                    <SuccessReview>
+                        <div>
+                            <h1>Review Adicionada!</h1>
+                        </div>
+                        <AiOutlineCheckCircle />
+                        <div className="second">
+                            <Link to={`/cities/${city}`}>
+                                <p>Descobrir novos locais na cidade.</p>
+                            </Link>
+                        </div>
+                    </SuccessReview>
                     : <CardBottom>
                         <textarea
                             placeholder="Escreva aqui..."
@@ -115,9 +155,6 @@ export function AddReviewModal({ isOpen, onRequestClose, place }: AddReviewModal
                         <p><Link to="/register">Crie agora mesmo sua conta</Link>, ou faca o <Link to="/login">login.</Link></p>
                     </CardBottom>
             }
-
-
-
         </Modal>
     )
 }

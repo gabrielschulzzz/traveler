@@ -12,12 +12,12 @@ interface CardHorizontalProps {
     handleEdit?: () => void;
 }
 
-export function CardHorizontal({ description, img, nome, iconDelete, iconEdit, handleEdit }: CardHorizontalProps) {
+export function CardHorizontal({ description, img, nome, iconDelete, iconEdit, handleEdit, handleDelete }: CardHorizontalProps) {
     return (
         <Container>
             {
                 iconDelete
-                    ? <div className="iconDelete">
+                    ? <div className="iconDelete" onClick={handleDelete}>
                         <AiOutlineDelete />
                     </div>
                     : null

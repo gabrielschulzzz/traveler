@@ -19,7 +19,7 @@ interface currentCityType {
     fact: string;
     description: string;
     places: currentCityPlacesType[];
-    highlight: highlightType;
+    highlight: highlightType | null;
 }
 
 interface highlightType {
@@ -39,8 +39,6 @@ interface HighlightModalProps {
 }
 
 export function HighlightModal({ isOpen, onRequestClose, places, currentCity, cityId, setCurrentCity }: HighlightModalProps) {
-    const [activeHighlight, setActiveHighlight] = useState('');
-
     async function handleSetNewHighlight(id: string, description: string, photo: string, name: string) {
         await api.put(`cities/${cityId}`, {
             name: currentCity.name,
@@ -64,6 +62,7 @@ export function HighlightModal({ isOpen, onRequestClose, places, currentCity, ci
                 photo
             }
         })
+
         onRequestClose()
     }
 

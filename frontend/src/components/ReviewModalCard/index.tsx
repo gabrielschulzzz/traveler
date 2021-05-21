@@ -8,7 +8,7 @@ interface ReviewModalCardProps {
     name: string;
     review: string;
     score: string;
-    avatar: string;
+    avatar: string | null;
 }
 
 export function ReviewModalCard({ onRequestClose, score, name, review, avatar }: ReviewModalCardProps) {

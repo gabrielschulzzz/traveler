@@ -2,7 +2,7 @@ import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 import { Container } from './styles';
 
 interface PersonRatingProps {
-    avatar: string;
+    avatar: string | null;
     name: string;
     avaliacao: string;
     rating?: number;

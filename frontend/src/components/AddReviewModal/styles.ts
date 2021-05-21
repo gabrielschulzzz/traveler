@@ -116,3 +116,33 @@ export const CardBottom = styled.div`
         }
     }
 `
+export const SuccessReview = styled.div`
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 75%;
+    color: var(--orange);
+    font-weight: bold;
+    padding: 1rem 0;
+
+    svg {
+        color: var(--green);
+        font-size: 5rem;
+    }
+
+    .second {
+        display: flex;
+        cursor: pointer;
+
+        p {
+            color: var(--text);
+            margin: 1rem;
+            border-radius: 0.625rem;
+            border: 1px solid var(--light-grey);
+            background-color: var(--white);
+            padding: 0.8rem 1.2rem;
+        }
+    }
+`

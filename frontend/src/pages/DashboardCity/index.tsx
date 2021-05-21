@@ -18,6 +18,7 @@ import { useEffect, useState } from 'react';
 import { AddButton } from '../../components/AddButton';
 import axios from 'axios';
 import { HighlightModal } from '../../components/HighlightModal';
+import { api } from '../../services/api';
 
 interface RouteParams {
     slug: string;
@@ -46,7 +47,7 @@ interface currentCityType {
     fact: string;
     description: string;
     places: currentCityPlacesType[];
-    highlight: highlightType;
+    highlight: highlightType | null;
 }
 
 export function DashboardCity() {
@@ -69,12 +70,23 @@ export function DashboardCity() {
         setIsHighlighModalOpen(false)
     }
 
-    function handleDelete() {
+    async function handleDelete() {
+        await api.put(`cities/${city}`, {
+            name: currentCity.name,
+            description: currentCity.description,
+            fact: currentCity.fact,
+            photo: currentCity.photo,
+        })
 
-    }
-
-    function handleEdit() {
-
+        setCurrentCity({
+            id: city,
+            name: currentCity.name,
+            description: currentCity.description,
+            fact: currentCity.fact,
+            photo: currentCity.photo,
+            places: currentCity.places,
+            highlight: null
+        })
     }
 
     useEffect(() => {
