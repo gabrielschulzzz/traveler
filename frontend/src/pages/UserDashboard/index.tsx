@@ -30,13 +30,12 @@ export function UserDashboard() {
         setDeletTriggered(true)
     }
 
-    async function deleteCity() {
+    async function deleteUser() {
         await api.delete(`/users`)
 
         setDeletTriggered(false)
         signOut()
     }
-
 
     return (
         <>
@@ -60,7 +59,13 @@ export function UserDashboard() {
 
                 <div>
                     {
-                        user && <h3>Voce ja postou {user.reviews.length} {user.reviews.length > 1 ? 'reviews' : 'review'} em nossa plataforma.</h3>
+                        user &&
+                        <h3>Voce ja postou {user.reviews.length}
+                            {user.reviews.length > 1
+                                ? ' reviews'
+                                : ' review'
+                            } em nossa plataforma.
+                        </h3>
                     }
 
                     <h2>Seus reviews</h2>
@@ -85,8 +90,6 @@ export function UserDashboard() {
                         }
                     </ReviewCardGrid>
 
-
-
                     <h2>Seu perfil</h2>
 
                     {
@@ -105,14 +108,13 @@ export function UserDashboard() {
                 </div>
             </DashboardBody >
 
-
             {
                 deletTriggered && user &&
                 <OverlayDelete
                     title="Excluir perfil"
                     text={`Tem certeza que quer excluir o seu perfil e seus ${user.reviews.length} reviews?`}
                     setDeletTriggered={setDeletTriggered}
-                    handleDelete={deleteCity}
+                    handleDelete={deleteUser}
                 />
             }
 

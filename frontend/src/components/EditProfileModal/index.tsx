@@ -19,7 +19,6 @@ export function EditProfileModal({ isOpen, onRequestClose }: EditProfileModalPro
     const [password, setPassword] = useState('');
     const notify = () => toast.error("Preencha todos os campos!");
 
-
     const { user, setUser } = useContext(AuthContext)
 
     useEffect(() => {
@@ -87,7 +86,6 @@ export function EditProfileModal({ isOpen, onRequestClose }: EditProfileModalPro
                 <div className="first">
                     <h3>Editar perfil</h3>
                 </div>
-
                 <div className="second">
                     <button className="close" onClick={onRequestClose}><IoCloseSharp /></button>
                 </div>
@@ -118,8 +116,8 @@ export function EditProfileModal({ isOpen, onRequestClose }: EditProfileModalPro
                     </>
                 }
 
-
                 <button onClick={handleUpdateProfile}>Alterar perfil</button>
+
             </CardBody>
         </Modal>
     )

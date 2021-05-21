@@ -72,6 +72,7 @@ export const Container = styled.div`
         border-top-right-radius: 0.625rem;
         border-bottom-right-radius: 0.625rem;
         width: 2rem;
+        cursor: pointer;
 
         
         svg {
@@ -91,6 +92,7 @@ export const Container = styled.div`
         border-top-left-radius: 0.625rem;
         border-bottom-left-radius: 0.625rem;
         width: 2rem;
+        cursor: pointer;
 
         
         svg {

@@ -17,6 +17,7 @@ import { Link, useHistory, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { AddButton } from '../../components/AddButton';
 import axios from 'axios';
+import { HighlightModal } from '../../components/HighlightModal';
 
 interface RouteParams {
     slug: string;
@@ -28,6 +29,14 @@ interface currentCityPlacesType {
     name: string;
     category: string;
     photo: string;
+    description: string;
+}
+
+interface highlightType {
+    id: string;
+    photo: string;
+    name: string;
+    description: string;
 }
 
 interface currentCityType {
@@ -37,6 +46,7 @@ interface currentCityType {
     fact: string;
     description: string;
     places: currentCityPlacesType[];
+    highlight: highlightType;
 }
 
 export function DashboardCity() {
@@ -45,10 +55,27 @@ export function DashboardCity() {
     const [turistic, setTuristic] = useState(0);
     const [events, setEvents] = useState(0);
     const [deleteTriggered, setDeletTriggered] = useState(false);
+    const [isHighlighModalOpen, setIsHighlighModalOpen] = useState(false);
 
     const { city } = useParams<RouteParams>();
 
     let history = useHistory();
+
+    function handleHighlightModalOpen() {
+        setIsHighlighModalOpen(true)
+    }
+
+    function handleHighlightModalClose() {
+        setIsHighlighModalOpen(false)
+    }
+
+    function handleDelete() {
+
+    }
+
+    function handleEdit() {
+
+    }
 
     useEffect(() => {
         const fetchData = async () => {
@@ -57,7 +84,7 @@ export function DashboardCity() {
             );
 
             setCurrentCity(result.data);
-
+            console.log(result.data)
 
             interface accAttr {
                 food: number;
@@ -68,7 +95,6 @@ export function DashboardCity() {
             interface placeAttr {
                 category: string;
             }
-
 
             const places = result.data.places.reduce((acc: accAttr, place: placeAttr) => {
                 if (place.category === 'food') {
@@ -156,13 +182,32 @@ export function DashboardCity() {
 
             </CardsContainer> */}
 
-            {/* <CardHorizontal
-                description="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aspernatur eaque cumque maxime assumenda in architecto."
-                img="https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80"
-                nome="Praia dos Ingleses"
-                iconDelete
-                iconEdit
-            /> */}
+            <HighlightModal
+                isOpen={isHighlighModalOpen}
+                onRequestClose={handleHighlightModalClose}
+                places={currentCity.places}
+                currentCity={currentCity}
+                setCurrentCity={setCurrentCity}
+                cityId={city}
+            />
+
+            {
+                currentCity.highlight ? <CardHorizontal
+                    description={currentCity.highlight.description}
+                    img={currentCity.highlight.photo}
+                    nome={currentCity.highlight.name}
+                    iconDelete
+                    handleDelete={handleDelete}
+                    handleEdit={handleHighlightModalOpen}
+                    iconEdit
+                /> : <CardHorizontal
+                    iconDelete
+                    handleDelete={handleDelete}
+                    handleEdit={handleHighlightModalOpen}
+                    iconEdit
+                />
+            }
+
 
             <AllHeader>
                 <div>
