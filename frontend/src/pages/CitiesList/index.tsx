@@ -11,6 +11,7 @@ import { Input } from "../../components/Input";
 import { Logo } from "../../components/Logo";
 import { Card } from "../../components/Card";
 import { AuthContext } from '../../context/AuthContext';
+import { Footer } from '../../components/Footer';
 
 interface CityAttributes {
     id: string;
@@ -80,6 +81,8 @@ export function CitiesList() {
                     </NotFoundContainer>
                 }
             </CardsContainer>
+
+            <Footer />
         </>
     )
 }

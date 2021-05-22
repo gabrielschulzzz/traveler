@@ -3,6 +3,7 @@ import { Card } from '../../components/Card';
 import { Header } from '../../components/Header/'
 import { Container, Hero, CardsRow } from './styles';
 import { Link } from 'react-router-dom';
+import { Footer } from '../../components/Footer';
 
 export function Home() {
     return (
@@ -55,6 +56,7 @@ export function Home() {
                     />
                 </CardsRow>
             </Container>
+            <Footer />
         </>
     )
 }

@@ -13,6 +13,7 @@ import { AddReviewModal } from '../../components/AddReviewModal';
 import { useParams } from 'react-router';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { Footer } from '../../components/Footer';
 
 interface RouteParams {
     city: string;
@@ -248,6 +249,7 @@ export function PlacePage() {
                     <img src={photo} alt="" />
                 </Image>
             </Container>
+            <Footer />
         </>
     )
 }

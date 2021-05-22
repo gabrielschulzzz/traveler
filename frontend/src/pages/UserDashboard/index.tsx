@@ -11,6 +11,7 @@ import { Container, DashboardBody, ReviewCard, Profile, ReviewCardGrid } from '.
 import { OverlayDelete } from '../../components/OverlayDelete';
 import { api } from '../../services/api'
 import { useHistory } from 'react-router'
+import { Footer } from '../../components/Footer'
 
 export function UserDashboard() {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false)
@@ -139,6 +140,8 @@ export function UserDashboard() {
 
                 </div>
             </DashboardBody >
+
+            <Footer />
 
             {
                 deletTriggered && user &&

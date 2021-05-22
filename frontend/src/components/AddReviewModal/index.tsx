@@ -6,9 +6,10 @@ import { IoCloseSharp } from 'react-icons/io5';
 import Modal from 'react-modal';
 import { api } from '../../services/api';
 import { AuthContext } from '../../context/AuthContext';
-import { CardTop, CardBottom, SuccessReview } from './styles';
+import { CardTop, CardBottom, SuccessReview, NotLogged } from './styles';
 import { Button } from '../Button';
 import { ToastContainer, toast } from 'react-toastify';
+import { BsExclamationCircle } from 'react-icons/bs';
 
 interface userAttr {
     avatar: string | null;
@@ -202,10 +203,11 @@ export function AddReviewModal({ isOpen, onRequestClose, place, setReviews, revi
                         </div>
                     </CardBottom>
                     :
-                    <CardBottom className="not-logged">
+                    <NotLogged>
+                        <BsExclamationCircle />
                         <h2>Apenas usuarios cadastrados podem adicionar reviews</h2>
-                        <p><Link to="/register">Crie agora mesmo sua conta</Link>, ou faca o <Link to="/login">login.</Link></p>
-                    </CardBottom>
+                        <p><Link to="/register">Crie agora mesmo sua conta</Link> ou faça o <Link to="/login">login.</Link></p>
+                    </NotLogged>
             }
         </Modal>
     )

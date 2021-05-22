@@ -20,11 +20,13 @@ import { CardFormDates } from "../../components/CardFormDates";
 import { NextEvent } from "../../components/NextEvent";
 import { CardCategoryPicker } from '../../components/CardCategoryPicker';
 import { Step1, Step2 } from '../../components/DashboardHeader/styles';
+import { ToastContainer, toast } from 'react-toastify';
 
 
 export function DashboardAddCity() {
     const [step, setStep] = useState(1);
     const [successAdd, setSuccessAdd] = useState(false);
+    const notify = () => toast.error("Preencha todos os campos!");
 
     // city state
     const [cityName, setCityName] = useState('');
@@ -71,6 +73,15 @@ export function DashboardAddCity() {
     const [sabadoFrom, setSabadoFrom] = useState('');
     const [sabadoUntil, setSabadoUntil] = useState('');
 
+    function handleStep2() {
+        if (!cityName || !cityDescription || !cityFact || cityPhoto) {
+            notify()
+            return;
+        }
+
+        setStep(2)
+    }
+
     async function createNewCity() {
         try {
             const newCity = await axios.post('http://localhost:3333/cities', {
@@ -80,64 +91,66 @@ export function DashboardAddCity() {
                 photo: cityPhoto
             })
 
-            type === "food"
-                ? await axios.post('http://localhost:3333/places', {
-                    name: placeName,
-                    city: newCity.data.id,
-                    description: placeDescription,
-                    telefone: placeTelefone,
-                    photo: placePhoto,
-                    category: type,
-                    cep,
-                    rua: street,
-                    bairro: district,
-                    numero: number,
-                    domingoOpen,
-                    domingoFrom,
-                    domingoUntil,
-                    segundaOpen,
-                    segundaFrom,
-                    segundaUntil,
-                    tercaOpen,
-                    tercaFrom,
-                    tercaUntil,
-                    quartaOpen,
-                    quartaFrom,
-                    quartaUntil,
-                    quintaOpen,
-                    quintaFrom,
-                    quintaUntil,
-                    sextaOpen,
-                    sextaFrom,
-                    sextaUntil,
-                    sabadoOpen,
-                    sabadoFrom,
-                    sabadoUntil,
-                })
-                : type === 'event'
+
+            if (type === "food" && !placeName || !newCity.data.id)
+                type === "food"
                     ? await axios.post('http://localhost:3333/places', {
                         name: placeName,
                         city: newCity.data.id,
                         description: placeDescription,
+                        telefone: placeTelefone,
                         photo: placePhoto,
                         category: type,
                         cep,
                         rua: street,
                         bairro: district,
                         numero: number,
+                        domingoOpen,
+                        domingoFrom,
+                        domingoUntil,
+                        segundaOpen,
+                        segundaFrom,
+                        segundaUntil,
+                        tercaOpen,
+                        tercaFrom,
+                        tercaUntil,
+                        quartaOpen,
+                        quartaFrom,
+                        quartaUntil,
+                        quintaOpen,
+                        quintaFrom,
+                        quintaUntil,
+                        sextaOpen,
+                        sextaFrom,
+                        sextaUntil,
+                        sabadoOpen,
+                        sabadoFrom,
+                        sabadoUntil,
                     })
+                    : type === 'event'
+                        ? await axios.post('http://localhost:3333/places', {
+                            name: placeName,
+                            city: newCity.data.id,
+                            description: placeDescription,
+                            photo: placePhoto,
+                            category: type,
+                            cep,
+                            rua: street,
+                            bairro: district,
+                            numero: number,
+                        })
 
-                    : await axios.post('http://localhost:3333/places', {
-                        name: placeName,
-                        city: newCity.data.id,
-                        description: placeDescription,
-                        photo: placePhoto,
-                        category: type,
-                        cep,
-                        rua: street,
-                        bairro: district,
-                        numero: number,
-                    })
+                        : await axios.post('http://localhost:3333/places', {
+                            name: placeName,
+                            city: newCity.data.id,
+                            description: placeDescription,
+                            photo: placePhoto,
+                            category: type,
+                            cep,
+                            rua: street,
+                            bairro: district,
+                            numero: number,
+                        })
         } catch (error) {
             console.log(error)
         } finally {
@@ -147,6 +160,17 @@ export function DashboardAddCity() {
 
     return (
         <Container>
+            <ToastContainer
+                position="top-right"
+                autoClose={2000}
+                hideProgressBar
+                newestOnTop={false}
+                closeOnClick={false}
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
             {
                 successAdd === false &&
                 <>
@@ -201,7 +225,7 @@ export function DashboardAddCity() {
                             <FiAlertCircle />
                             <p>Preencha todos os dados com cuidado</p>
                         </div>
-                        <Button onClick={() => setStep(2)}>Proximo</Button>
+                        <Button onClick={handleStep2}>Proximo</Button>
                     </CardFormFooter>
                 </CardForm>
             }

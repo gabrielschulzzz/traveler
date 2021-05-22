@@ -50,6 +50,7 @@ export const CardBottom = styled.div`
         color: var(--text);
     }
 
+
     .score {
         margin-top: 1rem;
         display: flex;
@@ -144,5 +145,25 @@ export const SuccessReview = styled.div`
             background-color: var(--white);
             padding: 0.8rem 1.2rem;
         }
+    }
+
+`
+
+export const NotLogged = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 60%;
+
+    svg {
+        color: var(--orange);
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+    h2 {
+        color: var(--title);
+        margin-bottom: 5rem;
     }
 `

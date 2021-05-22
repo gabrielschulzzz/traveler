@@ -1,12 +1,13 @@
 import { FiAlertCircle } from "react-icons/fi";
 import { Button } from "../../components/Button";
 import { Container, Image } from "./styles";
-import { AiOutlineEye } from 'react-icons/ai'
+import { AiOutlineArrowLeft, AiOutlineEye } from 'react-icons/ai'
 import { Link } from 'react-router-dom'
 import { FormEvent, useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { GoBackButton } from "../../components/GoBackButton";
 
 export function Login() {
     const [email, setEmail] = useState("")
@@ -48,6 +49,7 @@ export function Login() {
             </Image>
             <div className="form">
                 <form onSubmit={handleSubmit}>
+                    <GoBackButton />
                     <h1>Fazer login</h1>
                     <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
                     <div className="secondInput">

@@ -15,6 +15,7 @@ import { CityHeroImage } from '../../components/CityHeroImage';
 import { CityDescriptionAndStats } from '../../components/CityDescriptionAndStats';
 import { SectionText } from '../../components/SectionText';
 import { AuthContext } from '../../context/AuthContext';
+import { Footer } from '../../components/Footer';
 
 interface RouteParams {
     city: string;
@@ -142,17 +143,14 @@ export function City() {
             </CardsContainer> */}
 
             {
-                currentCity.highlight
-                    ?
-                    <Link to={`/cities/${city}/${currentCity.highlight.id}`}>
-                        <CardHorizontal
-                            description={currentCity.highlight.description}
-                            img={currentCity.highlight.photo}
-                            nome={currentCity.highlight.name}
-                        />
-                    </Link>
-                    : <CardHorizontal
+                currentCity.highlight &&
+                <Link to={`/cities/${city}/${currentCity.highlight.id}`}>
+                    <CardHorizontal
+                        description={currentCity.highlight.description}
+                        img={currentCity.highlight.photo}
+                        nome={currentCity.highlight.name}
                     />
+                </Link>
             }
 
             <AllHeader>
@@ -183,6 +181,8 @@ export function City() {
                     ))
                 }
             </CardsContainer>
+
+            <Footer />
         </>
     )
 }

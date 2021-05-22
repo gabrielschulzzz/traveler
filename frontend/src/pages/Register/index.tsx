@@ -2,20 +2,24 @@ import axios from 'axios'
 import { FormEvent, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Button } from '../../components/Button'
-import { Input } from '../../components/Input'
-import { Container } from './styles'
+import { Container, FormSuccess } from './styles'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { FiAlertCircle } from 'react-icons/fi'
+import { GoBackButton } from '../../components/GoBackButton'
+import { AiOutlineCheckCircle } from 'react-icons/ai'
 
-export function CreateAccount() {
+export function Register() {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [password2, setPassword2] = useState('')
     const [accountCreationSuccess, setAccountCreationSuccess] = useState(false);
+
     const notify = () => toast.error("Preencha todos os campos!");
     const notifypassword = () => toast.error("Senhas nao coincidem!");
     const notifyUserAlready = () => toast.error("Usuario com este e-mail ja cadastrado!")
+    const notifyServerError = () => toast.error("Erro no servidor. Tente novamente.")
 
     async function handleRegister(e: FormEvent) {
         e.preventDefault()
@@ -38,7 +42,7 @@ export function CreateAccount() {
                     setAccountCreationSuccess(true)
                 }
             } else {
-                console.log("Passwords dont match")
+                notifyServerError()
             }
 
         } catch (error) {
@@ -46,8 +50,6 @@ export function CreateAccount() {
                 notifyUserAlready()
             }
         }
-
-
     }
 
     return (
@@ -67,20 +69,28 @@ export function CreateAccount() {
                 accountCreationSuccess
                     ?
                     <>
-                        <div className="form">
+                        <FormSuccess>
                             <h1>Conta criada!</h1>
+                            <AiOutlineCheckCircle />
                             <Link to="/login"><Button>Fazer login</Button></Link>
-                        </div>
+                        </FormSuccess>
                     </>
                     :
-                    <form onSubmit={handleRegister} className="form">
-                        <h1>Criar conta</h1>
-                        <input type="text" placeholder="Nome" value={name} onChange={(e) => setName(e.target.value)} />
-                        <input type="text" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                        <input type="password" placeholder="Senha" value={password} onChange={(e) => setPassword(e.target.value)} />
-                        <input type="password" placeholder="Confirmar senha" value={password2} onChange={(e) => setPassword2(e.target.value)} />
-                        <Button>Cadastrar</Button>
-                    </form>
+                    <div className="form">
+                        <form onSubmit={handleRegister}>
+                            <GoBackButton />
+                            <h1>Criar conta</h1>
+                            <input type="text" placeholder="Nome" value={name} onChange={(e) => setName(e.target.value)} />
+                            <input type="text" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                            <input type="password" placeholder="Senha" value={password} onChange={(e) => setPassword(e.target.value)} />
+                            <input type="password" placeholder="Confirmar senha" value={password2} onChange={(e) => setPassword2(e.target.value)} />
+                            <Button>Cadastrar</Button>
+                            <div className="alert">
+                                <FiAlertCircle />
+                                <p>Ja possui conta? <Link to="/login">Faça login agora mesmo.</Link></p>
+                            </div>
+                        </form>
+                    </div>
             }
 
             <div className="image">

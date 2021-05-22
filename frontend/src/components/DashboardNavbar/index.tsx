@@ -18,8 +18,12 @@ export function DashboardNavbar() {
                 <Link to="/dashboard">
                     <BiMap />
                 </Link>
-                <FiGrid />
-                <MdChatBubbleOutline />
+                <Link to="/dashboard/users">
+                    <FiGrid />
+                </Link>
+                <Link to="/dashboard/reviews">
+                    <MdChatBubbleOutline />
+                </Link>
             </div>
             <Link to="/">
                 <BsPower />

@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 
 interface CardProps {
-    image: string;
+    image: string | null;
     title: string;
     places?: string;
     rating?: string;
@@ -15,12 +15,16 @@ interface CardProps {
     iconDeleteLink?: string;
     iconEdit?: boolean;
     iconEditLink?: string;
+    email?: string;
 }
 
-export function Card({ image, places, title, rating, category, iconDelete, iconEdit, iconDeleteLink, iconEditLink }: CardProps) {
+export function Card({ image, places, title, rating, category, iconDelete, iconEdit, iconDeleteLink, iconEditLink, email }: CardProps) {
     return (
         <CardElement>
-            <img src={image} alt={title} />
+            {image
+                ? <img src={image} alt={title} />
+                : <img src="https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png" alt={title} />}
+
             <div>
                 {rating
                     ?
@@ -31,6 +35,10 @@ export function Card({ image, places, title, rating, category, iconDelete, iconE
                     : ''
                 }
                 <h2>{title}</h2>
+
+                {
+                    email && <p>{email}</p>
+                }
 
                 {places ? <p>{places} {places.length === 1 ? 'local' : 'locais'}</p> : ''}
 
