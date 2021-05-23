@@ -36,6 +36,7 @@ type AuthContextData = {
     user: User | undefined | null;
     isAuthenticated: boolean;
     setUser: React.Dispatch<React.SetStateAction<User | null | undefined>>
+    jwt: string | null;
 }
 
 type AuthProviderProps = {
@@ -49,6 +50,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     const isAuthenticated = !!user;
     let history = useHistory();
     const notify = () => toast.error("Usuario ou senha incorretos!");
+    const jwt = localStorage.getItem("traveler");
 
     async function getUser() {
         const jwt = localStorage.getItem("traveler");
@@ -119,7 +121,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, signIn, user, signOut, getUser, setUser }}>
+        <AuthContext.Provider value={{ isAuthenticated, signIn, user, signOut, getUser, setUser, jwt }}>
             {children}
         </AuthContext.Provider>
     )

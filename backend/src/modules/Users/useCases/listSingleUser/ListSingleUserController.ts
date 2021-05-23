@@ -11,6 +11,10 @@ class ListSingleUserController {
 
     const user = await listSingleUserUseCase.execute(id);
 
+    if (user.avatar !== null) {
+      user.avatar = `http://localhost:3333/avatars/${user.avatar}`;
+    }
+
     return response.json(user);
   }
 }

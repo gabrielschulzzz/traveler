@@ -63,6 +63,8 @@ export const CardBody = styled.form`
 
     img {
         width: 10rem;
+        height: 10rem;
+        object-fit: cover;
         border-radius: 50%;
     }
 

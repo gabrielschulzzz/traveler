@@ -1,6 +1,7 @@
 import "reflect-metadata";
 import cors from "cors";
 import express, { NextFunction, Response, Request } from "express";
+import path from "path";
 import "express-async-errors";
 
 import "@shared/infra/typeorm";
@@ -10,6 +11,8 @@ import { AppError } from "@shared/errors/AppError";
 import { router } from "./routes";
 
 const app = express();
+const dir = path.join(__dirname, "..", "..", "..", "..", "tmp", "avatar");
+app.use("/avatars", express.static(dir));
 
 app.use(cors());
 app.use(express.json());

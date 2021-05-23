@@ -6,20 +6,32 @@ import { AuthContext } from "../../context/AuthContext";
 import { api } from "../../services/api";
 import { CardTop, CardBody } from './styles';
 import { ToastContainer, toast } from 'react-toastify';
+import Dropzone from "react-dropzone";
+import axios from "axios";
 
 interface EditProfileModalProps {
     isOpen: boolean;
     onRequestClose: () => void;
 }
 
+interface File {
+    path: string;
+    name: string;
+    size: string;
+    lastModified: number;
+    lastModifiedDate: Date;
+    type: string;
+}
+
 export function EditProfileModal({ isOpen, onRequestClose }: EditProfileModalProps) {
     const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
     const [avatar, setAvatar] = useState('');
+    const [newAvatar, setNewAvatar] = useState('');
     const [password, setPassword] = useState('');
     const notify = () => toast.error("Preencha todos os campos!");
 
-    const { user, setUser } = useContext(AuthContext)
+    const { user, setUser, jwt } = useContext(AuthContext)
 
     useEffect(() => {
         function fillData() {
@@ -32,6 +44,10 @@ export function EditProfileModal({ isOpen, onRequestClose }: EditProfileModalPro
         fillData()
     }, [user])
 
+    function handleFileUpload(file: any) {
+        setNewAvatar(file);
+    }
+
     async function handleUpdateProfile(e: FormEvent) {
         e.preventDefault()
 
@@ -41,12 +57,32 @@ export function EditProfileModal({ isOpen, onRequestClose }: EditProfileModalPro
         }
 
         try {
-            await api.patch("/users", {
-                name: nome,
-                avatar,
-                email,
-                password
+            let formData = new FormData();
+            formData.append('avatar', newAvatar);
+            formData.append('name', nome);
+            formData.append('email', email);
+            formData.append('password', password);
+
+            axios({
+                method: "patch",
+                url: "http://localhost:3333/users/",
+                data: formData,
+                headers:
+                    { "Content-Type": "multipart/form-data", "Authorization": `Bearer ${jwt}` },
             })
+                .then(function (response) {
+                    setUser({
+                        id: response.data.id,
+                        name: response.data.name,
+                        avatar: response.data.avatar,
+                        email: response.data.email,
+                        role: response.data.role,
+                        reviews: response.data.reviews,
+                    })
+                })
+                .catch(function (response) {
+                    console.log(response);
+                });
 
             user && setUser({
                 id: user?.id,
@@ -57,7 +93,6 @@ export function EditProfileModal({ isOpen, onRequestClose }: EditProfileModalPro
                 reviews: user.reviews,
             })
 
-            onRequestClose()
         } catch (error) {
             console.log(error)
         }
@@ -95,16 +130,37 @@ export function EditProfileModal({ isOpen, onRequestClose }: EditProfileModalPro
                 {
                     user?.avatar ?
                         <div className="avatar">
-                            <BiImageAdd />
+                            <Dropzone
+                                onDrop={acceptedFiles => handleFileUpload(acceptedFiles[0])}
+                            >
+                                {({ getRootProps, getInputProps }) => (
+                                    <section>
+                                        <div {...getRootProps()}>
+                                            <input {...getInputProps()} />
+                                            <p><BiImageAdd /></p>
+                                        </div>
+                                    </section>
+                                )}
+                            </Dropzone>
                             <img src={user?.avatar} alt="" />
                         </div>
                         :
                         <div className="avatar">
-                            <BiImageAdd />
+                            <Dropzone
+                                onDrop={acceptedFiles => handleFileUpload(acceptedFiles[0])}
+                            >
+                                {({ getRootProps, getInputProps }) => (
+                                    <section>
+                                        <div {...getRootProps()}>
+                                            <input {...getInputProps()} />
+                                            <p><BiImageAdd /></p>
+                                        </div>
+                                    </section>
+                                )}
+                            </Dropzone>
                             <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png" alt="" />
                         </div>
                 }
-
                 {
                     user && <>
                         <label>Nome</label>
