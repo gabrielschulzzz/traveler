@@ -5,9 +5,13 @@ import { AddCityUseCase } from "./AddCityUseCase";
 
 class AddCityController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { description, fact, name, photo } = request.body;
+    const { description, fact, name } = request.body;
+
+    let photo = request.file.filename;
 
     const addCityUseCase = container.resolve(AddCityUseCase);
+
+    photo = `http://localhost:3333/city/${photo}`;
 
     const newCity = await addCityUseCase.execute({
       description,

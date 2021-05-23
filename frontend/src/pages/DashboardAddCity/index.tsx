@@ -5,7 +5,7 @@ import { FiAlertCircle, FiCoffee } from "react-icons/fi";
 import { BsPlus } from 'react-icons/bs';
 import { AiOutlineArrowLeft, AiOutlineCalendar, AiOutlineCamera, AiOutlineCheckCircle } from "react-icons/ai";
 import { CategoryContainer, Container, RadioBox, SuccessAdd } from "./styles";
-
+import Dropzone from "react-dropzone";
 import { CardsRow } from "../Home/styles";
 import { Button } from "../../components/Button";
 import { CardForm } from "../../components/CardForm";
@@ -74,7 +74,7 @@ export function DashboardAddCity() {
     const [sabadoUntil, setSabadoUntil] = useState('');
 
     function handleStep2() {
-        if (!cityName || !cityDescription || !cityFact || cityPhoto) {
+        if (!cityName || !cityDescription || !cityFact || !cityPhoto) {
             notify()
             return;
         }
@@ -182,7 +182,7 @@ export function DashboardAddCity() {
                         <h2 className="title">Adicionar uma cidade</h2>
                         <div className="right">
                             <Step1 active={step} className="step1" onClick={() => setStep(1)}>01</Step1>
-                            <Step2 active={step} className="step2" onClick={() => setStep(2)}>02</Step2>
+                            <Step2 active={step} className="step2" onClick={() => handleStep2()}>02</Step2>
                         </div>
                     </DashboardHeader>
                 </>
@@ -203,12 +203,28 @@ export function DashboardAddCity() {
                         <input type="text" value={cityName} onChange={(e) => setCityName(e.target.value)} />
 
                         <label>Foto da cidade</label>
-                        <input type="text" value={cityPhoto} onChange={(e) => setCityPhoto(e.target.value)} />
-
-                        {/* <div className="form-foto">
+                        {/* <input type="text" value={cityPhoto} onChange={(e) => setCityPhoto(e.target.value)} /> */}
+                        <Dropzone
+                            onDrop={acceptedFiles => {
+                                handleFileUpload(acceptedFiles[0])
+                                setAvatarPreview(acceptedFiles.map(file => Object.assign(file, {
+                                    preview: URL.createObjectURL(file)
+                                })));
+                            }}
+                        >
+                            {({ getRootProps, getInputProps }) => (
+                                <section>
+                                    <div {...getRootProps()}>
+                                        <input {...getInputProps()} />
+                                        <p><BiImageAdd /></p>
+                                    </div>
+                                </section>
+                            )}
+                        </Dropzone>
+                        <div className="form-foto">
                             <BsPlus />
                             <p>Adicionar uma foto</p>
-                        </div> */}
+                        </div>
 
                         <label>Descricao da cidade</label>
                         <textarea

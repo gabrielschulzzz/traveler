@@ -11,8 +11,10 @@ import { AppError } from "@shared/errors/AppError";
 import { router } from "./routes";
 
 const app = express();
-const dir = path.join(__dirname, "..", "..", "..", "..", "tmp", "avatar");
-app.use("/avatars", express.static(dir));
+const avatarDir = path.join(__dirname, "..", "..", "..", "..", "tmp", "avatar");
+const cityDir = path.join(__dirname, "..", "..", "..", "..", "tmp", "city");
+app.use("/avatars", express.static(avatarDir));
+app.use("/city", express.static(cityDir));
 
 app.use(cors());
 app.use(express.json());

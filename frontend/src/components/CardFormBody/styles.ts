@@ -32,6 +32,7 @@ export const FormBody = styled.div`
             font-family: 'Heebo', sans-serif;
             background-color: var(--background);
             margin-bottom: 1.2rem;
+            cursor: pointer;
         }
 
         .form-foto-edit {

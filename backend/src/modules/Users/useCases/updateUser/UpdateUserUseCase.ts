@@ -24,7 +24,11 @@ class UpdateUserUseCase {
 
     const user = await this.usersRepository.findOne(id);
 
-    const avatartrimmed = user.avatar.substring(30);
+    let avatartrimmed;
+
+    if (user.avatar) {
+      avatartrimmed = user.avatar.substring(30);
+    }
 
     if (user.avatar) {
       await deleteFile(`./tmp/avatar/${avatartrimmed}`)
