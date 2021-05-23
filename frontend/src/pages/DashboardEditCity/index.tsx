@@ -13,6 +13,8 @@ import { Container } from './styles';
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
+import Dropzone from "react-dropzone";
+import { BsPlus } from 'react-icons/bs';
 
 interface RouteParams {
     slug: string;
@@ -34,9 +36,14 @@ export function DashboardEditCity() {
     const [cityPhoto, setCityPhoto] = useState('');
     const [cityDescription, setCityDescription] = useState('');
     const [cityFact, setCityFact] = useState('');
+    const [cityPhotoPreview, setCityPhotoPreview] = useState<any>([]);
 
     const { city } = useParams<RouteParams>();
     let history = useHistory();
+
+    function handleFileUploadCity(file: any) {
+        setCityPhoto(file);
+    }
 
     useEffect(() => {
         const fetchData = async () => {
@@ -55,11 +62,19 @@ export function DashboardEditCity() {
     }, [city]);
 
     async function handleEditSuccess() {
-        await axios.put(`http://localhost:3333/cities/${city}`, {
-            name: cityName,
-            description: cityDescription,
-            fact: cityFact,
-            photo: cityPhoto
+        let formData = new FormData();
+
+        formData.append("name", cityName)
+        formData.append("description", cityDescription)
+        formData.append("fact", cityFact)
+        formData.append("photo", cityPhoto)
+
+        axios({
+            method: "put",
+            url: `http://localhost:3333/cities/${city}`,
+            data: formData,
+            headers:
+                { "Content-Type": "multipart/form-data" },
         })
 
         setEditSuccess(true);
@@ -93,13 +108,46 @@ export function DashboardEditCity() {
                     <label>Nome da cidade</label>
                     <input type="text" value={cityName} onChange={(e) => setCityName(e.target.value)} />
                     <label htmlFor="">Foto da cidade</label>
-                    <input type="text" value={cityPhoto} onChange={(e) => setCityPhoto(e.target.value)} />
+                    {/* <input type="text" value={cityPhoto} onChange={(e) => setCityPhoto(e.target.value)} /> */}
                     {/* <div className="form-foto-edit">
                         <div>
                             <AiOutlineEdit />
                         </div>
                         <img src="https://images.unsplash.com/photo-1590093804249-491680485e5d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="" />
                     </div> */}
+
+                    <Dropzone
+                        onDrop={acceptedFiles => {
+                            handleFileUploadCity(acceptedFiles[0])
+                            setCityPhotoPreview(acceptedFiles.map(file => Object.assign(file, {
+                                preview: URL.createObjectURL(file)
+                            })));
+                        }}
+                    >
+                        {({ getRootProps, getInputProps }) => (
+                            <section>
+                                <div {...getRootProps()}>
+                                    <input {...getInputProps()} />
+                                    {cityPhotoPreview.length > 0
+                                        ? cityPhotoPreview.map((file: { preview: string | undefined; }) => (
+                                            <div className="form-foto">
+                                                <div>
+                                                    <AiOutlineEdit />
+                                                </div>
+                                                <img src={file.preview} alt="" />
+                                            </div>
+                                        ))
+                                        : <div className="form-foto">
+                                            <div>
+                                                <AiOutlineEdit />
+                                            </div>
+                                            <img src={cityPhoto} alt="" />
+                                        </div>
+                                    }
+                                </div>
+                            </section>
+                        )}
+                    </Dropzone>
 
                     <label>Descricao da cidade</label>
                     <textarea value={cityDescription} onChange={(e) => setCityDescription(e.target.value)}></textarea>

@@ -223,12 +223,12 @@ export function DashboardEditPlace() {
 
                     <label>Foto do local</label>
                     <input type="text" value={photo} onChange={(e) => setPhoto(e.target.value)} />
-                    {/* <div className="form-foto-edit">
+                    <div className="form-foto">
                         <div>
                             <AiOutlineEdit />
                         </div>
                         <img src="https://images.unsplash.com/photo-1517433670267-08bbd4be890f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=972&q=80" alt="" />
-                    </div> */}
+                    </div>
 
                     <label>Descricao do local</label>
                     <textarea value={description} onChange={(e) => setDescription(e.target.value)}></textarea>

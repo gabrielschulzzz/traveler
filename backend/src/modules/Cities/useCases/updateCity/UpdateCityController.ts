@@ -7,7 +7,11 @@ class UpdateCityController {
   async handle(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
 
-    const { name, fact, description, photo, highlight } = request.body;
+    const { name, fact, description, highlight } = request.body;
+
+    let photo = request.file.filename;
+
+    photo = `http://localhost:3333/city/${photo}`;
 
     const updateCityUseCase = container.resolve(UpdateCityUseCase);
 

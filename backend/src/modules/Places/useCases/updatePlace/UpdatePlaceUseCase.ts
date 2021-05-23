@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { PlacesRepository } from "@modules/Places/infra/typeorm/repositories/PlacesRepository";
 import { inject, injectable } from "tsyringe";
+import { deleteFile } from "utils/file";
 
 interface IRequest {
   id: string;
@@ -76,6 +77,12 @@ class UpdatePlaceUseCase {
     sabadoFrom,
     sabadoUntil
   }: IRequest): Promise<void> {
+    const place = await this.placesRepository.findOne(id);
+
+    if (photo) {
+      await deleteFile(`./tmp/place/${place.photo.substring(27)}`)
+    }
+
     await this.placesRepository.update({
       id,
       name,

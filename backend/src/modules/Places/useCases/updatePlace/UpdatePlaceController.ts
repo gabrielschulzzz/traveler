@@ -9,7 +9,6 @@ class UpdatePlaceController {
 
     const {
       name,
-      photo,
       category,
       cep,
       rua,
@@ -39,6 +38,10 @@ class UpdatePlaceController {
       sabadoFrom,
       sabadoUntil,
     } = request.body;
+
+    let photo = request.file.filename;
+
+    photo = `http://localhost:3333/place/${photo}`;
 
     const updatePlaceUseCase = container.resolve(UpdatePlaceUseCase);
 

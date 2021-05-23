@@ -22,6 +22,10 @@ placesRoutes.post(
 );
 placesRoutes.get("/:id", listSinglePlaceController.handle);
 placesRoutes.delete("/:id", deletePlaceController.handle);
-placesRoutes.patch("/:id", updatePlaceController.handle);
+placesRoutes.patch(
+  "/:id",
+  uploadPlaceImage.single("photo"),
+  updatePlaceController.handle
+);
 
 export { placesRoutes };

@@ -32,17 +32,6 @@ export const FormBody = styled.div`
             background-color: var(--background);
             margin-bottom: 1.2rem;
             cursor: pointer;
-
-            img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                border-radius: 0.625rem;
-            }
-        }
-
-        .form-foto-edit {
-            margin-bottom: 1rem;
             position: relative;
 
             div {
@@ -53,16 +42,15 @@ export const FormBody = styled.div`
                 padding: .5rem;
                 border-radius: .625rem;
 
-            svg {
-                color: var(--text);
+                svg {
+                    color: var(--text);
+                }
             }
-
-            }    
 
             img {
                 width: 100%;
+                height: 100%;
                 object-fit: cover;
-                height: 14.875rem;
                 border-radius: 0.625rem;
             }
         }

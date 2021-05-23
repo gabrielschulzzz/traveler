@@ -25,6 +25,10 @@ citiesRoutes.post(
   addCityController.handle
 );
 citiesRoutes.delete("/:id", deleteCityController.handle);
-citiesRoutes.put("/:id", updateCityController.handle);
+citiesRoutes.put(
+  "/:id",
+  uploadCityImage.single("photo"),
+  updateCityController.handle
+);
 
 export { citiesRoutes };

@@ -4,6 +4,7 @@ import { CitiesRepository } from "@modules/Cities/infra/typeorm/repositories/Cit
 import { Place } from "@modules/Places/infra/typeorm/entities/Place";
 import { inject, injectable } from "tsyringe";
 import { QueryDeepPartialEntity } from "typeorm/query-builder/QueryPartialEntity";
+import { deleteFile } from "utils/file";
 
 interface IRequest {
   id: string;
@@ -22,7 +23,20 @@ class UpdateCityUseCase {
   ) { }
 
   async execute({ description, name, fact, id, photo, highlight }: IRequest): Promise<void> {
-    await this.citiesRepository.update({ description, name, fact, id, photo, highlight })
+    const city = await this.citiesRepository.findOne(id)
+
+    if (photo) {
+      await deleteFile(`./tmp/city/${city.photo.substring(27)}`)
+    }
+
+    await this.citiesRepository.update({
+      description,
+      name,
+      fact,
+      id,
+      photo,
+      highlight
+    })
   }
 
 }

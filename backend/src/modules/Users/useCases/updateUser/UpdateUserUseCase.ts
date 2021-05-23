@@ -34,7 +34,13 @@ class UpdateUserUseCase {
       await deleteFile(`./tmp/avatar/${avatartrimmed}`)
     }
 
-    await this.usersRepository.update({ avatar, id, name, password: passwordHash, email })
+    await this.usersRepository.update({
+      avatar,
+      id,
+      name,
+      password: passwordHash,
+      email
+    })
   }
 }
 
