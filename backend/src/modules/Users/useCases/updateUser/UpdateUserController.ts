@@ -7,11 +7,13 @@ import { UpdateUserUseCase } from "./UpdateUserUseCase";
 class UpdateUserController {
   async handle(request: Request, response: Response): Promise<Response> {
     const { id } = request.user;
-    const avatar = request.file.filename;
+    let avatar = request.file.filename;
     const { email, password, name } = request.body;
 
     const updateUserUseCase = container.resolve(UpdateUserUseCase);
     const listSingleUserUseCase = container.resolve(ListSingleUserUseCase);
+
+    avatar = `http://localhost:3333/avatars/${avatar}`;
 
     await updateUserUseCase.execute({
       email,
@@ -22,8 +24,6 @@ class UpdateUserController {
     });
 
     const user = await listSingleUserUseCase.execute(id);
-
-    user.avatar = `http://localhost:3333/avatars/${user.avatar}`;
 
     return response.status(200).json(user);
   }

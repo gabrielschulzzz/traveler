@@ -43,7 +43,7 @@ export function EditProfileModal({ isOpen, onRequestClose }: EditProfileModalPro
             }
         }
         fillData()
-    }, [user])
+    }, [user, avatarPreview])
 
     function handleFileUpload(file: any) {
         setNewAvatar(file);
@@ -81,10 +81,15 @@ export function EditProfileModal({ isOpen, onRequestClose }: EditProfileModalPro
                         role: response.data.role,
                         reviews: response.data.reviews,
                     })
+
+                    onRequestClose()
+
                 })
                 .catch(function (response) {
                     console.log(response);
                 });
+
+
         } catch (error) {
             console.log(error)
         }
@@ -151,7 +156,12 @@ export function EditProfileModal({ isOpen, onRequestClose }: EditProfileModalPro
                         :
                         <div className="avatar">
                             <Dropzone
-                                onDrop={acceptedFiles => handleFileUpload(acceptedFiles[0])}
+                                onDrop={acceptedFiles => {
+                                    handleFileUpload(acceptedFiles[0])
+                                    setAvatarPreview(acceptedFiles.map(file => Object.assign(file, {
+                                        preview: URL.createObjectURL(file)
+                                    })));
+                                }}
                             >
                                 {({ getRootProps, getInputProps }) => (
                                     <section>
@@ -162,7 +172,15 @@ export function EditProfileModal({ isOpen, onRequestClose }: EditProfileModalPro
                                     </section>
                                 )}
                             </Dropzone>
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png" alt="" />
+                            {avatarPreview.length > 0
+                                ? avatarPreview.map((file: { preview: string | undefined; }) => (
+                                    <div>
+                                        <img src={file.preview} alt="" />
+                                    </div>
+                                ))
+                                : <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png" alt="" />
+                            }
+
                         </div>
                 }
                 {
@@ -171,8 +189,8 @@ export function EditProfileModal({ isOpen, onRequestClose }: EditProfileModalPro
                         <input type="text" value={nome} onChange={(e) => setNome(e.target.value)} />
                         <label>Email</label>
                         <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
-                        <label>Senha Atual</label>
-                        <input type="text" value={password} onChange={(e) => setPassword(e.target.value)} />
+                        <label>Nova senha</label>
+                        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                     </>
                 }
 
