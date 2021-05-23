@@ -8,7 +8,6 @@ class AddPlaceController {
     const {
       name,
       city,
-      photo,
       category,
       cep,
       rua,
@@ -39,7 +38,11 @@ class AddPlaceController {
       sabadoUntil,
     } = request.body;
 
+    let photo = request.file.filename;
+
     const addPlaceUseCase = container.resolve(AddPlaceUseCase);
+
+    photo = `http://localhost:3333/place/${photo}`;
 
     const newPlace = await addPlaceUseCase.execute({
       name,

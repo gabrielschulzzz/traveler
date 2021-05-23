@@ -21,9 +21,8 @@ export const FormBody = styled.div`
         }
 
         .form-foto {
-            border: 1px solid red;
             height: 10rem;
-            border: 2px dashed var(--light-grey);
+            border: 1px dashed var(--light-grey);
             border-radius: 0.625rem;
             display: flex;
             align-items: center;
@@ -33,6 +32,13 @@ export const FormBody = styled.div`
             background-color: var(--background);
             margin-bottom: 1.2rem;
             cursor: pointer;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: 0.625rem;
+            }
         }
 
         .form-foto-edit {

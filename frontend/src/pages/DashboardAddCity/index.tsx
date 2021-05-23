@@ -26,6 +26,8 @@ import { ToastContainer, toast } from 'react-toastify';
 export function DashboardAddCity() {
     const [step, setStep] = useState(1);
     const [successAdd, setSuccessAdd] = useState(false);
+    const [cityPhotoPreview, setCityPhotoPreview] = useState<any>([]);
+    const [placePhotoPreview, setPlacePhotoPreview] = useState<any>([]);
     const notify = () => toast.error("Preencha todos os campos!");
 
     // city state
@@ -45,115 +47,154 @@ export function DashboardAddCity() {
     const [district, setDistrict] = useState('');
     const [number, setNumber] = useState('');
 
-    const [domingoOpen, setDomingoOpen] = useState(true);
+    const [domingoOpen, setDomingoOpen] = useState(false);
     const [domingoFrom, setDomingoFrom] = useState('');
     const [domingoUntil, setDomingoUntil] = useState('');
 
-    const [segundaOpen, setSegundaOpen] = useState(true);
+    const [segundaOpen, setSegundaOpen] = useState(false);
     const [segundaFrom, setSegundaFrom] = useState('');
     const [segundaUntil, setSegundaUntil] = useState('');
 
-    const [tercaOpen, setTercaOpen] = useState(true);
+    const [tercaOpen, setTercaOpen] = useState(false);
     const [tercaFrom, setTercaFrom] = useState('');
     const [tercaUntil, setTercaUntil] = useState('');
 
-    const [quartaOpen, setQuartaOpen] = useState(true);
+    const [quartaOpen, setQuartaOpen] = useState(false);
     const [quartaFrom, setQuartaFrom] = useState('');
     const [quartaUntil, setQuartaUntil] = useState('');
 
-    const [quintaOpen, setQuintaOpen] = useState(true);
+    const [quintaOpen, setQuintaOpen] = useState(false);
     const [quintaFrom, setQuintaFrom] = useState('');
     const [quintaUntil, setQuintaUntil] = useState('');
 
-    const [sextaOpen, setSextaOpen] = useState(true);
+    const [sextaOpen, setSextaOpen] = useState(false);
     const [sextaFrom, setSextaFrom] = useState('');
     const [sextaUntil, setSextaUntil] = useState('');
 
-    const [sabadoOpen, setSabadoOpen] = useState(true);
+    const [sabadoOpen, setSabadoOpen] = useState(false);
     const [sabadoFrom, setSabadoFrom] = useState('');
     const [sabadoUntil, setSabadoUntil] = useState('');
 
     function handleStep2() {
+        console.log(cityName, cityDescription, cityFact, cityPhoto)
         if (!cityName || !cityDescription || !cityFact || !cityPhoto) {
             notify()
             return;
         }
-
         setStep(2)
     }
 
+    function handleFileUploadCity(file: any) {
+        setCityPhoto(file);
+    }
+
+    function handleFileUploadPlace(file: any) {
+        setPlacePhoto(file);
+    }
+
+    let newPlace: any;
+
     async function createNewCity() {
+        let cityFormData = new FormData();
+        cityFormData.append('name', cityName);
+        cityFormData.append('description', cityDescription);
+        cityFormData.append('fact', cityFact);
+        cityFormData.append('photo', cityPhoto);
+
         try {
-            const newCity = await axios.post('http://localhost:3333/cities', {
-                name: cityName,
-                description: cityDescription,
-                fact: cityFact,
-                photo: cityPhoto
+            const newCity = await axios({
+                method: "post",
+                url: "http://localhost:3333/cities",
+                data: cityFormData,
+                headers:
+                    { "Content-Type": "multipart/form-data" },
             })
 
+            let placeFormData = new FormData();
 
-            if (type === "food" && !placeName || !newCity.data.id)
-                type === "food"
-                    ? await axios.post('http://localhost:3333/places', {
-                        name: placeName,
-                        city: newCity.data.id,
-                        description: placeDescription,
-                        telefone: placeTelefone,
-                        photo: placePhoto,
-                        category: type,
-                        cep,
-                        rua: street,
-                        bairro: district,
-                        numero: number,
-                        domingoOpen,
-                        domingoFrom,
-                        domingoUntil,
-                        segundaOpen,
-                        segundaFrom,
-                        segundaUntil,
-                        tercaOpen,
-                        tercaFrom,
-                        tercaUntil,
-                        quartaOpen,
-                        quartaFrom,
-                        quartaUntil,
-                        quintaOpen,
-                        quintaFrom,
-                        quintaUntil,
-                        sextaOpen,
-                        sextaFrom,
-                        sextaUntil,
-                        sabadoOpen,
-                        sabadoFrom,
-                        sabadoUntil,
-                    })
-                    : type === 'event'
-                        ? await axios.post('http://localhost:3333/places', {
-                            name: placeName,
-                            city: newCity.data.id,
-                            description: placeDescription,
-                            photo: placePhoto,
-                            category: type,
-                            cep,
-                            rua: street,
-                            bairro: district,
-                            numero: number,
-                        })
+            if (type === "food") {
+                placeFormData.append("name", placeName)
+                placeFormData.append("city", newCity.data.id)
+                placeFormData.append("description", placeDescription)
+                placeFormData.append("telefone", placeTelefone)
+                placeFormData.append("photo", placePhoto)
+                placeFormData.append("category", type)
+                placeFormData.append("cep", cep)
+                placeFormData.append("rua", street)
+                placeFormData.append("bairro", district)
+                placeFormData.append("numero", number)
+                placeFormData.append("domingoOpen", String(domingoOpen))
+                placeFormData.append("domingoFrom", domingoFrom)
+                placeFormData.append("domingoUntil", domingoUntil)
+                placeFormData.append("segundaOpen", String(segundaOpen))
+                placeFormData.append("segundaFrom", segundaFrom)
+                placeFormData.append("segundaUntil", segundaUntil)
+                placeFormData.append("tercaOpen", String(tercaOpen))
+                placeFormData.append("tercaFrom", tercaFrom)
+                placeFormData.append("tercaUntil", tercaUntil)
+                placeFormData.append("quartaOpen", String(quartaOpen))
+                placeFormData.append("quartaFrom", quartaFrom)
+                placeFormData.append("quartaUntil", quartaUntil)
+                placeFormData.append("quintaOpen", String(quintaOpen))
+                placeFormData.append("quintaFrom", quintaFrom)
+                placeFormData.append("quintaUntil", quintaUntil)
+                placeFormData.append("sextaOpen", String(sextaOpen))
+                placeFormData.append("sextaFrom", sextaFrom)
+                placeFormData.append("sextaUntil", sextaUntil)
+                placeFormData.append("sabadoOpen", String(sabadoOpen))
+                placeFormData.append("sabadoFrom", sabadoFrom)
+                placeFormData.append("sabadoUntil", sabadoUntil)
 
-                        : await axios.post('http://localhost:3333/places', {
-                            name: placeName,
-                            city: newCity.data.id,
-                            description: placeDescription,
-                            photo: placePhoto,
-                            category: type,
-                            cep,
-                            rua: street,
-                            bairro: district,
-                            numero: number,
-                        })
+                newPlace = await axios({
+                    method: "post",
+                    url: "http://localhost:3333/places",
+                    data: placeFormData,
+                    headers:
+                        { "Content-Type": "multipart/form-data" },
+                })
+            } else if (type === "event") {
+                placeFormData.append("name", placeName)
+                placeFormData.append("city", newCity.data.id)
+                placeFormData.append("description", placeDescription)
+                placeFormData.append("telefone", placeTelefone)
+                placeFormData.append("photo", placePhoto)
+                placeFormData.append("category", type)
+                placeFormData.append("cep", cep)
+                placeFormData.append("rua", street)
+                placeFormData.append("numero", number)
+                placeFormData.append("bairro", district)
+
+                newPlace = await axios({
+                    method: "post",
+                    url: "http://localhost:3333/places",
+                    data: placeFormData,
+                    headers:
+                        { "Content-Type": "multipart/form-data" },
+                })
+            } else {
+                placeFormData.append("name", placeName)
+                placeFormData.append("city", newCity.data.id)
+                placeFormData.append("description", placeDescription)
+                placeFormData.append("telefone", placeTelefone)
+                placeFormData.append("photo", placePhoto)
+                placeFormData.append("category", type)
+                placeFormData.append("numero", number)
+                placeFormData.append("cep", cep)
+                placeFormData.append("rua", street)
+                placeFormData.append("bairro", district)
+
+                newPlace = await axios({
+                    method: "post",
+                    url: "http://localhost:3333/places",
+                    data: placeFormData,
+                    headers:
+                        { "Content-Type": "multipart/form-data" },
+                })
+            }
         } catch (error) {
             console.log(error)
         } finally {
+            console.log(newPlace)
             setSuccessAdd(true)
         }
     }
@@ -203,11 +244,10 @@ export function DashboardAddCity() {
                         <input type="text" value={cityName} onChange={(e) => setCityName(e.target.value)} />
 
                         <label>Foto da cidade</label>
-                        {/* <input type="text" value={cityPhoto} onChange={(e) => setCityPhoto(e.target.value)} /> */}
                         <Dropzone
                             onDrop={acceptedFiles => {
-                                handleFileUpload(acceptedFiles[0])
-                                setAvatarPreview(acceptedFiles.map(file => Object.assign(file, {
+                                handleFileUploadCity(acceptedFiles[0])
+                                setCityPhotoPreview(acceptedFiles.map(file => Object.assign(file, {
                                     preview: URL.createObjectURL(file)
                                 })));
                             }}
@@ -216,15 +256,21 @@ export function DashboardAddCity() {
                                 <section>
                                     <div {...getRootProps()}>
                                         <input {...getInputProps()} />
-                                        <p><BiImageAdd /></p>
+                                        {cityPhotoPreview.length > 0
+                                            ? cityPhotoPreview.map((file: { preview: string | undefined; }) => (
+                                                <div className="form-foto">
+                                                    <img src={file.preview} alt="" />
+                                                </div>
+                                            ))
+                                            : <div className="form-foto">
+                                                <BsPlus />
+                                                <p>Arraste uma imagem ou clique</p>
+                                            </div>
+                                        }
                                     </div>
                                 </section>
                             )}
                         </Dropzone>
-                        <div className="form-foto">
-                            <BsPlus />
-                            <p>Adicionar uma foto</p>
-                        </div>
 
                         <label>Descricao da cidade</label>
                         <textarea
@@ -260,11 +306,33 @@ export function DashboardAddCity() {
                         <input type="text" value={placeName} onChange={(e) => setPlaceName(e.target.value)} />
 
                         <label>Foto do local</label>
-                        <input type="text" value={placePhoto} onChange={(e) => setPlacePhoto(e.target.value)} />
-                        {/* <div className="form-foto">
-                            <BsPlus />
-                            <p>Adicionar uma foto</p>
-                        </div> */}
+                        <Dropzone
+                            onDrop={acceptedFiles => {
+                                handleFileUploadPlace(acceptedFiles[0])
+                                setPlacePhotoPreview(acceptedFiles.map(file => Object.assign(file, {
+                                    preview: URL.createObjectURL(file)
+                                })));
+                            }}
+                        >
+                            {({ getRootProps, getInputProps }) => (
+                                <section>
+                                    <div {...getRootProps()}>
+                                        <input {...getInputProps()} />
+                                        {placePhotoPreview.length > 0
+                                            ? placePhotoPreview.map((file: { preview: string | undefined; }) => (
+                                                <div className="form-foto">
+                                                    <img src={file.preview} alt="" />
+                                                </div>
+                                            ))
+                                            : <div className="form-foto">
+                                                <BsPlus />
+                                                <p>Arraste uma imagem ou clique</p>
+                                            </div>
+                                        }
+                                    </div>
+                                </section>
+                            )}
+                        </Dropzone>
 
                         <label>Descricao do local</label>
                         <textarea value={placeDescription} onChange={(e) => setPlaceDescription(e.target.value)}></textarea>
@@ -367,9 +435,9 @@ export function DashboardAddCity() {
                 </CardForm>
             }
 
-
             {
-                successAdd && <SuccessAdd>
+                successAdd &&
+                <SuccessAdd>
                     <div className="first">
                         <AiOutlineCheckCircle />
                         <h1>Cidade Cadastrada!</h1>
@@ -382,24 +450,30 @@ export function DashboardAddCity() {
 
                     <div className="second">
                         <CardsRow>
-                            <Card
-                                title={cityName}
-                                image={cityPhoto}
-                                places="1"
-                            />
+                            {
+                                cityPhotoPreview.map((file: { preview: string | undefined; }) => (
+                                    <Card
+                                        title={cityName}
+                                        image={file.preview}
+                                        places="1"
+                                    />
+                                ))
+                            }
 
-                            <Card
-                                title={placeName}
-                                image={placePhoto}
-                                rating="-"
-                                category={type}
-                            />
+                            {
+                                placePhotoPreview.map((file: { preview: string | undefined; }) => (
+                                    <Card
+                                        title={placeName}
+                                        image={file.preview}
+                                        rating="-"
+                                        category={type}
+                                    />
+                                ))
+                            }
                         </CardsRow>
                     </div>
                 </SuccessAdd>
             }
-
-
         </Container >
     )
 }

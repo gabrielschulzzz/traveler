@@ -18,11 +18,7 @@ class PlacesRepository implements IPlacesRepository {
     await this.repository.delete(id);
   }
 
-  async findOne(id: string): Promise<any> {
-    // const place = await this.repository.findOne(id, {
-    //   relations: ["reviews"],
-    // });
-
+  async findOne(id: string): Promise<Place> {
     const place = await this.repository
       .createQueryBuilder("place")
       .leftJoinAndSelect("place.reviews", "review")

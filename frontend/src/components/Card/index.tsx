@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 
 interface CardProps {
-    image: string | null;
+    image: any;
     title: string;
     places?: string;
     rating?: string;
