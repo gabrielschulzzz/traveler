@@ -24,8 +24,10 @@ class UpdateUserUseCase {
 
     const user = await this.usersRepository.findOne(id);
 
+    const avatartrimmed = user.avatar.substring(30);
+
     if (user.avatar) {
-      await deleteFile(`./tmp/avatar/${user.avatar}`)
+      await deleteFile(`./tmp/avatar/${avatartrimmed}`)
     }
 
     await this.usersRepository.update({ avatar, id, name, password: passwordHash, email })
