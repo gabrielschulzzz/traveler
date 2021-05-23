@@ -96,6 +96,38 @@ export const GlobalStyle = createGlobalStyle`
         border-radius: 1.25rem;
     }
 
+    .react-modal-content-edit-user {
+        width: 100%;
+        max-width: 46rem;
+        background: var(--background);
+        outline: none;
+        height: 44rem;
+        overflow-y: scroll;
+        border-radius: 1.25rem;
+
+       /* width */
+       ::-webkit-scrollbar {
+            width: .2rem;
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+            background: transparent;
+            border-radius: 1.25rem;
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+        }
+        
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+        }
+    }
+
     .react-modal-content {
         width: 100%;
         max-width: 46rem;

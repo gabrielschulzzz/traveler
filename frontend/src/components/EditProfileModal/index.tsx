@@ -27,6 +27,7 @@ export function EditProfileModal({ isOpen, onRequestClose }: EditProfileModalPro
     const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
     const [avatar, setAvatar] = useState('');
+    const [avatarPreview, setAvatarPreview] = useState<any>([]);
     const [newAvatar, setNewAvatar] = useState('');
     const [password, setPassword] = useState('');
     const notify = () => toast.error("Preencha todos os campos!");
@@ -47,6 +48,7 @@ export function EditProfileModal({ isOpen, onRequestClose }: EditProfileModalPro
     function handleFileUpload(file: any) {
         setNewAvatar(file);
     }
+
 
     async function handleUpdateProfile(e: FormEvent) {
         e.preventDefault()
@@ -83,16 +85,6 @@ export function EditProfileModal({ isOpen, onRequestClose }: EditProfileModalPro
                 .catch(function (response) {
                     console.log(response);
                 });
-
-            user && setUser({
-                id: user?.id,
-                name: nome,
-                avatar,
-                email,
-                role: user.role,
-                reviews: user.reviews,
-            })
-
         } catch (error) {
             console.log(error)
         }
@@ -104,7 +96,7 @@ export function EditProfileModal({ isOpen, onRequestClose }: EditProfileModalPro
             isOpen={isOpen}
             onRequestClose={onRequestClose}
             overlayClassName="react-modal-overlay"
-            className="react-modal-content"
+            className="react-modal-content-edit-user"
         >
             <ToastContainer
                 position="top-right"
@@ -131,7 +123,12 @@ export function EditProfileModal({ isOpen, onRequestClose }: EditProfileModalPro
                     user?.avatar ?
                         <div className="avatar">
                             <Dropzone
-                                onDrop={acceptedFiles => handleFileUpload(acceptedFiles[0])}
+                                onDrop={acceptedFiles => {
+                                    handleFileUpload(acceptedFiles[0])
+                                    setAvatarPreview(acceptedFiles.map(file => Object.assign(file, {
+                                        preview: URL.createObjectURL(file)
+                                    })));
+                                }}
                             >
                                 {({ getRootProps, getInputProps }) => (
                                     <section>
@@ -142,7 +139,14 @@ export function EditProfileModal({ isOpen, onRequestClose }: EditProfileModalPro
                                     </section>
                                 )}
                             </Dropzone>
-                            <img src={user?.avatar} alt="" />
+                            {avatarPreview.length > 0
+                                ? avatarPreview.map((file: { preview: string | undefined; }) => (
+                                    <div>
+                                        <img src={file.preview} alt="" />
+                                    </div>
+                                ))
+                                : <img src={user?.avatar} alt="" />
+                            }
                         </div>
                         :
                         <div className="avatar">
@@ -175,6 +179,6 @@ export function EditProfileModal({ isOpen, onRequestClose }: EditProfileModalPro
                 <button onClick={handleUpdateProfile}>Alterar perfil</button>
 
             </CardBody>
-        </Modal>
+        </Modal >
     )
 }
