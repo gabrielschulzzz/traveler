@@ -14,7 +14,7 @@ const app = express();
 const avatarDir = path.join(__dirname, "..", "..", "..", "..", "tmp", "avatar");
 const cityDir = path.join(__dirname, "..", "..", "..", "..", "tmp", "city");
 const placeDir = path.join(__dirname, "..", "..", "..", "..", "tmp", "place");
-app.use("/avatars", express.static(avatarDir));
+app.use("/avatar", express.static(avatarDir));
 app.use("/city", express.static(cityDir));
 app.use("/place", express.static(placeDir));
 

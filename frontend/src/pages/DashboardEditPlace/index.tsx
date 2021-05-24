@@ -19,6 +19,8 @@ import { DashboardNavbar } from '../../components/DashboardNavbar';
 import { NextEvent } from '../../components/NextEvent';
 import { OverlayMessage } from '../../components/OverlayMessage';
 import { OverlayDelete } from '../../components/OverlayDelete';
+import Dropzone from 'react-dropzone';
+import { BsPlus } from 'react-icons/bs';
 
 interface RouteParams {
     city: string;
@@ -27,6 +29,7 @@ interface RouteParams {
 
 export function DashboardEditPlace() {
     const [editSuccess, setEditSuccess] = useState(false)
+    const [photoPreview, setPhotoPreview] = useState<any>([]);
     const [type, setType] = useState('food');
     const [bairro, setBairro] = useState('');
     const [cep, setCep] = useState('');
@@ -37,37 +40,42 @@ export function DashboardEditPlace() {
     const [rua, setRua] = useState('');
     const [description, setDescription] = useState('');
     const [deleteTriggered, setDeleteTriggered] = useState(false);
-    const [domingoOpen, setDomingoOpen] = useState(true);
+    const [domingoOpen, setDomingoOpen] = useState(false);
     const [domingoFrom, setDomingoFrom] = useState('');
     const [domingoUntil, setDomingoUntil] = useState('');
 
-    const [segundaOpen, setSegundaOpen] = useState(true);
+    const [segundaOpen, setSegundaOpen] = useState(false);
     const [segundaFrom, setSegundaFrom] = useState('');
     const [segundaUntil, setSegundaUntil] = useState('');
 
-    const [tercaOpen, setTercaOpen] = useState(true);
+    const [tercaOpen, setTercaOpen] = useState(false);
     const [tercaFrom, setTercaFrom] = useState('');
     const [tercaUntil, setTercaUntil] = useState('');
 
-    const [quartaOpen, setQuartaOpen] = useState(true);
+    const [quartaOpen, setQuartaOpen] = useState(false);
     const [quartaFrom, setQuartaFrom] = useState('');
     const [quartaUntil, setQuartaUntil] = useState('');
 
-    const [quintaOpen, setQuintaOpen] = useState(true);
+    const [quintaOpen, setQuintaOpen] = useState(false);
     const [quintaFrom, setQuintaFrom] = useState('');
     const [quintaUntil, setQuintaUntil] = useState('');
 
-    const [sextaOpen, setSextaOpen] = useState(true);
+    const [sextaOpen, setSextaOpen] = useState(false);
     const [sextaFrom, setSextaFrom] = useState('');
     const [sextaUntil, setSextaUntil] = useState('');
 
-    const [sabadoOpen, setSabadoOpen] = useState(true);
+    const [sabadoOpen, setSabadoOpen] = useState(false);
     const [sabadoFrom, setSabadoFrom] = useState('');
     const [sabadoUntil, setSabadoUntil] = useState('');
 
     let history = useHistory();
+    let newPlace: any;
 
     const { city, place } = useParams<RouteParams>();
+
+    function handleFileUploadPlace(file: any) {
+        setPhoto(file);
+    }
 
     useEffect(() => {
         const fetchData = async () => {
@@ -115,75 +123,89 @@ export function DashboardEditPlace() {
         fetchData()
     }, [place])
 
-    function handleEditSuccess() {
-        if (type === "food") {
-            axios.patch(`http://localhost:3333/places/${place}`, {
-                name,
-                city,
-                photo,
-                category: type,
-                cep,
-                rua,
-                telefone,
-                bairro,
-                numero,
-                description,
-                domingoOpen,
-                domingoFrom,
-                domingoUntil,
-                segundaOpen,
-                segundaFrom,
-                segundaUntil,
-                tercaOpen,
-                tercaFrom,
-                tercaUntil,
-                quartaOpen,
-                quartaFrom,
-                quartaUntil,
-                quintaOpen,
-                quintaFrom,
-                quintaUntil,
-                sextaOpen,
-                sextaFrom,
-                sextaUntil,
-                sabadoOpen,
-                sabadoFrom,
-                sabadoUntil,
-            })
-        }
+    async function handleEditSuccess() {
+        let placeFormData = new FormData();
 
-        if (type === "turistic" || type === "event") {
-            axios.patch(`http://localhost:3333/places/${place}`, {
-                name,
-                city,
-                photo,
-                category: type,
-                cep,
-                rua,
-                bairro,
-                numero,
-                description,
-                domingoOpen: null,
-                domingoFrom: null,
-                domingoUntil: null,
-                segundaOpen: null,
-                segundaFrom: null,
-                segundaUntil: null,
-                tercaOpen: null,
-                tercaFrom: null,
-                tercaUntil: null,
-                quartaOpen: null,
-                quartaFrom: null,
-                quartaUntil: null,
-                quintaOpen: null,
-                quintaFrom: null,
-                quintaUntil: null,
-                sextaOpen: null,
-                sextaFrom: null,
-                sextaUntil: null,
-                sabadoOpen: null,
-                sabadoFrom: null,
-                sabadoUntil: null,
+        console.log(photo)
+
+
+        if (type === "food") {
+            placeFormData.append("name", name)
+            placeFormData.append("city", city)
+            placeFormData.append("description", description)
+            placeFormData.append("telefone", telefone)
+            placeFormData.append("photo", photo)
+            placeFormData.append("category", type)
+            placeFormData.append("cep", cep)
+            placeFormData.append("rua", rua)
+            placeFormData.append("bairro", bairro)
+            placeFormData.append("numero", numero)
+            placeFormData.append("domingoOpen", String(domingoOpen))
+            placeFormData.append("domingoFrom", domingoFrom)
+            placeFormData.append("domingoUntil", domingoUntil)
+            placeFormData.append("segundaOpen", String(segundaOpen))
+            placeFormData.append("segundaFrom", segundaFrom)
+            placeFormData.append("segundaUntil", segundaUntil)
+            placeFormData.append("tercaOpen", String(tercaOpen))
+            placeFormData.append("tercaFrom", tercaFrom)
+            placeFormData.append("tercaUntil", tercaUntil)
+            placeFormData.append("quartaOpen", String(quartaOpen))
+            placeFormData.append("quartaFrom", quartaFrom)
+            placeFormData.append("quartaUntil", quartaUntil)
+            placeFormData.append("quintaOpen", String(quintaOpen))
+            placeFormData.append("quintaFrom", quintaFrom)
+            placeFormData.append("quintaUntil", quintaUntil)
+            placeFormData.append("sextaOpen", String(sextaOpen))
+            placeFormData.append("sextaFrom", sextaFrom)
+            placeFormData.append("sextaUntil", sextaUntil)
+            placeFormData.append("sabadoOpen", String(sabadoOpen))
+            placeFormData.append("sabadoFrom", sabadoFrom)
+            placeFormData.append("sabadoUntil", sabadoUntil)
+
+            newPlace = await axios({
+                method: "patch",
+                url: `http://localhost:3333/places/${place}`,
+                data: placeFormData,
+                headers:
+                    { "Content-Type": "multipart/form-data" },
+            })
+        } else if (type === "event") {
+            placeFormData.append("name", name)
+            placeFormData.append("city", city)
+            placeFormData.append("description", description)
+            placeFormData.append("telefone", telefone)
+            placeFormData.append("photo", photo)
+            placeFormData.append("category", type)
+            placeFormData.append("cep", cep)
+            placeFormData.append("rua", rua)
+            placeFormData.append("numero", numero)
+            placeFormData.append("bairro", bairro)
+
+            newPlace = await axios({
+                method: "patch",
+                url: `http://localhost:3333/places/${place}`,
+                data: placeFormData,
+                headers:
+                    { "Content-Type": "multipart/form-data" },
+            })
+        } else {
+            placeFormData.append("name", name)
+            placeFormData.append("city", city)
+            placeFormData.append("description", description)
+            placeFormData.append("telefone", telefone)
+            placeFormData.append("photo", photo)
+            placeFormData.append("category", type)
+            placeFormData.append("numero", numero)
+            placeFormData.append("cep", cep)
+            placeFormData.append("rua", rua)
+            placeFormData.append("bairro", bairro)
+
+            newPlace = await axios({
+                method: "patch",
+                url: `http://localhost:3333/places/${place}`,
+                data: placeFormData,
+                headers:
+                    { "Content-Type": "multipart/form-data" },
             })
         }
 
@@ -214,26 +236,58 @@ export function DashboardEditPlace() {
                 </DeleteButton>
             </DashboardHeader>
 
+
             <CardForm>
-                <CardFormHeader title="Editar local da cidade" subtitle="Dados basicos" />
+                <CardFormHeader
+                    title="Editar local da cidade"
+                    subtitle="Dados basicos"
+                />
 
                 <CardFormBody>
                     <label>Nome do local</label>
-                    <input value={name} onChange={(e) => setName(e.target.value)} />
+                    <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
 
                     <label>Foto do local</label>
-                    <input type="text" value={photo} onChange={(e) => setPhoto(e.target.value)} />
-                    <div className="form-foto">
-                        <div>
-                            <AiOutlineEdit />
-                        </div>
-                        <img src="https://images.unsplash.com/photo-1517433670267-08bbd4be890f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=972&q=80" alt="" />
-                    </div>
+                    <Dropzone
+                        onDrop={acceptedFiles => {
+                            handleFileUploadPlace(acceptedFiles[0])
+                            setPhotoPreview(acceptedFiles.map(file => Object.assign(file, {
+                                preview: URL.createObjectURL(file)
+                            })));
+                        }}
+                    >
+                        {({ getRootProps, getInputProps }) => (
+                            <section>
+                                <div {...getRootProps()}>
+                                    <input {...getInputProps()} />
+                                    {photoPreview.length > 0
+                                        ? photoPreview.map((file: { preview: string | undefined; }) => (
+                                            <div className="form-foto">
+                                                <div>
+                                                    <AiOutlineEdit />
+                                                </div>
+                                                <img src={file.preview} alt="" />
+                                            </div>
+                                        ))
+                                        : <div className="form-foto">
+                                            <div>
+                                                <AiOutlineEdit />
+                                            </div>
+                                            <img src={photo} alt="" />
+                                        </div>
+                                    }
+                                </div>
+                            </section>
+                        )}
+                    </Dropzone>
 
                     <label>Descricao do local</label>
                     <textarea value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
 
-                    <CardCategoryPicker type={type} setType={setType} />
+                    <CardCategoryPicker
+                        type={type}
+                        setType={setType}
+                    />
 
                     {
                         type === 'food' &&
@@ -290,20 +344,21 @@ export function DashboardEditPlace() {
                     }
 
                     {
-                        type === 'event' && <NextEvent />
+                        type === 'event' &&
+                        <NextEvent />
                     }
 
 
                     <CardFormAddress
-                        map
                         cep={cep}
-                        street={rua}
-                        district={bairro}
-                        number={numero}
                         setCep={setCep}
-                        setDistrict={setBairro}
-                        setNumber={setNumero}
+                        street={rua}
                         setStreet={setRua}
+                        district={bairro}
+                        setDistrict={setBairro}
+                        number={numero}
+                        setNumber={setNumero}
+                        map
                     />
 
                     {

@@ -1,3 +1,4 @@
+/* eslint-disable no-prototype-builtins */
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
@@ -16,32 +17,61 @@ class UpdatePlaceController {
       numero,
       telefone,
       description,
-      domingoOpen,
       domingoFrom,
       domingoUntil,
-      segundaOpen,
       segundaFrom,
       segundaUntil,
-      tercaOpen,
       tercaFrom,
       tercaUntil,
-      quartaOpen,
       quartaFrom,
       quartaUntil,
-      quintaOpen,
       quintaFrom,
       quintaUntil,
-      sextaOpen,
       sextaFrom,
       sextaUntil,
-      sabadoOpen,
       sabadoFrom,
       sabadoUntil,
     } = request.body;
 
-    let photo = request.file.filename;
+    let {
+      segundaOpen,
+      tercaOpen,
+      quartaOpen,
+      quintaOpen,
+      sextaOpen,
+      sabadoOpen,
+      domingoOpen,
+    } = request.body;
 
-    photo = `http://localhost:3333/place/${photo}`;
+    segundaOpen = "true" && (segundaOpen = true);
+    segundaOpen = "false" && (segundaOpen = false);
+
+    tercaOpen = "true" && (tercaOpen = true);
+    tercaOpen = "false" && (tercaOpen = false);
+
+    quartaOpen = "true" && (quartaOpen = true);
+    quartaOpen = "false" && (quartaOpen = false);
+
+    quintaOpen = "true" && (quintaOpen = true);
+    quintaOpen = "false" && (quintaOpen = false);
+
+    sextaOpen = "true" && (sextaOpen = true);
+    sextaOpen = "false" && (sextaOpen = false);
+
+    sabadoOpen = "true" && (sabadoOpen = true);
+    sabadoOpen = "false" && (sabadoOpen = false);
+
+    domingoOpen = "true" && (domingoOpen = true);
+    domingoOpen = "false" && (domingoOpen = false);
+
+    let photo;
+
+    if (request.hasOwnProperty("file")) {
+      photo = request.file.filename;
+      photo = `1http://localhost:3333/place/${photo}`;
+    } else {
+      photo = request.body.photo;
+    }
 
     const updatePlaceUseCase = container.resolve(UpdatePlaceUseCase);
 

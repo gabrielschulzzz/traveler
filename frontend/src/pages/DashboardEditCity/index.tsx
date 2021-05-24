@@ -108,14 +108,6 @@ export function DashboardEditCity() {
                     <label>Nome da cidade</label>
                     <input type="text" value={cityName} onChange={(e) => setCityName(e.target.value)} />
                     <label htmlFor="">Foto da cidade</label>
-                    {/* <input type="text" value={cityPhoto} onChange={(e) => setCityPhoto(e.target.value)} /> */}
-                    {/* <div className="form-foto-edit">
-                        <div>
-                            <AiOutlineEdit />
-                        </div>
-                        <img src="https://images.unsplash.com/photo-1590093804249-491680485e5d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="" />
-                    </div> */}
-
                     <Dropzone
                         onDrop={acceptedFiles => {
                             handleFileUploadCity(acceptedFiles[0])

@@ -16,7 +16,7 @@ class DeleteUserUseCase {
     let avatartrimmed;
 
     if (user.avatar) {
-      avatartrimmed = user.avatar.substring(30);
+      avatartrimmed = user.avatar.substring(29);
     }
 
     if (user.avatar) {

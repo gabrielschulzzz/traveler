@@ -24,17 +24,20 @@ class UpdateCityUseCase {
 
   async execute({ description, name, fact, id, photo, highlight }: IRequest): Promise<void> {
     const city = await this.citiesRepository.findOne(id)
+    let photoTrim = photo;
 
-    if (photo) {
+    if (photo.startsWith("1")) {
       await deleteFile(`./tmp/city/${city.photo.substring(27)}`)
+      photoTrim = photo.substring(1);
     }
+
 
     await this.citiesRepository.update({
       description,
       name,
       fact,
       id,
-      photo,
+      photo: photoTrim,
       highlight
     })
   }

@@ -78,15 +78,17 @@ class UpdatePlaceUseCase {
     sabadoUntil
   }: IRequest): Promise<void> {
     const place = await this.placesRepository.findOne(id);
+    let photoTrim = photo;
 
-    if (photo) {
+    if (photo.startsWith("1")) {
       await deleteFile(`./tmp/place/${place.photo.substring(27)}`)
+      photoTrim = photo.substring(1);
     }
 
     await this.placesRepository.update({
       id,
       name,
-      photo,
+      photo: photoTrim,
       category,
       cep,
       telefone,

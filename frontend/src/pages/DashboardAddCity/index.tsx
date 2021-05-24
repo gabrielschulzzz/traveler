@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link } from "react-router-dom";
 import { FiAlertCircle, FiCoffee } from "react-icons/fi";
 import { BsPlus } from 'react-icons/bs';
-import { AiOutlineArrowLeft, AiOutlineCalendar, AiOutlineCamera, AiOutlineCheckCircle } from "react-icons/ai";
+import { AiOutlineArrowLeft, AiOutlineCalendar, AiOutlineCamera, AiOutlineCheckCircle, AiOutlineEdit } from "react-icons/ai";
 import { CategoryContainer, Container, RadioBox, SuccessAdd } from "./styles";
 import Dropzone from "react-dropzone";
 import { CardsRow } from "../Home/styles";
@@ -259,6 +259,9 @@ export function DashboardAddCity() {
                                         {cityPhotoPreview.length > 0
                                             ? cityPhotoPreview.map((file: { preview: string | undefined; }) => (
                                                 <div className="form-foto">
+                                                    <div>
+                                                        <AiOutlineEdit />
+                                                    </div>
                                                     <img src={file.preview} alt="" />
                                                 </div>
                                             ))
@@ -321,6 +324,9 @@ export function DashboardAddCity() {
                                         {placePhotoPreview.length > 0
                                             ? placePhotoPreview.map((file: { preview: string | undefined; }) => (
                                                 <div className="form-foto">
+                                                    <div>
+                                                        <AiOutlineEdit />
+                                                    </div>
                                                     <img src={file.preview} alt="" />
                                                 </div>
                                             ))

@@ -28,7 +28,6 @@ export function EditProfileModal({ isOpen, onRequestClose }: EditProfileModalPro
     const [email, setEmail] = useState('');
     const [avatar, setAvatar] = useState('');
     const [avatarPreview, setAvatarPreview] = useState<any>([]);
-    const [newAvatar, setNewAvatar] = useState('');
     const [password, setPassword] = useState('');
     const notify = () => toast.error("Preencha todos os campos!");
 
@@ -43,10 +42,10 @@ export function EditProfileModal({ isOpen, onRequestClose }: EditProfileModalPro
             }
         }
         fillData()
-    }, [user, avatarPreview])
+    }, [user])
 
     function handleFileUpload(file: any) {
-        setNewAvatar(file);
+        setAvatar(file);
     }
 
 
@@ -58,12 +57,15 @@ export function EditProfileModal({ isOpen, onRequestClose }: EditProfileModalPro
             return;
         }
 
+        let formData = new FormData();
+
         try {
-            let formData = new FormData();
-            formData.append('avatar', newAvatar);
+            formData.append('avatar', avatar);
             formData.append('name', nome);
             formData.append('email', email);
             formData.append('password', password);
+
+            console.log(nome, email, password, avatar)
 
             axios({
                 method: "patch",
@@ -180,7 +182,6 @@ export function EditProfileModal({ isOpen, onRequestClose }: EditProfileModalPro
                                 ))
                                 : <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png" alt="" />
                             }
-
                         </div>
                 }
                 {
