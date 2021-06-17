@@ -3,10 +3,10 @@
 </h1>
 
 <h3 align="center">
-  Projeto Fullstack desenvolvido em React e NodeJs
+  Projeto fullstack desenvolvido em React e NodeJs
 </h3>
 
-<p align="center">Controle de finanças de um jeito simples e eficiente!</p>
+<p align="center">Viva uma grande aventura!</p>
 
 </br>
 
